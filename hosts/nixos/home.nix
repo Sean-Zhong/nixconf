@@ -25,7 +25,7 @@
     history.size = 10000;
 
     initExtra = ''
-      [[ ! -f ${./p10k.zsh;} ]] || source ${./p10k.zsh}
+      [[ ! -f ${./p10k.zsh} ]] || source ${./p10k.zsh}
     '';
     plugins = [
       {
@@ -34,7 +34,7 @@
         file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       }
     ];
-    
+
     # plugins
     zplug = {
       enable = true;
