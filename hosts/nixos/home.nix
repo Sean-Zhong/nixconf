@@ -6,10 +6,25 @@
   home.username = "sean";
   home.homeDirectory = "/home/sean";
 
-  programs.git = {
-    enable = true;
-    userName = "Sean Zhong";
-    userEmail = "sean.zhong@scila.se";
+  programs = {
+    git = {
+      enable = true;
+      userName = "Sean Zhong";
+      userEmail = "sean.zhong@scila.se";
+    };
+    zsh = {
+      oh-my-zsh = {
+      enable = true;
+      plugins = [ 
+        "git"
+        "fzf"
+        "zsh-syntax-highlighting"
+        "zsh-autosuggestions"
+        "zsh-interactive-cd" 
+        ];
+      theme = "agnoster";
+      };
+    };
   };
 
   # This value determines the Home Manager release that your configuration is
