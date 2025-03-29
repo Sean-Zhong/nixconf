@@ -6,36 +6,35 @@
   home.username = "sean";
   home.homeDirectory = "/home/sean";
 
-  programs = {
-    git = {
+  programs.git = {
       enable = true;
       userName = "Sean Zhong";
       userEmail = "sean.zhong@scila.se";
     };
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      #autosuggestions.enable = true;
-      #syntaxHighlighting.enable = true;
+    
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
 
-      shellAliases = {
-        ll = "ls -l";
-        update = "sudo nixos-rebuild switch --flake /home/sean/nixconf/#nixos";
-      };
-      history.size = 10000;
+    shellAliases = {
+      ll = "ls -l";
+      update = "sudo nixos-rebuild switch --flake /home/sean/nixconf/#nixos";
+    };
+    history.size = 10000;
 
-      # plugins
-      oh-my-zsh = {
-      enable = true;
-      plugins = [ 
-        "git"
-        "fzf"
-        "zsh-syntax-highlighting"
-        "zsh-autosuggestions"
-        "zsh-interactive-cd" 
-        ];
-      theme = "agnoster";
-      };
+    # plugins
+    oh-my-zsh = {
+    enable = true;
+    plugins = [ 
+      "git"
+      "fzf"
+      "zsh-syntax-highlighting"
+      "zsh-autosuggestions"
+      "zsh-interactive-cd" 
+      ];
+    theme = "agnoster";
     };
   };
 
