@@ -114,6 +114,8 @@
     pkgs.jetbrains.idea-ultimate
   ];
 
+  environment.shells = with pkgs; [ zsh ];
+
   # Docker
   virtualisation.docker.rootless = {
     enable = true;
