@@ -24,11 +24,21 @@
     };
     history.size = 10000;
 
+    initExtra = ''
+      [[ ! -f ${./p10k.zsh;} ]] || source ${./p10k.zsh}
+    '';
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+    ];
+    
     # plugins
     zplug = {
       enable = true;
       plugins = [
-        { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
         { name = "zsh-users/zsh-autosuggestions"; }
         { name = "plugins/git"; tags = [ from:oh-my-zsh ]; }
         { name = "junegunn/fzf"; }

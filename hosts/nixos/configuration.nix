@@ -116,6 +116,10 @@
 
   environment.shells = with pkgs; [ zsh ];
 
+  fonts.fonts = with pkgs; [
+    meslo-lgs-nf
+  ];
+
   # Docker
   virtualisation.docker.rootless = {
     enable = true;
