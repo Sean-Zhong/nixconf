@@ -25,16 +25,16 @@
     history.size = 10000;
 
     # plugins
-    oh-my-zsh = {
-    enable = true;
-    plugins = [ 
-      "git"
-      "fzf"
-      "zsh-syntax-highlighting"
-      "zsh-autosuggestions"
-      "zsh-interactive-cd" 
+    zplug = {
+      enable = true;
+      plugins = [
+        { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
+        { name = "zsh-users/zsh-autosuggestions"; }
+        { name = "plugins/git"; tags = [ from:oh-my-zsh ]; }
+        { name = "junegunn/fzf"; }
+        { name = "zsh-users/zsh-syntax-highlighting"; tags = [ defer:2 ]; }
+        { name = "mrjohannchang/zsh-interactive-cd"; }
       ];
-    theme = "agnoster";
     };
   };
 
