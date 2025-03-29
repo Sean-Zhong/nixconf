@@ -97,10 +97,11 @@
     };
   };
 
-  # Install firefox.
   programs.firefox.enable = true;
-
   programs.openvpn3.enable = true;
+  programs.zsh.enable = true;
+
+  users.defaultUserShell = pkgs.zsh;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
