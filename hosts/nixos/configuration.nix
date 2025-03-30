@@ -119,6 +119,7 @@
     pkgs.keepassxc
     pkgs.filezilla
     pkgs.gnomeExtensions.forge
+    pkgs.gnomeExtensions.no-title-bar
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
