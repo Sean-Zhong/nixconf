@@ -120,6 +120,7 @@
     pkgs.filezilla
     pkgs.gnomeExtensions.forge
     pkgs.gnomeExtensions.app-icons-taskbar
+    pkgs.youtube-music
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
