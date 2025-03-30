@@ -121,6 +121,7 @@
     pkgs.gnomeExtensions.forge
     pkgs.gnomeExtensions.app-icons-taskbar
     pkgs.youtube-music
+    pkgs.vscode-fhs
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
