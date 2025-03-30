@@ -129,6 +129,11 @@
     setSocketVariable = true;
   };
 
+  systemd.tmpfiles.rules = [
+    "d /mnt/team_files 0755 sean users"
+    "d /mnt/dolph_files 0755 sean users"
+  ];
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
