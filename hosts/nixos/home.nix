@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
 {
+  imports = [ ../../modules/home-manager/nix-index-database.nix ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "sean";
@@ -78,7 +79,6 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
-    nix-index-database
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
