@@ -128,7 +128,10 @@
   # Prevent the new user dialog in zsh
   system.userActivationScripts.zshrc = "touch .zshrc";
 
-  programs.zsh.shellInit = "neofetch";
+  programs.zsh.shellInit = ''
+    "source /home/sean/hosts/nixos/p10k-config/.p10k.zsh
+    "neofetch";
+  '';
 
   # Docker
   virtualisation.docker.rootless = {
