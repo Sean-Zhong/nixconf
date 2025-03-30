@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../../modules/home-manager/nix-index-database.nix ];
+  # imports = [ ../../modules/home-manager/nix-index-database.nix ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "sean";

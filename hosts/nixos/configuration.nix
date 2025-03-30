@@ -112,6 +112,9 @@
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
     pkgs.jetbrains.idea-ultimate
+    pkgs.sshfs
+    pkgs.cifs-utils
+    (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
   environment.shells = with pkgs; [ zsh ];
