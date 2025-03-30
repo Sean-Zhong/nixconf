@@ -24,8 +24,15 @@
       update = "sudo nixos-rebuild switch --flake /home/sean/nixconf/#nixos";
     };
     history.size = 10000;
+    history.ignoreAllDups = true;
+    history.path = "$HOME/.zsh_history";
+    zshrcExtra = ''neofetch '';
 
     plugins = [
+      {
+        name = "nix-shell";
+        src = pkgs.zsh-nix-shell;
+      }
       {
         name = "powerlevel10k";
         src = pkgs.zsh-powerlevel10k;
@@ -36,6 +43,24 @@
         src = ./p10k-config;
         file = "p10k.zsh";
       }
+      {
+        name = "zsh-autocomplete";
+        src = pkgs.fetchFromGitHub {
+          owner = "marlonrichert";
+          repo = "zsh-autocomplete";
+          rev = "23.07.13";
+          sha256 = "sha256-/6V6IHwB5p0GT1u5SAiUa20LjFDSrMo731jFBq/bnpw=";
+        };
+      }
+      {
+        name = "zsh-syntax-highlighting";
+        src = pkgs.fetchFromGitHub {
+          owner = "zsh-users";
+          repo = "zsh-syntax-highlighting";
+          rev = "0.8.0";
+          sha256 = "sha256-iJdWopZwHpSyYl5/FQXEW7gl/SrKaYDEtTH9cGP7iPo=";
+        };
+      }
     ];
 
     # plugins
@@ -45,7 +70,6 @@
         { name = "zsh-users/zsh-autosuggestions"; }
         { name = "plugins/git"; tags = [ from:oh-my-zsh ]; }
         { name = "junegunn/fzf"; }
-        { name = "zsh-users/zsh-syntax-highlighting"; tags = [ defer:2 ]; }
         { name = "mrjohannchang/zsh-interactive-cd"; }
       ];
     };

@@ -114,6 +114,7 @@
     pkgs.jetbrains.idea-ultimate
     pkgs.sshfs
     pkgs.cifs-utils
+    pkgs.wezterm
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
@@ -122,6 +123,9 @@
   fonts.packages = with pkgs; [
     meslo-lgs-nf
   ];
+
+  # Prevent the new user dialog in zsh
+  system.userActivationScripts.zshrc = "touch .zshrc";
 
   # Docker
   virtualisation.docker.rootless = {
