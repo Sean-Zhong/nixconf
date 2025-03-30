@@ -129,7 +129,7 @@
   system.userActivationScripts.zshrc = "touch .zshrc";
 
   programs.zsh.shellInit = ''
-    "source /home/sean/hosts/nixos/p10k-config/.p10k.zsh"
+    "source /home/sean/nixconf/hosts/nixos/p10k-config/.p10k.zsh"
     "neofetch";
   '';
 
