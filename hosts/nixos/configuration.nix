@@ -116,7 +116,7 @@
 
   environment.shells = with pkgs; [ zsh ];
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     meslo-lgs-nf
   ];
 

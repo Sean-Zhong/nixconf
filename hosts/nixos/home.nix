@@ -78,6 +78,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    nix-index-database
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
