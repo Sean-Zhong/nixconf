@@ -116,6 +116,7 @@
     pkgs.cifs-utils
     pkgs.wezterm
     pkgs.neofetch
+    pkgs.keepassxc
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
