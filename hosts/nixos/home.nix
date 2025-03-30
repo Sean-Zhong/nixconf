@@ -42,15 +42,15 @@
         src = ./p10k-config;
         file = "p10k.zsh";
       }
-      {
-        name = "zsh-autocomplete";
-        src = pkgs.fetchFromGitHub {
-          owner = "marlonrichert";
-          repo = "zsh-autocomplete";
-          rev = "23.07.13";
-          sha256 = "sha256-/6V6IHwB5p0GT1u5SAiUa20LjFDSrMo731jFBq/bnpw=";
-        };
-      }
+      # {
+      #   name = "zsh-autocomplete";
+      #   src = pkgs.fetchFromGitHub {
+      #     owner = "marlonrichert";
+      #     repo = "zsh-autocomplete";
+      #     rev = "23.07.13";
+      #     sha256 = "sha256-/6V6IHwB5p0GT1u5SAiUa20LjFDSrMo731jFBq/bnpw=";
+      #   };
+      # }
       {
         name = "zsh-syntax-highlighting";
         src = pkgs.fetchFromGitHub {
@@ -73,6 +73,14 @@
       ];
     };
   };
+
+  programs.fzf.fuzzyCompletion = {
+    enable = true;
+  }
+
+  programs.fzf.keybindings = {
+    enable = true;
+  }
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
