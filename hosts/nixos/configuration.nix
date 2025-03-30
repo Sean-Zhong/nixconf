@@ -117,6 +117,7 @@
     pkgs.wezterm
     pkgs.neofetch
     pkgs.keepassxc
+    pkgs.filezilla
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
