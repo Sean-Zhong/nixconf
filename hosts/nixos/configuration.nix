@@ -118,6 +118,7 @@
     pkgs.neofetch
     pkgs.keepassxc
     pkgs.filezilla
+    pkgs.gnomeExtensions.forge
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
