@@ -115,6 +115,7 @@
     pkgs.sshfs
     pkgs.cifs-utils
     pkgs.wezterm
+    pkgs.neofetch
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
@@ -126,6 +127,8 @@
 
   # Prevent the new user dialog in zsh
   system.userActivationScripts.zshrc = "touch .zshrc";
+
+  programs.zsh.shellInit = "neofetch";
 
   # Docker
   virtualisation.docker.rootless = {
