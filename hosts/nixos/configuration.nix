@@ -119,7 +119,7 @@
     pkgs.keepassxc
     pkgs.filezilla
     pkgs.gnomeExtensions.forge
-    pkgs.gnomeExtensions.no-title-bar
+    pkgs.gnomeExtensions.app-icons-taskbar
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
