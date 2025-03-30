@@ -133,6 +133,14 @@
     "neofetch";
   '';
 
+  programs.fzf.fuzzyCompletion = {
+    enable = true;
+  };
+
+  programs.fzf.keybindings = {
+    enable = true;
+  };
+
   # Docker
   virtualisation.docker.rootless = {
     enable = true;
