@@ -68,8 +68,6 @@
       plugins = [
         { name = "zsh-users/zsh-autosuggestions"; }
         { name = "plugins/git"; tags = [ from:oh-my-zsh ]; }
-        { name = "junegunn/fzf"; }
-        { name = "mrjohannchang/zsh-interactive-cd"; }
       ];
     };
   };

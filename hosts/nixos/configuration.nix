@@ -134,8 +134,8 @@
   # Prevent the new user dialog in zsh
   system.userActivationScripts.zshrc = "touch .zshrc";
 
+  # "source /home/sean/nixconf/hosts/nixos/p10k-config/p10k.zsh"
   programs.zsh.shellInit = ''
-    "source /home/sean/nixconf/hosts/nixos/p10k-config/p10k.zsh"
     "neofetch";
   '';
 
