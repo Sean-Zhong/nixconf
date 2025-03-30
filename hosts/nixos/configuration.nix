@@ -133,12 +133,10 @@
     "neofetch";
   '';
 
-  programs.fzf.fuzzyCompletion = {
+  programs.fzf = {
     enable = true;
-  };
-
-  programs.fzf.keybindings = {
-    enable = true;
+    fuzzyCompletion = true;
+    keybindings = true;
   };
 
   # Docker
