@@ -122,6 +122,7 @@
     pkgs.gnomeExtensions.app-icons-taskbar
     pkgs.youtube-music
     pkgs.vscode-fhs
+    pkgs.maven
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
