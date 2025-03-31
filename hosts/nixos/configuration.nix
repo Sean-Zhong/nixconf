@@ -123,6 +123,7 @@
     pkgs.youtube-music
     pkgs.vscode-fhs
     pkgs.maven
+    pkgs.temurin-jre-bin
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
