@@ -5,6 +5,7 @@
 }: {
   programs.wezterm = {
     enable = true;
+    package = inputs.wezterm.packages.${system}.default;
     enableZshIntegration = true;
     enableBashIntegration = true;
     extraConfig = ''
