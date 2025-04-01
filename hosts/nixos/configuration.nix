@@ -136,6 +136,7 @@
     pkgs.vscode-fhs
     pkgs.maven
     pkgs.temurin-jre-bin
+    pkgs.openssh
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
@@ -178,9 +179,6 @@
   # };
 
   # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
