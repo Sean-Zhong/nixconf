@@ -137,7 +137,6 @@
     pkgs.maven
     pkgs.temurin-jre-bin
     pkgs.openssh
-    pkgs.filezilla
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
