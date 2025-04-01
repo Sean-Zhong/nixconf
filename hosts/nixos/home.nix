@@ -85,7 +85,7 @@
     -- This is where you actually apply your config choices
 
     -- For example, changing the color scheme:
-    config.color_scheme = 'AdventureTime'
+    config.color_scheme = 'Sequoia Moonlight'
     config.font_size = 10.0
     config.font = wezterm.font 'JetBrainsMono Nerd Font'
     config.enable_wayland = false
