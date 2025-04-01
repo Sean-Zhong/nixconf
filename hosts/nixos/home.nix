@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../../modules/home-manager/wezterm.nix ];
+  #imports = [ ../../modules/home-manager/wezterm.nix ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "sean";
@@ -70,6 +70,29 @@
         { name = "plugins/git"; tags = [ from:oh-my-zsh ]; }
       ];
     };
+  };
+  programs.wezterm = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    extraConfig = ''
+    -- Pull in the wezterm API
+    local wezterm = require 'wezterm'
+
+    -- This will hold the configuration.
+    local config = wezterm.config_builder()
+
+    -- This is where you actually apply your config choices
+
+    -- For example, changing the color scheme:
+    config.color_scheme = 'AdventureTime'
+    config.font_size = 10.0
+    config.font = wezterm.font 'JetBrainsMono Nerd Font'
+    config.enable_wayland = false
+
+    -- and finally, return the configuration to wezterm
+    return config
+    '';
   };
   #xdg.configFile."wezterm/wezterm.lua".source = ./dotfiles/wezterm/wezterm.lua;
 
