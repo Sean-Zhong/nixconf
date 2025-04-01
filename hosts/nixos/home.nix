@@ -72,6 +72,13 @@
     };
   };
 
+  programs.wezterm = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+  };
+  #xdg.configFile."wezterm/wezterm.lua".source = ./dotfiles/wezterm/wezterm.lua;
+
   fonts.fontconfig.enable = true;
 
   # This value determines the Home Manager release that your configuration is

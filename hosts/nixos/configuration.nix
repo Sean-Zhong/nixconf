@@ -111,8 +111,8 @@
 
   programs.firefox.enable = true;
   programs.openvpn3.enable = true;
+  
   programs.zsh.enable = true;
-
   users.defaultUserShell = pkgs.zsh;
 
   # Allow unfree packages
@@ -126,7 +126,6 @@
     pkgs.jetbrains.idea-ultimate
     pkgs.sshfs
     pkgs.cifs-utils
-    pkgs.wezterm
     pkgs.neofetch
     pkgs.keepassxc
     pkgs.filezilla
