@@ -99,7 +99,7 @@
 
   programs.tmux = {
     enable = true;
-  };Z
+  };
   #xdg.configFile."wezterm/wezterm.lua".source = ./dotfiles/wezterm/wezterm.lua;
 
   fonts.fontconfig.enable = true;
