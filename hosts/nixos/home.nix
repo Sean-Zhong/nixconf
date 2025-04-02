@@ -71,6 +71,7 @@
       ];
     };
   };
+
   programs.wezterm = {
     enable = true;
     enableZshIntegration = true;
@@ -85,15 +86,20 @@
     -- This is where you actually apply your config choices
 
     -- For example, changing the color scheme:
-    config.color_scheme = 'Sequoia Moonlight'
+    config.color_scheme = 'Rapture'
     config.font_size = 10.0
     config.font = wezterm.font 'JetBrainsMono Nerd Font'
     config.enable_wayland = false
+    config.window_background_opacity = 0.7
 
     -- and finally, return the configuration to wezterm
     return config
     '';
   };
+
+  programs.tmux = {
+    enable = true;
+  };Z
   #xdg.configFile."wezterm/wezterm.lua".source = ./dotfiles/wezterm/wezterm.lua;
 
   fonts.fontconfig.enable = true;
