@@ -137,6 +137,7 @@
     pkgs.temurin-jre-bin
     pkgs.openssh
     pkgs.wezterm
+    pkgs.devpod
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
