@@ -138,6 +138,7 @@
     pkgs.openssh
     pkgs.wezterm
     pkgs.devpod
+    pkgs.jetbrains.gateway
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
