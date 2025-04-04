@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  # imports = [ ../../modules/home-manager/java.nix ];
+  imports = [ ../../modules/home-manager/wezterm.nix ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "sean";
@@ -42,15 +42,6 @@
         src = ./p10k-config;
         file = "p10k.zsh";
       }
-      # {
-      #   name = "zsh-autocomplete";
-      #   src = pkgs.fetchFromGitHub {
-      #     owner = "marlonrichert";
-      #     repo = "zsh-autocomplete";
-      #     rev = "23.07.13";
-      #     sha256 = "sha256-/6V6IHwB5p0GT1u5SAiUa20LjFDSrMo731jFBq/bnpw=";
-      #   };
-      # }
       {
         name = "zsh-syntax-highlighting";
         src = pkgs.fetchFromGitHub {
@@ -72,17 +63,16 @@
     };
   };
 
-  programs.wezterm = {
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-    extraConfig = builtins.readFile ../../dotfiles/wezterm/wezterm.lua;
-  };
+  # programs.wezterm = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  #   enableBashIntegration = true;
+  #   extraConfig = builtins.readFile ../../dotfiles/wezterm/wezterm.lua;
+  # };
 
   programs.tmux = {
     enable = true;
   };
-  #xdg.configFile."wezterm/wezterm.lua".source = ./dotfiles/wezterm/wezterm.lua;
 
   fonts.fontconfig.enable = true;
 
