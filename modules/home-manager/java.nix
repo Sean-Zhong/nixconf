@@ -1,15 +1,9 @@
 { pkgs, ... }:
-let
-    pkgsUnstable = import <nixpkgs-unstable> {
-        config = {
-            allowUnfree = true;
-        };
-    };
-in
+
 {
     home.file."jdks/temurin11".source = pkgs.temurin-bin-11;
     home.file."jdks/temurin17".source = pkgs.temurin-bin-17;
-    home.file."jdks/temurin21".source = pkgsUnstable.temurin-bin-21;
+    home.file."jdks/temurin21".source = pkgs.temurin-bin;
     home.file."jdks/graalvm-ce".source = pkgs.graalvm-ce;
     home.file."jdks/jetbrains".source = pkgs.jetbrains.jdk;
 
@@ -25,11 +19,9 @@ in
         maven
         gradle
         jdk17
-        pkgsUnstable.jetbrains.idea-ultimate
         graalvm-ce
         java-language-server
         jdt-language-server
     ];
 
-#    nixpkgs.config.allowUnfree = true;
 }
