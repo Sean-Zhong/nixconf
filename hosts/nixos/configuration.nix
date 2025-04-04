@@ -53,8 +53,8 @@
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "us, se";
-    variant = "";
+    layout = "se";
+    variant = "us";
   };
 
   # RDP
@@ -152,9 +152,6 @@
   system.userActivationScripts.zshrc = "touch .zshrc";
 
   # "source /home/sean/nixconf/hosts/nixos/p10k-config/p10k.zsh"
-  programs.zsh.shellInit = ''
-    "neofetch";
-  '';
 
   programs.fzf = {
     fuzzyCompletion = true;
@@ -171,6 +168,8 @@
     "d /mnt/team_files 0755 sean users"
     "d /mnt/dolph_files 0755 sean users"
   ];
+
+  nix.settings.auto-optimise-store = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
