@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
     home.file."jdks/temurin11".source = pkgs.temurin-bin-11;
@@ -23,5 +23,4 @@
         java-language-server
         jdt-language-server
     ];
-
 }

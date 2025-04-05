@@ -8,7 +8,7 @@
     syntaxHighlighting.enable = true;
 
     shellAliases = {
-      ll = "ls -l";
+      ll = "ls -la";
       update = "sudo nixos-rebuild switch --flake /home/sean/nixconf/#nixos";
     };
     history.size = 10000;

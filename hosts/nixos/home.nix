@@ -4,6 +4,7 @@
   imports = [ 
     ../../modules/home-manager/wezterm.nix
     ../../modules/home-manager/zsh.nix
+    # ../../modules/home-manager/java.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -98,7 +99,6 @@
   #  /etc/profiles/per-user/sean/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
     JAVA_11_HOME = "$HOME/jdks/temurin11";
     JAVA_17_HOME = "$HOME/jdks/temurin17";
     JAVA_21_HOME = "$HOME/jdks/temurin21";
