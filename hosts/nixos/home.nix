@@ -1,9 +1,18 @@
-{ config, pkgs, ... }:
-
+{ config, pkgs, inputs, ... }:
+  let
+    startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
+      ${pkgs.waybar}/bin/waybar &
+      ${pkgs.swww}/bin/swww init &
+  
+      sleep 1
+    '';
+  in
+  # ${pkgs.swww}/bin/swww img ${../../resources/images/wallpaper.jpg} &
 {
   imports = [ 
     ../../modules/home-manager/wezterm.nix
     ../../modules/home-manager/zsh.nix
+    # ../../modules/home-manager/hyprland.nix
     # ../../modules/home-manager/java.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
@@ -104,6 +113,15 @@
     JAVA_21_HOME = "$HOME/jdks/temurin21";
     GRAAL_HOME = "$HOME/jdks/graalvm-ce";
     JETBRAINS_CLIENT_JDK = "$HOME/jdks/jetbrains";
+  };
+
+  # Hyprland
+  wayland.windowManager.hyprland = {
+    enable = true;
+
+    settings = {
+      exec-once = ''${startupScript}/bin/start'';
+    };
   };
 
   # Let Home Manager install and manage itself.

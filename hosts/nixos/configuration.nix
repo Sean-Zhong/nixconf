@@ -72,6 +72,9 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  programs.hyprland.enable = true;
+  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+  
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -111,7 +114,6 @@
 
   programs.firefox.enable = true;
   programs.openvpn3.enable = true;
-  
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
