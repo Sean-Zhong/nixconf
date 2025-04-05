@@ -8,7 +8,7 @@ local config = wezterm.config_builder()
 
 -- For example, changing the color scheme:
 config.color_scheme = 'Rapture'
-config.font_size = 10.0
+config.font_size = 20.0
 config.font = wezterm.font 'JetBrainsMono Nerd Font'
 config.enable_wayland = false
 config.window_background_opacity = 0.7
