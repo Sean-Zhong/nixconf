@@ -3,6 +3,8 @@
 {
   environment.systemPackages = with pkgs; [
     pkgs.discord
+    pkgs.lutris
+    pkgs.runelite
   ];
 
   programs.steam = {

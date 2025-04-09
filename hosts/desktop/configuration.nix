@@ -73,6 +73,10 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  services.flatpak.enable = true;
+  hardware.keyboard.qmk.enable = true;
+  hardware.graphics.enable = true;
+
 #  programs.hyprland.enable = true;
 #  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   
@@ -142,7 +146,9 @@
     pkgs.wezterm
     pkgs.devpod
     pkgs.jetbrains.gateway
+    via
   ];
+  services.udev.packages = [ pkgs.via ];
 
   environment.shells = with pkgs; [ zsh ];
 
@@ -151,7 +157,7 @@
   ];
 
   # Prevent the new user dialog in zsh
-  system.userActivationScripts.zshrc = "touch .zshrc";
+  #system.userActivationScripts.zshrc = "touch .zshrc";
 
   # "source /home/sean/nixconf/hosts/nixos/p10k-config/p10k.zsh"
 
