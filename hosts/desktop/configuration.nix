@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/nixos/desktop_specific_programs.nix
+      ../../modules/nixos/youtube-tui.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -75,7 +76,10 @@
 
   services.flatpak.enable = true;
   hardware.keyboard.qmk.enable = true;
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
 #  programs.hyprland.enable = true;
 #  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
@@ -146,6 +150,7 @@
     pkgs.wezterm
     pkgs.devpod
     pkgs.jetbrains.gateway
+    pkgs.go
     via
   ];
   services.udev.packages = [ pkgs.via ];
