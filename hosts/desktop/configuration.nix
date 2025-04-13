@@ -152,6 +152,7 @@
     pkgs.jetbrains.gateway
     pkgs.go
     via
+    pkgs.chromium
   ];
   services.udev.packages = [ pkgs.via ];
 

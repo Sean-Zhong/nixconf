@@ -3,7 +3,6 @@
 {
   environment.systemPackages = with pkgs; [
     pkgs.python314
-    pkgs.python312Packages.ytmusicapi
-    pkgs.ytermusic
+    pkgs.mpv-unwrapped
   ];
 }
