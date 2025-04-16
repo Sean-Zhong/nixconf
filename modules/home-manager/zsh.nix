@@ -41,7 +41,7 @@
      }
     ];
 
-    plugins
+    # plugins
     zplug = {
      enable = true;
      plugins = [
