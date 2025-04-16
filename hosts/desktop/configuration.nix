@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       ../../modules/nixos/desktop_specific_programs.nix
       ../../modules/nixos/youtube-tui.nix
+      ../../modules/nixos/hyprland.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -80,9 +81,6 @@
     enable = true;
     enable32Bit = true;
   };
-
-#  programs.hyprland.enable = true;
-#  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
