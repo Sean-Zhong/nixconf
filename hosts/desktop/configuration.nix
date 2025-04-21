@@ -82,6 +82,20 @@
     enable32Bit = true;
   };
 
+  #turn off mouse accel
+  services.libinput = {
+    enable = true;
+    # disabling mouse acceleration
+    mouse = {
+      accelProfile = "flat";
+    };
+
+    # disabling touchpad acceleration
+    touchpad = {
+      accelProfile = "flat";
+    };
+  }; 
+
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
 
