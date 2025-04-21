@@ -152,6 +152,7 @@
     via
     pkgs.chromium
     pkgs.solaar
+    pkgs.remmina
   ];
   services.udev.packages = [ pkgs.via ];
 
