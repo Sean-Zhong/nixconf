@@ -151,6 +151,7 @@
     pkgs.go
     via
     pkgs.chromium
+    pkgs.solaar
   ];
   services.udev.packages = [ pkgs.via ];
 
