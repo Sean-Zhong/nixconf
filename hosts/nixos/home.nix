@@ -115,10 +115,8 @@
     JETBRAINS_CLIENT_JDK = "$HOME/jdks/jetbrains";
   };
 
-  # Hyprland
-  wayland.windowManager.hyprland = {
-    enable = true;
-
+  # Hyprland settings
+  wayland.windowManager.hyprland.settings = {
     #settings = builtins.readFile ../../dotfiles/hyprland/hyprland.conf;
   };
 
