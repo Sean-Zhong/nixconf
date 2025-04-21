@@ -116,8 +116,8 @@
   };
 
   # Hyprland settings
-  wayland.windowManager.hyprland.settings = {
-    settings = builtins.readFile ../../dotfiles/hyprland/hyprland.conf;
+  wayland.windowManager.hyprland = {
+    extraConfig = builtins.readFile ../../dotfiles/hyprland/hyprland.conf;
   };
 
   # Let Home Manager install and manage itself.
