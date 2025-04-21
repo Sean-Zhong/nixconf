@@ -119,9 +119,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
 
-    settings = {
-      exec-once = ''${startupScript}/bin/start'';
-    };
+    settings = builtins.readFile ../../dotfiles/hyprland/hyprland.conf;
   };
 
   # Let Home Manager install and manage itself.
