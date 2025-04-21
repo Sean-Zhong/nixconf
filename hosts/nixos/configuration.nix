@@ -72,9 +72,6 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
-  programs.hyprland.enable = true;
-  programs.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
