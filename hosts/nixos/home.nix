@@ -89,6 +89,7 @@
     "jdks/temurin21".source = pkgs.temurin-bin;
     "jdks/graalvm-ce".source = pkgs.graalvm-ce;
     "jdks/jetbrains".source = pkgs.jetbrains.jdk;
+    ".config/hypr/hyprland.conf".source = ../../dotfiles/hyprland/hyprland.conf;
   };
 
   # Home Manager can also manage your environment variables through
@@ -116,9 +117,9 @@
   };
 
   # Hyprland settings
-  wayland.windowManager.hyprland = {
-    extraConfig = builtins.readFile ../../dotfiles/hyprland/hyprland.conf;
-  };
+  #wayland.windowManager.hyprland = {
+  #  extraConfig = builtins.readFile ../../dotfiles/hyprland/hyprland.conf;
+  #};
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
