@@ -139,6 +139,7 @@
     pkgs.wezterm
     pkgs.devpod
     pkgs.jetbrains.gateway
+    pkgs.solaar
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
