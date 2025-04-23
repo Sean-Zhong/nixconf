@@ -2,11 +2,12 @@
 
 {
   environment.systemPackages = with pkgs; [
-    pkgs.waybar
-    pkgs.dunst
-    pkgs.networkmanagerapplet
+    waybar
+    dunst
+    networkmanagerapplet
     libnotify
     swww
+    hyprpaper
     wofi
   ];
 
