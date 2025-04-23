@@ -3,12 +3,14 @@
 {
   environment.systemPackages = with pkgs; [
     waybar
-    dunst
+    swaynotificationcenter
     networkmanagerapplet
     libnotify
     swww
     hyprpaper
     wofi
+    hyprshot
+    hyprlock
   ];
 
   programs.hyprland = {

@@ -139,8 +139,9 @@
     "jdks/temurin21".source = pkgs.temurin-bin;
     "jdks/graalvm-ce".source = pkgs.graalvm-ce;
     "jdks/jetbrains".source = pkgs.jetbrains.jdk;
-    ".config/hypr/hyprland.conf".source = ../../dotfiles/hyprland/hyprland.conf;
+    ".config/hypr".source = ../../dotfiles/hypr;
     ".config/waybar".source = ../../dotfiles/waybar;
+    "resources/images".source = ../../resources/images;
   };
 
   # Home Manager can also manage your environment variables through
