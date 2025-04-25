@@ -11,6 +11,7 @@
     wofi
     hyprshot
     hyprlock
+    hypridle
   ];
 
   programs.hyprland = {
