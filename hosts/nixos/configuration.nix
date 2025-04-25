@@ -51,6 +51,17 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.defaultSession = "hyprland-uwsm";
+
+  # xdg portal
+  services.dbus.enable = true;
+  xdg = {
+    autostart.enable = true;
+    portal = {
+      enable = true;
+      wlr.enable = true;
+    };
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {

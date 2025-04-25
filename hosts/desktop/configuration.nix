@@ -53,6 +53,17 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.defaultSession = "hyprland-uwsm";
+
+  # xdg portal
+  services.dbus.enable = true;
+  xdg = {
+    autostart.enable = true;
+    portal = {
+      enable = true;
+      wlr.enable = true;
+    };
+  };
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -155,7 +166,6 @@
     description = "Sean Zhong";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    #  thunderbird
     git
     ];
   };
@@ -209,11 +219,6 @@
   fonts.packages = with pkgs; [
     meslo-lgs-nf
   ];
-
-  # Prevent the new user dialog in zsh
-  #system.userActivationScripts.zshrc = "touch .zshrc";
-
-  # "source /home/sean/nixconf/hosts/nixos/p10k-config/p10k.zsh"
 
   programs.fzf = {
     fuzzyCompletion = true;
