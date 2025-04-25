@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/nixos/hyprland.nix
+      ../../modules/nixos/gc.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -109,7 +110,6 @@
     description = "Sean Zhong";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    #  thunderbird
     git
     ];
   };
