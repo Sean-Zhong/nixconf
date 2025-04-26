@@ -12,6 +12,7 @@
     hyprshot
     hyprlock
     hypridle
+    hyprcursor
   ];
 
   programs.hyprland = {

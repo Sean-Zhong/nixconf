@@ -12,8 +12,8 @@
   imports = [ 
     ../../modules/home-manager/wezterm.nix
     # ../../modules/home-manager/zsh.nix
-    # ../../modules/home-manager/hyprland.nix
     # ../../modules/home-manager/java.nix
+    ../../modules/home-manager/cursor.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.

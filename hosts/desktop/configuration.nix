@@ -11,6 +11,7 @@
       ../../modules/nixos/desktop_specific_programs.nix
       ../../modules/nixos/youtube-tui.nix
       ../../modules/nixos/hyprland.nix
+      ../../modules/nixos/gc.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -46,9 +47,6 @@
     LC_TELEPHONE = "sv_SE.UTF-8";
     LC_TIME = "sv_SE.UTF-8";
   };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
