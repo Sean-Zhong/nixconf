@@ -23,6 +23,10 @@
     color: @foreground-inactive;
 }
 
+#window {
+    padding-right: 1em;
+}
+
 #memory,
 #temperature {
     padding-right: 1em;
@@ -45,6 +49,7 @@
 }
 #tray {
     padding-left: 1.5em;
+    padding-right: 1.5em;
 }
 #custom-exit {
     padding-right: 1em;
