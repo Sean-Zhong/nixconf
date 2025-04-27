@@ -13,6 +13,8 @@
     hyprlock
     hypridle
     hyprcursor
+    wlogout
+    jq
   ];
 
   programs.hyprland = {

@@ -142,6 +142,7 @@
     ".config/hypr".source = ../../dotfiles/hypr;
     ".config/waybar".source = ../../dotfiles/waybar;
     "resources/images".source = ../../resources/images;
+    ".config/scripts".source = ../../dotfiles/scripts;
   };
 
   # Home Manager can also manage your environment variables through

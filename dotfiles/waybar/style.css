@@ -25,15 +25,27 @@
 
 #memory,
 #temperature {
-    padding-left: 1em
+    padding-right: 1em;
 }
 
-#wireplumber,
-#battery,
-#backlight,
-#language,
-#network,
-#bluetooth,
+#wireplumber {
+    padding-right: 1em;
+}
+#battery {
+    padding-right: 1em;
+}
+#backlight {
+    padding-right: 1em;
+}
+#network {
+    padding-right: 1em;
+}
+#bluetooth {
+    padding-right: 1em;
+}
 #tray {
-    padding-right: 1em 
+    padding-left: 1.5em;
+}
+#custom-exit {
+    padding-right: 1em;
 }
