@@ -14,7 +14,7 @@
     hypridle
     hyprcursor
     wlogout
-    jq
+    blueman
   ];
 
   programs.hyprland = {
