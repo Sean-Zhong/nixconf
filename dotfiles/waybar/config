@@ -20,7 +20,7 @@
             "6": "󰍹",
             "7": "󰍹"
         },
-        "on-click": "activate"
+        "on-click": "activate",
     },
 
     "hyprland/window": {
