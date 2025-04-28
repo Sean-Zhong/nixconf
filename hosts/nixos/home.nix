@@ -1,13 +1,5 @@
 { config, pkgs, inputs, ... }:
-  let
-    startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
-      ${pkgs.waybar}/bin/waybar &
-      ${pkgs.swww}/bin/swww init &
-  
-      sleep 1
-    '';
-  in
-  # ${pkgs.swww}/bin/swww img ${../../resources/images/wallpaper.jpg} &
+
 {
   imports = [ 
     ../../modules/home-manager/wezterm.nix
