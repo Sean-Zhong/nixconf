@@ -10,7 +10,7 @@ local config = wezterm.config_builder()
 config.color_scheme = 'Rapture'
 config.font_size = 16.0
 config.font = wezterm.font 'JetBrainsMono Nerd Font'
-config.enable_wayland = false
+config.enable_wayland = true
 config.window_background_opacity = 0.7
 
 -- tmux
@@ -125,6 +125,8 @@ wezterm.on("update-right-status", function(window, _)
         { Text = SOLID_LEFT_ARROW }
     })
 end)
+
+config.mux_enable_ssh_agent = false
 
 -- and finally, return the configuration to wezterm
 return config
