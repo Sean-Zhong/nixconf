@@ -13,7 +13,7 @@
         "format": "{icon}",
         "format-icons": {
             "1": "",
-            "2": "\ue7b5",
+            "2": "",
             "3": "",
             "4": "\udb82\udf3d",
             "5": "\udb82\udf3e",
@@ -39,7 +39,8 @@
     },
 
     "clock": {
-        "format": "{:%d.%m.%Y | %H:%M}"
+        "format": " {0:%R}  {0:%Y-%m-%d}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
     },
 
     "wireplumber": {

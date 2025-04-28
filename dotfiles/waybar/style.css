@@ -31,8 +31,8 @@
 }
 
 #workspaces button {
-    padding-left: 8pt;
-    padding-right: 8pt;
+    padding-left: 10pt;
+    padding-right: 10pt;
     background: @background_color_1;
     color: @foreground;
 }
