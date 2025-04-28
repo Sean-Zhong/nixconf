@@ -1,7 +1,7 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 24,
+    "height": 36,
     "spacing": 5,
 
     "modules-left": ["hyprland/workspaces", "tray", "hyprland/window"],
@@ -9,38 +9,32 @@
     "modules-right": ["memory", "temperature", "wireplumber", "battery", "backlight", "network", "bluetooth", "custom/exit"],
 
     "hyprland/workspaces": {
-        "format": "<span size='larger'>{icon}</span>",
-        "on-click": "activate",
+        "disable-scroll": true,
+        "format": "{icon}",
         "format-icons": {
-            "active": "\uf444",
-            "default": "\uf4c3"
+            "1": "",
+            "2": "\ue7b5",
+            "3": "",
+            "4": "\udb82\udf3d",
+            "5": "\udb82\udf3e",
+            "6": "󰍹",
+            "7": "󰍹"
         },
-        "icon-size": 10,
-        "sort-by-number": true,
-        "persistent-workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": [],
-            "6": [],
-            "7": [],
-        }
+        "on-click": "activate"
     },
 
     "hyprland/window": {
         "format": "{}",
         "rewrite": {
-            "Mozilla Firefox": " firefox",
-            "(.*) — Mozilla Firefox": " $1",
+            "Mozilla Firefox": "\ue745 firefox",
+            "(.*) — Mozilla Firefox": "\ue745 $1",
             "(.*) - Chromium": " $1",
             "(vim|nvim).*": " $0",
-            "docker.*": "󰡨 $0 $1",
+            "docker.*": "\ue7b0 $0 $1",
             "(lf|lfcd)": "󰙅 $0",
             "(top|htop|bashtop)": "󱎴 $0",
             "(bash|zsh)": " $0",
-            "Alacritty": " alacritty",
-            "intellij - (.*)": " $1"
+            "intellij - (.*)": "\ue7b5 $1"
         }
     },
 
