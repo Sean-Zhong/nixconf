@@ -82,6 +82,7 @@
     "jdks/graalvm-ce".source = pkgs.graalvm-ce;
     "jdks/jetbrains".source = pkgs.jetbrains.jdk;
     ".config/hypr".source = ../../dotfiles/hypr;
+    ".config/hyprmodules".source = ./hyprmodules;
     ".config/waybar".source = ../../dotfiles/waybar;
     "resources/images".source = ../../resources/images;
   };

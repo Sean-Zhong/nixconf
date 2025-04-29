@@ -132,6 +132,7 @@
     "jdks/graalvm-ce".source = pkgs.graalvm-ce;
     "jdks/jetbrains".source = pkgs.jetbrains.jdk;
     ".config/hypr".source = ../../dotfiles/hypr;
+    ".config/hyprmodules".source = ./hyprmodules;
     ".config/waybar".source = ../../dotfiles/waybar;
     "resources/images".source = ../../resources/images;
   };
@@ -159,15 +160,6 @@
     GRAAL_HOME = "$HOME/jdks/graalvm-ce";
     JETBRAINS_CLIENT_JDK = "$HOME/jdks/jetbrains";
   };
-
-  # Hyprland
-  #wayland.windowManager.hyprland = {
-  #  enable = true;
-
-  #  settings = {
-  #    exec-once = ''${startupScript}/bin/start'';
-  #  };
-  #};
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
