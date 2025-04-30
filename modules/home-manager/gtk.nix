@@ -25,6 +25,16 @@
 
     gtk = {
         enable = true;
+        theme = {
+	        package = pkgs.orchis-theme;
+	        name = "Orchis-Grey-Dark";
+	    };
+
+	    iconTheme = {
+	        package = pkgs.tela-icon-theme;
+	        name = "Tela-blue-dark";
+	    };
+        
         cursorTheme = {
         name = "Bibata-Modern-Ice";
         size = 16;

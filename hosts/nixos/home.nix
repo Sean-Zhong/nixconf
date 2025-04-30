@@ -5,7 +5,7 @@
     ../../modules/home-manager/wezterm.nix
     ../../modules/home-manager/zsh.nix
     # ../../modules/home-manager/java.nix
-    ../../modules/home-manager/cursor.nix
+    ../../modules/home-manager/gtk.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
