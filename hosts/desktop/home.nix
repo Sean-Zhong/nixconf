@@ -135,6 +135,7 @@
     ".config/hyprmodules".source = ./hyprmodules;
     ".config/waybar".source = ../../dotfiles/waybar;
     "resources/images".source = ../../resources/images;
+    ".config/wofi".source = ../../dotfiles/wofi;
   };
 
   # Home Manager can also manage your environment variables through
