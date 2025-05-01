@@ -6,6 +6,7 @@
     # ../../modules/home-manager/zsh.nix
     # ../../modules/home-manager/java.nix
     ../../modules/home-manager/gtk.nix
+    ../../modules/home-manager/neovim.nix
     ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
