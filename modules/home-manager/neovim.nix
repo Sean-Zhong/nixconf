@@ -14,5 +14,6 @@
   programs.neovim.plugins = with pkgs.vimPlugins; [
     catppuccin-nvim
     telescope-nvim
+    nvim-treesitter.withAllGrammars
   ];
 }
