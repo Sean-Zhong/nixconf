@@ -205,6 +205,7 @@
     pkgs.chromium
     pkgs.solaar
     pkgs.remmina
+    ripgrep
   ];
   services.udev.packages = [ pkgs.via ];
 
