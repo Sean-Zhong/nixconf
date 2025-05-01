@@ -1,0 +1,59 @@
+@define-color background-darker rgba(30, 31, 41, 230);
+@define-color background #2E3440;
+@define-color selection #FFFACD;
+@define-color foreground #D8DEE9;
+@define-color comment #4C566A;
+@define-color blue #5e81ac;
+@define-color cyan #88C0D0;
+@define-color green #A3BE8C;
+@define-color pink #B48EAD;
+@define-color purple #81A1C1;
+@define-color red #BF616A;
+@define-color yellow #EBCB8B;
+@define-color white #FFFFFF;
+
+window {
+  margin: 0px;
+  border: 1px solid @white;
+  background-color: @background;
+  font-family: JetBrainsMono Nerd Font;
+  font-size: small;
+}
+
+#input {
+  margin: 5px;
+  border: none;
+  color: @foreground;
+  background-color: background-darker;
+}
+
+#input:focus {
+  box-shadow: 0 0 0 1px @cyan;
+}
+
+#inner-box {
+  margin: 5px;
+  border: none;
+  background-color: @background;
+}
+
+#outer-box {
+  margin: 5px;
+  border: none;
+  background-color: @background;
+}
+
+#scroll {
+  margin: 0px;
+  border: none;
+}
+
+#text {
+  margin: 5px;
+  border: none;
+  color: @foreground;
+} 
+
+#entry:selected {
+  background-color: @comment;
+}

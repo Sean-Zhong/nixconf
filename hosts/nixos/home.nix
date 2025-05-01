@@ -112,11 +112,6 @@
     JETBRAINS_CLIENT_JDK = "$HOME/jdks/jetbrains";
   };
 
-  # Hyprland settings
-  #wayland.windowManager.hyprland = {
-  #  extraConfig = builtins.readFile ../../dotfiles/hyprland/hyprland.conf;
-  #};
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }

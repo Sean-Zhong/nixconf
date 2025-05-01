@@ -1,7 +1,7 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 36,
+    "height": 40,
     "spacing": 5,
 
     "modules-left": ["hyprland/workspaces", "tray", "hyprland/window"],
@@ -96,7 +96,7 @@
     },
 
     "tray": {
-        "icon-size": 16,
+        "icon-size": 22,
         "spacing": 16,
     }
 }
