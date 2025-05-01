@@ -15,5 +15,6 @@
     catppuccin-nvim
     telescope-nvim
     nvim-treesitter.withAllGrammars
+    neo-tree-nvim
   ];
 }
