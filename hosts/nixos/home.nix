@@ -111,6 +111,7 @@
     JAVA_21_HOME = "$HOME/jdks/temurin21";
     GRAAL_HOME = "$HOME/jdks/graalvm-ce";
     JETBRAINS_CLIENT_JDK = "$HOME/jdks/jetbrains";
+    SSH_AUTH_SOCK= "/run/user/1000/keyring/ssh";
   };
 
   # Let Home Manager install and manage itself.

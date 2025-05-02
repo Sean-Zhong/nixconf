@@ -8,6 +8,7 @@
       ../../modules/nixos/youtube-tui.nix
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/gc.nix
+      ../../modules/nixos/ssh.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -227,8 +228,6 @@
   };
 
   nix.settings.auto-optimise-store = true;
-
-  programs.ssh.startAgent = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

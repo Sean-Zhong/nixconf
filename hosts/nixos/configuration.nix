@@ -6,6 +6,7 @@
       ./hardware-configuration.nix
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/gc.nix
+      ../../modules/nixos/ssh.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -177,9 +178,6 @@
   ];
 
   nix.settings.auto-optimise-store = true;
-
-  services.gnome.gnome-keyring.enable = true;
-  programs.ssh.startAgent = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
