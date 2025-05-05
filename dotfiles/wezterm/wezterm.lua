@@ -88,20 +88,21 @@ config.keys = {
     },
 }
 
-for i = 0, 9 do
-    -- leader + number to activate that tab
+-- Update the keybindings to use 1-indexed tabs
+for i = 1, 9 do
+    -- leader + number to activate that tab (1-indexed)
     table.insert(config.keys, {
         key = tostring(i),
         mods = "LEADER",
-        action = wezterm.action.ActivateTab(i),
+        action = wezterm.action.ActivateTab(i - 1),  -- We subtract 1 here because tabs are 0-indexed internally
     })
 end
 
--- tab bar
+-- tab bar settings
 config.hide_tab_bar_if_only_one_tab = false
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
-config.tab_and_split_indices_are_zero_based = true
+config.tab_and_split_indices_are_zero_based = false  -- Set this to false to make tab indices 1-indexed
 
 -- tmux status
 wezterm.on("update-right-status", function(window, _)
@@ -114,7 +115,7 @@ wezterm.on("update-right-status", function(window, _)
         SOLID_LEFT_ARROW = utf8.char(0xe0b2)
     end
 
-    if window:active_tab():tab_id() ~= 0 then
+    if window:active_tab():tab_id() ~= 1 then
         ARROW_FOREGROUND = { Foreground = { Color = "#333333" } }
     end -- arrow color based on if tab is first pane
 
