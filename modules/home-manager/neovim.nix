@@ -16,5 +16,6 @@
     telescope-nvim
     nvim-treesitter.withAllGrammars
     neo-tree-nvim
+    lualine-nvim
   ];
 }
