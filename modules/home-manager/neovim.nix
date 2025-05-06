@@ -22,5 +22,9 @@
 
   home.packages = with pkgs; [
     lua-language-server
+    nixd
+    bash-language-server
+    typescript-language-server
+    yaml-language-server
   ];
 }
