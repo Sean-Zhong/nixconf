@@ -15,9 +15,12 @@
     catppuccin-nvim
     telescope-nvim
     nvim-treesitter.withAllGrammars
+    plenary-nvim
     neo-tree-nvim
+    nvim-web-devicons
     lualine-nvim
     nvim-lspconfig
+    nui-nvim
   ];
 
   home.packages = with pkgs; [
