@@ -18,4 +18,8 @@
     neo-tree-nvim
     lualine-nvim
   ];
+
+  home.packages with pkgs = [
+    lua-language-server
+  ];
 }
