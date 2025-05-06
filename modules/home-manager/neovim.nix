@@ -17,6 +17,7 @@
     nvim-treesitter.withAllGrammars
     neo-tree-nvim
     lualine-nvim
+    nvim-lspconfig
   ];
 
   home.packages = with pkgs; [
