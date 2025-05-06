@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  programs.neovim = {
+    programs.neovim = {
     enable = true;
     extraConfig = ''
     '';
@@ -19,7 +19,7 @@
     lualine-nvim
   ];
 
-  home.packages with pkgs = [
+  home.packages = with pkgs; [
     lua-language-server
   ];
 }
