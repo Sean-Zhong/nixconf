@@ -147,6 +147,7 @@
     pkgs.jetbrains.gateway
     pkgs.solaar
     ripgrep
+    binutils
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 

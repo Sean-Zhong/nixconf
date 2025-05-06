@@ -207,6 +207,7 @@
     pkgs.solaar
     pkgs.remmina
     ripgrep
+    binutils
   ];
   services.udev.packages = [ pkgs.via ];
 
