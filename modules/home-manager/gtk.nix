@@ -34,7 +34,7 @@
 	        package = pkgs.tela-icon-theme;
 	        name = "Tela-blue-dark";
 	    };
-        
+
         cursorTheme = {
         name = "Bibata-Modern-Ice";
         size = 16;
