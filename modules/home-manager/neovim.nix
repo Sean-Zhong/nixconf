@@ -21,6 +21,11 @@
     lualine-nvim
     nvim-lspconfig
     nui-nvim
+    nvim-cmp
+    luasnip
+    cmp_luasnip
+    friendly-snippets
+    cmp-nvim-lsp
   ];
 
   home.packages = with pkgs; [
