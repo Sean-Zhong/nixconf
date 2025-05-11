@@ -148,6 +148,7 @@
     pkgs.solaar
     ripgrep
     binutils
+    via
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
