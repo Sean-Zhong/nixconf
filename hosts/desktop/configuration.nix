@@ -208,6 +208,7 @@
     pkgs.remmina
     ripgrep
     binutils
+    bambu-studio
   ];
   services.udev.packages = [ pkgs.via ];
 
