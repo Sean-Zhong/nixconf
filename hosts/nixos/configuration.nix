@@ -7,6 +7,7 @@
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/gc.nix
       ../../modules/nixos/ssh.nix
+      ../../modules/nixos/keyboard.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -148,11 +149,8 @@
     pkgs.solaar
     ripgrep
     binutils
-    via
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
-
-  environment.shells = with pkgs; [ zsh ];
 
   fonts.packages = with pkgs; [
     meslo-lgs-nf

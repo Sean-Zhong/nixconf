@@ -9,6 +9,7 @@
       ../../modules/nixos/hyprland.nix
       ../../modules/nixos/gc.nix
       ../../modules/nixos/ssh.nix
+      ../../modules/nixos/keyboard.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -202,7 +203,6 @@
     pkgs.devpod
     pkgs.jetbrains.gateway
     pkgs.go
-    via
     pkgs.chromium
     pkgs.solaar
     pkgs.remmina
@@ -210,7 +210,6 @@
     binutils
     bambu-studio
   ];
-  services.udev.packages = [ pkgs.via ];
 
   environment.shells = with pkgs; [ zsh ];
 
