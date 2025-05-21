@@ -177,6 +177,12 @@
     "d /mnt/dolph_files 0755 sean users"
   ];
 
+  # antivirus
+  services.clamav = {
+    daemon.enable = true;
+    updater.enable = true;
+  };
+
   nix.settings.auto-optimise-store = true;
 
   # Some programs need SUID wrappers, can be configured further or are

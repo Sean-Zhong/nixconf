@@ -7,6 +7,7 @@
     ../../modules/home-manager/java.nix
     ../../modules/home-manager/gtk.nix
     ../../modules/home-manager/neovim.nix
+    ../../modules/home-manager/antivirus.nix
     ];
 
   home.username = "sean";
@@ -43,7 +44,8 @@
     ".config/waybar".source = ../../dotfiles/waybar;
     "resources/images".source = ../../resources/images;
     ".config/wofi".source = ../../dotfiles/wofi;
-  };
+    "scripts".source = ../../dotfiles/scripts; 
+    };
 
   home.sessionVariables = {
     SSH_AUTH_SOCK= "/run/user/1000/keyring/ssh";
