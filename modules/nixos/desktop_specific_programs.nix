@@ -2,9 +2,11 @@
 
 {
   environment.systemPackages = with pkgs; [
-    pkgs.discord
-    pkgs.lutris
-    pkgs.runelite
+    discord
+    lutris
+    runelite
+    piper
+    libratbag
   ];
 
   programs.steam = {
@@ -13,4 +15,6 @@
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
+
+  services.ratbagd.enable = true;
 }
