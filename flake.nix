@@ -2,7 +2,8 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     home-manager = {
@@ -11,9 +12,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
-    # use "nixos", or your hostname as the name of the configuration
-    # it's a better practice than "default" shown in the video
+  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs: {
+    pkgsUnstable = import nixpkgs-unstable {
+        config = {
+          allowUnfree = true;
+        };
+      };
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
