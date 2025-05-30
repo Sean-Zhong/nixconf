@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, outputs, ... }:
 
 {
   imports = [ 
@@ -8,10 +8,11 @@
     ../../modules/home-manager/gtk.nix
     ../../modules/home-manager/neovim.nix
     ../../modules/home-manager/antivirus.nix
+    ../../modules/home-manager/programs.nix
     ];
 
   home.username = "sean";
-  home.homeDirectory = "/home/sean";
+  home.homeDirectory = "/home/sean"; 
 
   programs.git = {
       enable = true;

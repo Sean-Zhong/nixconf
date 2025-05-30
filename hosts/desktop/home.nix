@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, outputs, ... }:
 
 {
   imports = [ 
@@ -7,6 +7,7 @@
     ../../modules/home-manager/java.nix
     ../../modules/home-manager/gtk.nix
     ../../modules/home-manager/neovim.nix
+    ../../modules/home-manager/programs.nix
     ];
 
   home.username = "sean";
