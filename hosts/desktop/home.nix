@@ -7,22 +7,11 @@
     ../../modules/home-manager/java.nix
     ../../modules/home-manager/gtk.nix
     ../../modules/home-manager/neovim.nix
+    ../../modules/home-manager/programs.nix
     ];
 
   home.username = "sean";
   home.homeDirectory = "/home/sean";
-
-  nixpkgs = {
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.unstable-packages
-    ];
-    config = {
-      allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = _: true;
-    };
-  };
 
   programs.git = {
       enable = true;

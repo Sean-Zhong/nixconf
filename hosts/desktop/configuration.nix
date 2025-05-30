@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, outputs, ... }:
 
 {
   imports =
@@ -10,7 +10,7 @@
       ../../modules/nixos/gc.nix
       ../../modules/nixos/ssh.nix
       ../../modules/nixos/keyboard.nix
-      inputs.home-manager.nixosModules.default
+      inputs.home-manager.nixosModules.home-manager
     ];
 
   # Bootloader.
@@ -167,7 +167,7 @@
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs outputs; };
     users = {
       "sean" = import ./home.nix;
     };
@@ -184,28 +184,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    pkgs.jetbrains.idea-ultimate
-    pkgs.sshfs
-    pkgs.cifs-utils
-    pkgs.neofetch
-    pkgs.keepassxc
-    pkgs.filezilla
-    pkgs.gnomeExtensions.forge
-    pkgs.gnomeExtensions.app-icons-taskbar
-    pkgs.youtube-music
-    pkgs.vscode-fhs
-    pkgs.maven
-    pkgs.temurin-jre-bin
-    pkgs.openssh
-    pkgs.wezterm
-    pkgs.devpod
-    pkgs.jetbrains.gateway
-    pkgs.go
-    pkgs.chromium
-    pkgs.solaar
-    pkgs.remmina
-    ripgrep
-    binutils
     bambu-studio
   ];
 
