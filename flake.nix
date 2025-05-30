@@ -13,11 +13,14 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs: {
-    pkgsUnstable = import nixpkgs-unstable {
-        config = {
-          allowUnfree = true;
+    overlays = {
+      unstable-packages = final: _prev: {
+        unstable = nixpkgs-unstable {
+          system = final.system;
+          config.allowUnfree = true;
         };
       };
+    };
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
