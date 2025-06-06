@@ -20,6 +20,7 @@
         remmina
         ripgrep
         binutils
+        kubectl
     ];
 }
 
