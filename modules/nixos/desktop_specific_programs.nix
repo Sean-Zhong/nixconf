@@ -7,6 +7,7 @@
     runelite
     piper
     libratbag
+    steam-run
   ];
 
   programs.steam = {
