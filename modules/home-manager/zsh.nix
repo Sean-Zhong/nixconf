@@ -10,6 +10,9 @@
     shellAliases = {
       ll = "ls -la";
       update = "sudo nixos-rebuild switch --flake /home/sean/nixconf/#nixos";
+      ns="nix-shell";
+      ns-bin="nix-shell ~/nixconf/modules/nixos/nix-shell/bin-runner.nix";
+      ns-mvn="nix-shell ~/nixconf/modules/nixos/nix-shell/mvn-builder.nix";
     };
     history.size = 10000;
     history.ignoreAllDups = true;
