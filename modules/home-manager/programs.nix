@@ -3,7 +3,6 @@
     home.packages = with pkgs; [
         pkgsUnstable.jetbrains.idea-ultimate
         sshfs
-        cifs-utils
         neofetch
         keepassxc
         filezilla

@@ -130,6 +130,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    keyutils
+    cifs-utils
     (import ../../modules/nixos/mountdata.nix { inherit pkgs; })
   ];
 
