@@ -20,6 +20,7 @@
         ripgrep
         binutils
         kubectl
+        playerctl
     ];
 }
 
