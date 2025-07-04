@@ -88,6 +88,8 @@
     enable = true;
     enable32Bit = true;
   };
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   #turn off mouse accel
   services.libinput = {
