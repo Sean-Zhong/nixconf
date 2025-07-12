@@ -10,6 +10,7 @@
       ../../modules/nixos/gc.nix
       ../../modules/nixos/ssh.nix
       ../../modules/nixos/keyboard.nix
+      ../../modules/nixos/rgb.nix
       inputs.home-manager.nixosModules.home-manager
     ];
 
