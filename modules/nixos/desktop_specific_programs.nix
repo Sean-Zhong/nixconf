@@ -8,6 +8,7 @@
     piper
     libratbag
     steam-run
+    bolt-launcher
   ];
 
   programs.steam = {
