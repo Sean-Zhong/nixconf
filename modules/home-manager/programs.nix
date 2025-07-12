@@ -21,6 +21,7 @@
         binutils
         kubectl
         playerctl
+        parted
     ];
 }
 
