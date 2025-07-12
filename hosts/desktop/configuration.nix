@@ -11,6 +11,7 @@
       ../../modules/nixos/ssh.nix
       ../../modules/nixos/keyboard.nix
       ../../modules/nixos/rgb.nix
+      ../../modules/nixos/gpu.nix
       inputs.home-manager.nixosModules.home-manager
     ];
 
@@ -86,10 +87,6 @@
 
   services.flatpak.enable = true;
   hardware.keyboard.qmk.enable = true;
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
@@ -106,9 +103,6 @@
       accelProfile = "flat";
     };
   }; 
-
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["amdgpu"];
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
