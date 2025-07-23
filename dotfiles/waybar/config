@@ -3,6 +3,7 @@
     "position": "top",
     "height": 40,
     "spacing": 5,
+    "output": ["eDP-1", "DP-1", "DP-2", "DP-3"],
 
     "modules-left": ["hyprland/workspaces", "tray", "hyprland/window"],
     "modules-center": ["clock"],
