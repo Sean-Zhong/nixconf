@@ -22,6 +22,9 @@
         kubectl
         playerctl
         parted
+        pavucontrol
+        talosctl
+        hardinfo2
     ];
 }
 
