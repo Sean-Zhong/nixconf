@@ -25,6 +25,7 @@
         pavucontrol
         talosctl
         hardinfo2
+        kubernetes-helm
     ];
 }
 

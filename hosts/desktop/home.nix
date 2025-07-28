@@ -103,6 +103,7 @@
 
   home.sessionVariables = {
     SSH_AUTH_SOCK= "/run/user/1000/keyring/ssh";
+    TALOSCONFIG="/home/sean/Projects/talos-config/rendered/talosconfig";
   };
 
   # Let Home Manager install and manage itself.
