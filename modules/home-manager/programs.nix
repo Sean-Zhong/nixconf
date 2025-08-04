@@ -27,6 +27,8 @@
         hardinfo2
         kubernetes-helm
         mangohud
+        cookiecutter
+        usbimager
     ];
 }
 
