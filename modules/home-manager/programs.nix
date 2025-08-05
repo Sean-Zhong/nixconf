@@ -29,6 +29,9 @@
         mangohud
         cookiecutter
         usbimager
+        pinta
+        libreoffice
+        blueberry
     ];
 }
 
