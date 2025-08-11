@@ -173,6 +173,24 @@
     setSocketVariable = true;
   };
 
+  # Allow powerdown commands without password
+  security.polkit.enable = true;
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if ((action.id == "org.freedesktop.login1.reboot" ||
+           action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+           action.id == "org.freedesktop.login1.power-off" ||
+           action.id == "org.freedesktop.login1.power-off-multiple-sessions" ||
+           action.id == "org.freedesktop.login1.suspend" ||
+           action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+           action.id == "org.freedesktop.login1.hibernate" ||
+           action.id == "org.freedesktop.login1.hibernate-multiple-sessions") &&
+          subject.isInGroup("wheel")) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
+
   nix.settings.auto-optimise-store = true;
 
   # Some programs need SUID wrappers, can be configured further or are
