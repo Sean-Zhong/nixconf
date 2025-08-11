@@ -2,9 +2,11 @@
 
 {
     programs.neovim = {
-    enable = true;
-    extraConfig = ''
-    '';
+      enable = true;
+      extraLuaPackages = ps: [ ps.magick ];
+      extraPackages = [ pkgs.imagemagick ];
+      extraConfig = ''
+      '';
   };
 
   home.file = {
@@ -26,6 +28,7 @@
     cmp_luasnip
     friendly-snippets
     cmp-nvim-lsp
+    image-nvim
   ];
 
   home.packages = with pkgs; [
@@ -34,5 +37,7 @@
     bash-language-server
     typescript-language-server
     yaml-language-server
+    typst
+    ueberzugpp
   ];
 }
