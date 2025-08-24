@@ -189,6 +189,20 @@
         return polkit.Result.YES;
       }
     });
+
+    polkit.addRule(function(action, subject) {
+      if ((action.id == "org.freedesktop.login1.reboot" ||
+           action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+           action.id == "org.freedesktop.login1.power-off" ||
+           action.id == "org.freedesktop.login1.power-off-multiple-sessions" ||
+           action.id == "org.freedesktop.login1.suspend" ||
+           action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+           action.id == "org.freedesktop.login1.hibernate" ||
+           action.id == "org.freedesktop.login1.hibernate-multiple-sessions") && 
+          subject.user === "root") {
+        return polkit.Result.YES;
+      }
+    });
   '';
 
   nix.settings.auto-optimise-store = true;
