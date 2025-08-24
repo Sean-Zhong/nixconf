@@ -32,6 +32,7 @@
         pinta
         libreoffice
         blueberry
+        realvnc-vnc-viewer
     ];
 }
 
