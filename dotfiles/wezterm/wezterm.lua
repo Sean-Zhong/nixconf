@@ -86,6 +86,11 @@ config.keys = {
         key = "UpArrow",
         action = wezterm.action.AdjustPaneSize { "Up", 5 }
     },
+    {
+        mods = 'CTRL',
+        key = 'V',
+        action = wezterm.action.PasteFrom 'Clipboard'
+    },
 }
 
 -- Update the keybindings to use 1-indexed tabs
