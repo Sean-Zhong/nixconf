@@ -15,6 +15,8 @@
     hyprcursor
     wlogout
     blueman
+    wl-clipboard
+    cliphist
   ];
 
   programs.hyprland = {
