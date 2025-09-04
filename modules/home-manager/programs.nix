@@ -33,6 +33,7 @@
         libreoffice
         blueberry
         realvnc-vnc-viewer
+        vial
     ];
 }
 
