@@ -17,6 +17,7 @@
     blueman
     wl-clipboard
     cliphist
+    hyprpolkitagent
   ];
 
   programs.hyprland = {
