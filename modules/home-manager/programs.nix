@@ -3,7 +3,7 @@
     home.packages = with pkgs; [
         jetbrains.idea-ultimate
         sshfs
-        neofetch
+        fastfetch
         keepassxc
         filezilla
         gnomeExtensions.forge
