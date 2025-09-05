@@ -18,6 +18,8 @@
     wl-clipboard
     cliphist
     hyprpolkitagent
+    hyprsunset
+    hyprsysteminfo
   ];
 
   programs.hyprland = {
