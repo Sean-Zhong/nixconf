@@ -1,5 +1,12 @@
-{ pkgs, ... }:
-
+{ pkgs, lib, config, osConfig, ... }:
+let
+  commonAliases = {
+    ns="nix-shell";
+    ns-bin="nix-shell ~/nixconf/modules/nixos/nix-shell/bin-runner.nix";
+    ns-mvn="nix-shell ~/nixconf/modules/nixos/nix-shell/mvn-builder.nix";
+  };
+  hostSpecificAliases = lib.attrsets.getAttr osConfig.networking.hostName (import ./aliases.nix);
+in
 {
   programs.zsh = {
     enable = true;
@@ -7,13 +14,7 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    shellAliases = {
-      ll = "ls -la";
-      update = "sudo nixos-rebuild switch --flake /home/sean/nixconf/#nixos";
-      ns="nix-shell";
-      ns-bin="nix-shell ~/nixconf/modules/nixos/nix-shell/bin-runner.nix";
-      ns-mvn="nix-shell ~/nixconf/modules/nixos/nix-shell/mvn-builder.nix";
-    };
+    shellAliases = commonAliases // hostSpecificAliases;
     history.size = 10000;
     history.ignoreAllDups = true;
     history.path = "$HOME/.zsh_history";
