@@ -15,7 +15,7 @@ Rebuilding the configuration can be done by running: `sudo nixos-rebuild switch 
 }
 ```
 
-## Updating the flake.lock
+## Updating flake.lock
 The versions of `nix-packages`, `home-manager` and `hyprland` are pinned using the `flake.lock` file. To update the versions run: 
 ```bash
 nix flake update
@@ -23,3 +23,4 @@ nix flake update
 
 ## Modules
 `Nixos` and `Home Manager` modules can be linked into and used in `configuration.nix` and `home.nix`
+
