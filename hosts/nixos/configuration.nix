@@ -8,6 +8,7 @@
       ../../modules/nixos/gc.nix
       ../../modules/nixos/ssh.nix
       ../../modules/nixos/keyboard.nix
+      ../../modules/nixos/rdp.nix
       inputs.home-manager.nixosModules.home-manager
     ];
 
