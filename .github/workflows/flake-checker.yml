@@ -1,0 +1,24 @@
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    name: Check nix flake
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check nix flake inputs
+        uses: DeterminateSystems/flake-checker-action@main
+        with:
+          flake-lock-path: flake.lock
+
+      - name: Install nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Check nix flake
+        working-directory: .
+        run: nix flake check -L
