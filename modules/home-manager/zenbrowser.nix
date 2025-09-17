@@ -41,7 +41,14 @@ in
     profiles.sean.settings = {
       "zen.view.grey-out-inactive-windows" = lock-false;
       "zen.view.experimental-no-window-controls" = lock-true;
+      "toolkit.legacyUserProfileCustomizations.stylesheets" = lock-true;
     };
+  };
+
+  home.file = {
+    ".zen/sean/chrome/userChrome.css".source = ../../dotfiles/zen/userChrome.css;
+    ".zen/sean/chrome/userContent.css".source = ../../dotfiles/zen/userContent.css;
+    ".zen/sean/chrome/zen-logo-macchiato.svg".source = ../../dotfiles/zen/zen-logo-macchiato.svg;
   };
 }
 
