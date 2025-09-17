@@ -8,6 +8,7 @@
     ../../modules/home-manager/gtk.nix
     ../../modules/home-manager/neovim.nix
     ../../modules/home-manager/programs.nix
+    ../../modules/home-manager/zenbrowser.nix
     ];
 
   home.username = "sean";

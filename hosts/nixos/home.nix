@@ -9,6 +9,7 @@
     ../../modules/home-manager/neovim.nix
     ../../modules/home-manager/antivirus.nix
     ../../modules/home-manager/programs.nix
+    ../../modules/home-manager/zenbrowser.nix
     ];
 
   home.username = "sean";
