@@ -1,4 +1,14 @@
 { pkgs, inputs, ... }:
+let
+  lock-false = {
+    Value = false;
+    Status = "locked";
+  };
+  lock-true = {
+    Value = true;
+    Status = "locked";
+  };
+in
 {
   imports = [
     inputs.zen-browser.homeModules.beta
@@ -26,6 +36,11 @@
         Cryptomining = true;
         Fingerprinting = true;
       };
+    };
+
+    profiles.sean.settings = {
+      "zen.view.grey-out-inactive-windows" = lock-false;
+      "zen.view.experimental-no-window-controls" = lock-true;
     };
   };
 }
