@@ -14,6 +14,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     catppuccin.url = "github:catppuccin/nix";
+    dagger = {
+      url = "github:dagger/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:

@@ -1,4 +1,4 @@
-{ pkgs, pkgsUnstable, ... }:
+{ pkgs, pkgsUnstable, system, inputs, ... }:
 {
     home.packages = with pkgs; [
         pkgsUnstable.jetbrains.idea-ultimate
@@ -34,6 +34,7 @@
         blueberry
         realvnc-vnc-viewer
         vial
+        inputs.dagger.packages.${system}.dagger
     ];
 }
 

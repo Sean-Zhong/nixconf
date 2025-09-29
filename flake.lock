@@ -51,6 +51,26 @@
         "type": "github"
       }
     },
+    "dagger": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758557291,
+        "narHash": "sha256-m8jwQ7Vfz/qXyYlZAAxqNAy09lD3xeMPIAO3CAjWb7o=",
+        "owner": "dagger",
+        "repo": "nix",
+        "rev": "7a879509f6467ce4e023ed2d8fe1ef42ecfcb69c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dagger",
+        "repo": "nix",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -481,6 +501,7 @@
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
+        "dagger": "dagger",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "nixpkgs": "nixpkgs_3",
