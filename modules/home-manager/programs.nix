@@ -23,7 +23,7 @@
         playerctl
         parted
         pavucontrol
-        talosctl
+        pkgsUnstable.talosctl
         hardinfo2
         kubernetes-helm
         mangohud
