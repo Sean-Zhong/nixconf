@@ -35,6 +35,7 @@
         realvnc-vnc-viewer
         vial
         inputs.dagger.packages.${system}.dagger
+        fluxcd
     ];
 }
 
