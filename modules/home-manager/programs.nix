@@ -36,6 +36,8 @@
         vial
         inputs.dagger.packages.${system}.dagger
         fluxcd
+        sops
+        gnupg
     ];
 }
 
