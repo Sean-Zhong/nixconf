@@ -38,6 +38,7 @@
         fluxcd
         sops
         gnupg
+        age
     ];
 }
 
