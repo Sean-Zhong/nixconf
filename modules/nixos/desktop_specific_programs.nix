@@ -3,7 +3,6 @@
 {
   environment.systemPackages = with pkgs; [
     discord
-    lutris
     runelite
     piper
     libratbag
