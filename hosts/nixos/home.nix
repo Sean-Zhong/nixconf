@@ -10,6 +10,7 @@
     ../../modules/home-manager/antivirus.nix
     ../../modules/home-manager/programs.nix
     ../../modules/home-manager/zenbrowser.nix
+    ../../modules/home-manager/kubernetes.nix
     ];
 
   home.username = "sean";

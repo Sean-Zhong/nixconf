@@ -19,13 +19,10 @@
         remmina
         ripgrep
         binutils
-        kubectl
         playerctl
         parted
         pavucontrol
-        pkgsUnstable.talosctl
         hardinfo2
-        kubernetes-helm
         mangohud
         cookiecutter
         usbimager
@@ -33,12 +30,7 @@
         libreoffice
         blueberry
         realvnc-vnc-viewer
-        vial
         inputs.dagger.packages.${system}.dagger
-        fluxcd
-        sops
-        gnupg
-        age
     ];
 }
 
