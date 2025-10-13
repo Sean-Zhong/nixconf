@@ -1,7 +1,7 @@
 { pkgs, pkgsUnstable, system, inputs, ... }:
 {
     home.packages = with pkgs; [
-        pkgsUnstable.jetbrains.idea-ultimate
+        jetbrains.idea-ultimate
         sshfs
         fastfetch
         keepassxc
