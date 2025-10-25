@@ -20,6 +20,9 @@
     hyprpolkitagent
     hyprsunset
     hyprsysteminfo
+    grim
+    slurp
+    swappy
   ];
 
   programs.hyprland = {
