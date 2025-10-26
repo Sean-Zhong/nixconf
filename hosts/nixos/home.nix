@@ -18,8 +18,8 @@
 
   programs.git = {
       enable = true;
-      userName = "Sean Zhong";
-      userEmail = "sean.zhong@scila.se";
+      settings.user.name = "Sean Zhong";
+      settings.user.email = "sean.zhong@scila.se";
     };
 
   programs.tmux = {

@@ -17,8 +17,8 @@
 
   programs.git = {
       enable = true;
-      userName = "Sean Zhong";
-      userEmail = "sean.zhong98@gmail.com";
+      settings.user.name = "Sean Zhong";
+      settings.user.email = "sean.zhong98@gmail.com";
     };
 
   programs.tmux = {
