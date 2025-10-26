@@ -161,8 +161,6 @@
 
   nix.settings.auto-optimise-store = true;
 
-  #nixpkgs.config.permittedInsecurePackages = ["mbedtls-2.28.10"];
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
