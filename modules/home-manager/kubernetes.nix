@@ -9,6 +9,7 @@
         gnupg
         age
         apacheHttpd
+        openssl
     ];
 }
 
