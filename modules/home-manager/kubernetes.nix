@@ -8,6 +8,7 @@
         sops
         gnupg
         age
+        apacheHttpd
     ];
 }
 
