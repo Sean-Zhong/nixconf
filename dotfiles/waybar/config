@@ -4,9 +4,9 @@
     "height": 40,
     "spacing": 5,
 
-    "modules-left": ["hyprland/workspaces", "tray", "hyprland/window"],
+    "modules-left": ["hyprland/workspaces", "custom/spacer", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["memory", "temperature", "wireplumber", "battery", "backlight", "network", "bluetooth", "custom/exit"],
+    "modules-right": ["tray", "memory", "temperature", "wireplumber", "battery", "backlight", "custom/exit"],
 
     "hyprland/workspaces": {
         "disable-scroll": true,
@@ -23,7 +23,13 @@
         "on-click": "activate",
     },
 
+    "custom/spacer": {
+        "format": "   "
+    },
+
     "hyprland/window": {
+        "max-length": 40,
+        "icon": true,
         "format": "{}",
         "rewrite": {
             "Mozilla Firefox": "\ue745 firefox",
@@ -39,7 +45,7 @@
     },
 
     "clock": {
-        "format": " {0:%R}  {0:%Y-%m-%d}",
+        "format": "{0:%R}  {0:%m-%d}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
     },
 
@@ -67,27 +73,6 @@
 
     "temperature": {
         "format": "  {temperatureC}°C"
-    },
-
-    "network": {
-        "format": "{ifname}",
-        "format-wifi": " {essid} ({signalStrength}%)",
-        "format-ethernet": "\udb83\udc9d",
-        "format-disconnected": "Disconnected ⚠",
-        "tooltip-format": " {ifname} via {gwaddri}",
-        "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
-        "tooltip-format-ethernet": "\udb83\udc9d {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
-        "tooltip-format-disconnected": "Disconnected",
-        "max-length": 50
-    },
-
-    "bluetooth": {
-        "format": "\udb80\udcaf",
-        "format-disabled": "\udb80\udcb2",
-        "format-connected": "\udb80\udcb1",
-        "tooltip-format": "{controller_alias}\t{controller_address}",
-        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
     },
 
     "custom/exit": {
