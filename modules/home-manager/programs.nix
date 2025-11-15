@@ -31,7 +31,7 @@
         blueberry
         realvnc-vnc-viewer
         inputs.dagger.packages.${system}.dagger
-        jetbrains.pycharm-community
+        pkgsUnstable.jetbrains.pycharm-community
     ];
 }
 
