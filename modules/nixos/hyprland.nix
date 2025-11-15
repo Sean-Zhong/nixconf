@@ -23,6 +23,7 @@
     grim
     slurp
     swappy
+    brightnessctl
   ];
 
   programs.hyprland = {
