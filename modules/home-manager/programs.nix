@@ -32,6 +32,7 @@
         realvnc-vnc-viewer
         inputs.dagger.packages.${system}.dagger
         pkgsUnstable.jetbrains.pycharm-community
+        tree
     ];
 }
 
