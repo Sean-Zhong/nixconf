@@ -15,7 +15,6 @@
 
     home.packages = with pkgs; [
         maven
-        gradle
         jdk17
         java-language-server
         jdt-language-server

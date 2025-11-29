@@ -7,9 +7,6 @@
 
   # Load AMD driver for Xorg and Wayland
   services.xserver.videoDrivers = ["amdgpu"];
-  hardware.graphics.extraPackages = with pkgs; [
-    amdvlk
-  ];
 
   environment.systemPackages = with pkgs; [ lact ];
   systemd.packages = with pkgs; [ lact ];

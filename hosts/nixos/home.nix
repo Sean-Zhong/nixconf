@@ -37,11 +37,6 @@
   ];
 
   home.file = {
-    "jdks/temurin11".source = pkgs.temurin-bin-11;
-    "jdks/temurin17".source = pkgs.temurin-bin-17;
-    "jdks/temurin21".source = pkgs.temurin-bin;
-    "jdks/graalvm-ce".source = pkgs.graalvm-ce;
-    "jdks/jetbrains".source = pkgs.jetbrains.jdk;
     ".config/hypr".source = ../../dotfiles/hypr;
     ".config/hyprmodules".source = ./hyprmodules;
     ".config/waybar".source = ../../dotfiles/waybar;
