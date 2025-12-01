@@ -19,8 +19,4 @@
     '';
   };
 
-  home.sessionVariables = {
-    SSH_ASKPASS = "${config.home.homeDirectory}/.local/bin/my-ssh-askpass";
-    SSH_ASKPASS_REQUIRE = "prefer"; # Use the script if possible
-  };
 }
