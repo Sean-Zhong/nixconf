@@ -6,4 +6,5 @@
     security.pam.services.hyprland.enableGnomeKeyring = true;
     programs.seahorse.enable = true;
     services.gnome.gcr-ssh-agent.enable = false;
+    programs.dconf.enable = true;
 }

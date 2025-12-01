@@ -11,6 +11,7 @@
     ../../modules/home-manager/programs.nix
     ../../modules/home-manager/zenbrowser.nix
     ../../modules/home-manager/kubernetes.nix
+    ../../modules/home-manager/ssh.nix
     ];
 
   home.username = "sean";
@@ -26,17 +27,12 @@
     enable = true;
   };
 
-  home.sessionVariables = {
-    SSH_ASKPASS = "${pkgs.gcr}/libexec/gcr-ssh-askpass";
-  };
-
   fonts.fontconfig.enable = true;
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
   home.packages = [
     pkgs.nerd-fonts.jetbrains-mono
-    pkgs.gcr
   ];
 
   home.file = {
