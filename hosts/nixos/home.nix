@@ -28,7 +28,6 @@
 
   home.sessionVariables = {
     SSH_ASKPASS = "${pkgs.gcr}/libexec/gcr-ssh-askpass";
-    SSH_ASKPASS_REQUIRE = "prefer";
   };
 
   fonts.fontconfig.enable = true;
