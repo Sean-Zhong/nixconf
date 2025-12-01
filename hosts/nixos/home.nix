@@ -17,13 +17,19 @@
   home.homeDirectory = "/home/sean";
 
   programs.git = {
-      enable = true;
-      settings.user.name = "Sean Zhong";
-      settings.user.email = "sean.zhong@scila.se";
-    };
+    enable = true;
+    settings.user.name = "Sean Zhong";
+    settings.user.email = "sean.zhong@scila.se";
+  };
 
   programs.tmux = {
     enable = true;
+  };
+
+  programs.keychain = {
+    enable = true;
+    keys = [ "id_ed25519" ]; 
+    extraFlags = [ "--quiet" ];
   };
 
   fonts.fontconfig.enable = true;
