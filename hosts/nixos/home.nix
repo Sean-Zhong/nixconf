@@ -26,10 +26,9 @@
     enable = true;
   };
 
-  programs.keychain = {
-    enable = true;
-    keys = [ "id_ed25519" ]; 
-    extraFlags = [ "--quiet" ];
+  home.sessionVariables = {
+    SSH_ASKPASS = "${pkgs.gcr}/libexec/gcr-ssh-askpass";
+    SSH_ASKPASS_REQUIRE = "prefer";
   };
 
   fonts.fontconfig.enable = true;
@@ -38,6 +37,7 @@
 
   home.packages = [
     pkgs.nerd-fonts.jetbrains-mono
+    pkgs.gcr
   ];
 
   home.file = {
