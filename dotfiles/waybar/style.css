@@ -88,3 +88,20 @@
 #custom-exit {
     padding-right: 1em;
 }
+#custom-vpn {
+    background-color: #383c4a;
+    color: #ffffff;
+    padding: 0 10px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+#custom-vpn.connected {
+    background-color: #26A65B; /* Green */
+    color: #ffffff;
+}
+
+#custom-vpn.disconnected {
+    background-color: #E05C5C; /* Red */
+    color: #ffffff;
+}

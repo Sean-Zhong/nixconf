@@ -6,7 +6,7 @@
 
     "modules-left": ["hyprland/workspaces", "custom/spacer", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "memory", "temperature", "wireplumber", "battery", "backlight", "custom/exit"],
+    "modules-right": ["tray", "custom/vpn", "memory", "temperature", "wireplumber", "battery", "backlight", "custom/exit"],
 
     "hyprland/workspaces": {
         "disable-scroll": true,
@@ -47,6 +47,14 @@
     "clock": {
         "format": "{0:%R}  {0:%m-%d}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    },
+
+    "custom/vpn": {
+        "format": "🔒 {}",
+        "exec": "vpn-toggle",
+        "return-type": "json",
+        "interval": 5,
+        "on-click": "vpn-toggle toggle"
     },
 
     "wireplumber": {
