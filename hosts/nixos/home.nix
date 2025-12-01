@@ -1,7 +1,7 @@
 { config, pkgs, inputs, outputs, ... }:
 
 {
-  imports = [ 
+  imports = [
     ../../modules/home-manager/wezterm.nix
     ../../modules/home-manager/zsh.nix
     ../../modules/home-manager/java.nix
@@ -14,7 +14,7 @@
     ];
 
   home.username = "sean";
-  home.homeDirectory = "/home/sean"; 
+  home.homeDirectory = "/home/sean";
 
   programs.git = {
       enable = true;
@@ -30,8 +30,6 @@
 
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = [
     pkgs.nerd-fonts.jetbrains-mono
   ];
@@ -45,10 +43,5 @@
     "scripts".source = ../../dotfiles/scripts; 
     };
 
-  home.sessionVariables = {
-    SSH_AUTH_SOCK= "/run/user/1000/keyring/ssh";
-  };
-
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
