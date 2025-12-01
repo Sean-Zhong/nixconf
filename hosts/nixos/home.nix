@@ -44,5 +44,7 @@
     "scripts".source = ../../dotfiles/scripts; 
     };
 
+  # force update
+
   programs.home-manager.enable = true;
 }

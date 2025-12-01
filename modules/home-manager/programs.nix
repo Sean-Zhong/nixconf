@@ -33,6 +33,7 @@
         inputs.dagger.packages.${system}.dagger
         pkgsUnstable.jetbrains.pycharm-community
         tree
+        openvpn3
     ];
 }
 
