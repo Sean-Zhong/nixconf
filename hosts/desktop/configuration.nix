@@ -24,7 +24,12 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [
+      networkmanager-openvpn
+    ];
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
