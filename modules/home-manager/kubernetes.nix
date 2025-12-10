@@ -10,6 +10,7 @@
         age
         apacheHttpd
         openssl
+        k9s
     ];
 }
 
