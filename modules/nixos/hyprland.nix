@@ -9,6 +9,7 @@
     swww
     hyprpaper
     wofi
+    uwsm
     hyprshot
     hyprlock
     hypridle

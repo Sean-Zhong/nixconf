@@ -34,6 +34,7 @@
         pkgsUnstable.jetbrains.pycharm-community
         tree
         openvpn3
+        jq
     ];
 }
 
