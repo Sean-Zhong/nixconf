@@ -138,10 +138,13 @@
   };
 
   # Docker
-  virtualisation.docker.rootless = {
+  virtualisation.docker = {
     enable = true;
-    setSocketVariable = true;
   };
+
+  # Needed for default bridge network to automatically work
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  boot.kernel.sysctl."net.ipv6.ip_forward" = 1;
 
   systemd.tmpfiles.rules = [
     "d /mnt/team_files 0755 sean users"
