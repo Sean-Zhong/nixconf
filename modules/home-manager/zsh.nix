@@ -4,6 +4,7 @@ let
     ns="nix-shell";
     ns-bin="nix-shell ~/nixconf/modules/nixos/nix-shell/bin-runner.nix";
     ns-mvn="nix-shell ~/nixconf/modules/nixos/nix-shell/mvn-builder.nix";
+    ns-python="nix-shell ~/nixconf/modules/nixos/nix-shell/python-env.nix";
   };
   hostSpecificAliases = lib.attrsets.getAttr osConfig.networking.hostName (import ./aliases.nix);
 in

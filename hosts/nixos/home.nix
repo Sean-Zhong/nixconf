@@ -13,6 +13,7 @@
     ../../modules/home-manager/kubernetes.nix
     ../../modules/home-manager/ssh.nix
     ../../modules/home-manager/vpn-toggle.nix
+    ../../modules/home-manager/development.nix
     ];
 
   home.username = "sean";
