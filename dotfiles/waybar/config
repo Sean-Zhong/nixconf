@@ -99,5 +99,12 @@
     "tray": {
         "icon-size": 22,
         "spacing": 16,
-    }
+    },
+
+    "custom/nixos": {
+        "tooltip": true,
+        "return-type": "json",
+        "exec": "bash ~/nixconf/dotfiles/scripts/nixos_status.sh",
+        "interval": 60
+    },
 }

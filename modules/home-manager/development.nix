@@ -17,5 +17,7 @@
         tree
         openvpn3
         jq
+        kitty
+        nvd
     ];
 }
