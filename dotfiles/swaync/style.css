@@ -71,3 +71,52 @@
 .widget-title > button:hover {
     background: #585b70;
 }
+
+.widget-mpris {
+    background: #313244;
+    padding: 16px;
+    margin: 10px;
+    border-radius: 12px;
+    color: #cdd6f4;
+}
+
+.widget-mpris > box > button {
+    border-radius: 12px;
+}
+
+.widget-mpris-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #89b4fa;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.widget-mpris-subtitle {
+    font-size: 1rem;
+    color: #bac2de;
+}
+
+.widget-mpris-player > box > button {
+    background: transparent;
+    color: #cdd6f4;
+    border-radius: 20px;
+    padding: 6px 10px;
+    margin: 0 4px;
+    border: 1px solid transparent; 
+}
+
+.widget-mpris-player > box > button:hover {
+    background: #45475a;
+    border: 1px solid #585b70;
+}
+
+.widget-mpris trough {
+    background: #45475a;
+    border-radius: 12px;
+    min-height: 6px;
+}
+
+.widget-mpris highlight {
+    background: #89b4fa;
+    border-radius: 12px;
+}
