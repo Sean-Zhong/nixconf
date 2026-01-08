@@ -1,7 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg fill="#8aadf4" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
-<metadata> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>
-<g><path d="M622.5,990H50.8C26.3,990,10,973.7,10,949.2V50.8C10,26.3,26.3,10,50.8,10h571.7c24.5,0,40.8,16.3,40.8,40.8v285.8c0,24.5-16.3,40.8-40.8,40.8s-40.8-16.3-40.8-40.8v-245h-490v816.7h490v-245c0-24.5,16.3-40.8,40.8-40.8s40.8,16.3,40.8,40.8v285.8C663.3,973.7,647,990,622.5,990z"/><path d="M949.2,540.8H336.7c-24.5,0-40.8-16.3-40.8-40.8c0-24.5,16.3-40.8,40.8-40.8h612.5c24.5,0,40.8,16.3,40.8,40.8C990,524.5,973.7,540.8,949.2,540.8z"/><path d="M949.2,540.8c-12.3,0-20.4-4.1-28.6-12.3L757.3,365.3c-16.3-16.3-16.3-40.8,0-57.2c16.3-16.3,40.8-16.3,57.2,0l163.3,163.3c16.3,16.3,16.3,40.8,0,57.2C969.6,536.8,961.4,540.8,949.2,540.8z"/><path d="M785.8,704.2c-12.3,0-20.4-4.1-28.6-12.3c-16.3-16.3-16.3-40.8,0-57.2l163.3-163.3c16.3-16.3,40.8-16.3,57.2,0c16.3,16.3,16.3,40.8,0,57.2L814.4,691.9C806.3,700.1,798.1,704.2,785.8,704.2z"/></g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="60.973358mm"
+   height="60.973358mm"
+   viewBox="0 0 60.973358 60.973358"
+   version="1.1"
+   id="svg8"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer2"
+     transform="translate(-29.763967,-109.73627)">
+    <g
+       id="g5668"
+       transform="translate(-6.8178377)">
+      <path
+         id="rect9038"
+         style="fill:none;stroke:#8aadf4;stroke-width:5.29167;stroke-opacity:1;stop-color:#000000"
+         d="M 75.298014,134.32508 V 123.37611 H 51.28987 v 32.78134 h 24.008144 v -10.44401" />
+      <path
+         style="color:#000000;fill:#8aadf4;fill-opacity:1;-inkscape-stroke:none"
+         d="M 87.585801,137.29255 H 65.308463 v 5.29296 h 22.277338 z"
+         id="path9040" />
+      <path
+         style="fill:none;stroke:#8aadf4;stroke-width:3.96875;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m 82.608591,147.27074 7.35604,-7.57781 -7.66369,-7.4394"
+         id="path9042" />
+    </g>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:bevel;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;stop-color:#000000"
+       id="rect7155"
+       width="60.973358"
+       height="60.973358"
+       x="29.763966"
+       y="109.73627" />
+  </g>
 </svg>
