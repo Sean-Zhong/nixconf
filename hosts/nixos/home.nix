@@ -43,7 +43,8 @@
     ".config/waybar".source = ../../dotfiles/waybar;
     "resources/images".source = ../../resources/images;
     ".config/wofi".source = ../../dotfiles/wofi;
-    "scripts".source = ../../dotfiles/scripts; 
+    "scripts".source = ../../dotfiles/scripts;
+    ".config/wlogout".source = ../../dotfiles/wlogout;
     };
 
   programs.home-manager.enable = true;
