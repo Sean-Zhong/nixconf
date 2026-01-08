@@ -93,7 +93,7 @@
 
     "custom/exit": {
         "format": "",
-        "on-click": "wlogout"
+        "on-click": "wlogout -b 5 -T 400 -B 400"
     },
 
     "tray": {
