@@ -53,6 +53,7 @@
     "resources/images".source = ../../resources/images;
     ".config/wofi".source = ../../dotfiles/wofi;
     ".config/wlogout".source = ../../dotfiles/wlogout;
+    ".config/swaync".source = ../../dotfiles/swaync;
   };
 
   home.sessionVariables = {

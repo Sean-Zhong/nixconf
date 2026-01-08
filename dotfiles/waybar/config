@@ -58,9 +58,11 @@
     },
 
     "wireplumber": {
-        "format": "\udb81\udd7e  {volume}%",
+        "format": "{icon}  {volume}%",
+        "format-icons": ["", "", ""],
         "max-volume": 100,
-        "scroll-step": 5
+        "on-click": "swaync-client -t -sw", // -t toggles, -sw skips wait
+        "tooltip": false
     },
 
     "battery": {

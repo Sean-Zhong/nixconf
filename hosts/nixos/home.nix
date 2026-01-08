@@ -45,6 +45,7 @@
     ".config/wofi".source = ../../dotfiles/wofi;
     "scripts".source = ../../dotfiles/scripts;
     ".config/wlogout".source = ../../dotfiles/wlogout;
+    ".config/swaync".source = ../../dotfiles/swaync;
     };
 
   programs.home-manager.enable = true;

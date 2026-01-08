@@ -1,0 +1,73 @@
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-weight: bold;
+}
+
+.control-center {
+    background: #1e1e2e;
+    border: 2px solid #313244;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.widget-volume {
+    background: #313244;
+    padding: 8px;
+    margin: 10px;
+    border-radius: 12px;
+}
+
+.widget-volume trough {
+    background: #45475a;
+    border-radius: 12px;
+    min-height: 8px;
+}
+
+.widget-volume highlight {
+    background: #89b4fa;
+    border-radius: 12px;
+}
+
+.widget-volume slider {
+    background: #cdd6f4;
+    border-radius: 50%;
+    min-height: 16px;
+    min-width: 16px;
+}
+
+.widget-mpris {
+    background: #11111b;
+    padding: 8px;
+    margin: 10px;
+    border-radius: 12px;
+    color: #cdd6f4;
+}
+
+.notification-row {
+    outline: none;
+    margin: 10px;
+}
+
+.notification {
+    background: #313244;
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid #45475a;
+}
+
+.widget-title {
+    color: #cdd6f4;
+    margin: 10px;
+}
+
+.widget-title > button {
+    background: #45475a;
+    color: #cdd6f4;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+}
+
+.widget-title > button:hover {
+    background: #585b70;
+}
