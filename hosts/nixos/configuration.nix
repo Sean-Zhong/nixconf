@@ -9,7 +9,6 @@
       ../../modules/nixos/ssh.nix
       ../../modules/nixos/keyboard.nix
       ../../modules/nixos/rdp.nix
-      ../../modules/nixos/laptop-gpu.nix
       inputs.home-manager.nixosModules.home-manager
     ];
 
