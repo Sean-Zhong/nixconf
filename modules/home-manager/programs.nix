@@ -19,6 +19,7 @@
         libreoffice
         blueberry
         realvnc-vnc-viewer
+        davinci-resolve
     ];
 }
 
