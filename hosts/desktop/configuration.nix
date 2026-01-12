@@ -118,7 +118,7 @@
   users.users.sean = {
     isNormalUser = true;
     description = "Sean Zhong";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
     git
     ];
@@ -159,9 +159,8 @@
   };
 
   # Docker
-  virtualisation.docker.rootless = {
+  virtualisation.docker = {
     enable = true;
-    setSocketVariable = true;
   };
 
   # Needed for default bridge network to automatically work
