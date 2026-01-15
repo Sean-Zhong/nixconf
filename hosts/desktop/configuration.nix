@@ -167,6 +167,13 @@
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.kernel.sysctl."net.ipv6.ip_forward" = 1;
 
+  services.udev.extraRules = ''
+    # Fractal Scape: Allow user access AND unbind kernel driver from Interface 3
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="36bc", ATTRS{idProduct}=="0001", MODE="0666"
+
+    # Automatically unbind the 'hid-generic' driver from Interface 3 when plugged in
+    SUBSYSTEM=="hid", DRIVERS=="hid-generic", ATTRS{idVendor}=="36bc", ATTRS{idProduct}=="0001", RUN+="${pkgs.bash}/bin/sh -c 'echo $kernel > /sys/bus/hid/drivers/hid-generic/unbind'"
+  '';
   nix.settings.auto-optimise-store = true;
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -6,7 +6,7 @@
 
     "modules-left": ["hyprland/workspaces", "custom/spacer", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "custom/nixos", "memory", "temperature", "wireplumber", "battery", "backlight", "custom/exit"],
+    "modules-right": ["tray", "custom/nixos", "custom/fractal", "memory", "temperature", "wireplumber", "battery", "backlight", "custom/exit"],
 
     "hyprland/workspaces": {
         "disable-scroll": true,
@@ -108,5 +108,13 @@
         "return-type": "json",
         "exec": "bash ~/nixconf/dotfiles/scripts/nixos_status.sh",
         "interval": 60
+    },
+
+    "custom/fractal": {
+        "exec": "/home/sean/nixconf/dotfiles/scripts/scape_battery.py",
+        "return-type": "json",
+        "interval": 60,
+        "format": "{}",
+        "tooltip": true
     },
 }
