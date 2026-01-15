@@ -9,6 +9,7 @@ if ! systemctl --user list-timers | grep -q "$UNIT_NAME.timer"; then
   systemd-run --user \
     --unit="$UNIT_NAME" \
     --on-calendar="12:00" \
+    --on-startup="300" \
     --description="Daily NixOS Update Check" \
     --setenv=PATH="/run/current-system/sw/bin:/etc/profiles/per-user/$USER/bin" \
     bash -c "
