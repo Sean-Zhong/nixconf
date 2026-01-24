@@ -29,6 +29,7 @@
     friendly-snippets
     cmp-nvim-lsp
     image-nvim
+    oil-nvim
   ];
 
   home.packages = with pkgs; [

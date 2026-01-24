@@ -5,6 +5,7 @@ require("plugins/lualine")
 require("plugins/lsp-config")
 require("plugins/completions")
 require("plugins/image")
+require("plugins/oil-nvim")
 require("catppuccin").setup({
     flavour = "macchiato", -- latte, frappe, macchiato, mocha
 })
