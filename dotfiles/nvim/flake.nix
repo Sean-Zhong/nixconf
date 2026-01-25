@@ -45,9 +45,29 @@
               --prefix PATH : ${pkgs.lib.makeBinPath sharedPackages}
           '';
         };
+
+        docker-image = pkgs.dockerTools.buildImage {
+          name = "nvim-flake";
+          tag = "latest";
+            copyToRoot = pkgs.buildEnv {
+              name = "image-root";
+              paths = [ nvim-final pkgs.bashInteractive pkgs.coreutils pkgs.git ];
+              pathsToLink = [ "/bin" ];
+            };
+
+            config = {
+              Cmd = [ "${nvim-final}/bin/nvim" ];
+              WorkingDir = "/workdir";
+              Env = [
+                "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" # Fixes git/networking
+              ];
+            };
+        };
+
       in
       {
         packages.default = nvim-final;
+        packages.docker = docker-image;
 
         apps.default = {
           type = "app";
