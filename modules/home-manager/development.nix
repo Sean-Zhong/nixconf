@@ -1,7 +1,7 @@
 { pkgs, pkgsUnstable, system, inputs, ... }:
 {
     home.packages = with pkgs; [
-        jetbrains.idea
+        pkgsUnstable.jetbrains.idea
         sshfs
         vscode-fhs
         openssh
