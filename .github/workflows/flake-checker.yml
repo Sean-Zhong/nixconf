@@ -19,6 +19,9 @@ jobs:
       - name: Install nix
         uses: DeterminateSystems/nix-installer-action@main
 
+      - name: Stub out encrypted secrets for CI
+        run: echo "{ }" > modules/nixos/private-hosts.nix
+
       - name: Check nix flake
         working-directory: .
         run: nix flake check -L
