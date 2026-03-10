@@ -9,6 +9,7 @@
       ../../modules/nixos/ssh.nix
       ../../modules/nixos/keyboard.nix
       ../../modules/nixos/rdp.nix
+      ../../modules/nixos/private-hosts.nix
       inputs.home-manager.nixosModules.home-manager
     ];
 

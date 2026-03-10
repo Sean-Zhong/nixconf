@@ -1,0 +1,1 @@
+private-hosts.nix filter=git-crypt diff=git-crypt
