@@ -19,5 +19,6 @@
         jq
         kitty
         nvd
+        git-crypt
     ];
 }
