@@ -53,6 +53,7 @@
     GLFW_IM_MODULE = "ibus"; 
   };
 
+  systemd.services.NetworkManager-wait-online.enable = false;
   programs.dconf.enable = true;
 }
 
