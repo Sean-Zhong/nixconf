@@ -20,5 +20,26 @@
         kitty
         nvd
         git-crypt
+        ffmpegthumbnailer # Video thumbnails
+        unzip             # Archive previews
+        jq                # JSON previews
+        poppler           # PDF previews
+        fd                # File searching
+        ripgrep           # File content searching
+        fzf               # Fuzzy finding
+        zoxide            # Historical directory navigation
     ];
+
+    home.sessionVariables = {
+        EDITOR = "nvim";
+        VISUAL = "nvim";
+    };
+
+    programs.yazi = {
+        enable = true;
+        enableBashIntegration = true; # default is true
+        enableZshIntegration = true;  # default is true
+        enableFishIntegration = true; # default is true
+    };
+
 }
