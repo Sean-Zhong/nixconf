@@ -89,7 +89,7 @@
     "tray": {
         "icon-size": 22,
         "spacing": 16
-    }
+    },
 
     "custom/nixos": {
         "tooltip": true,
