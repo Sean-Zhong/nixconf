@@ -6,7 +6,7 @@
 
     "modules-left": ["hyprland/workspaces", "custom/spacer", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "memory", "wireplumber", "battery", "backlight", "custom/exit"],
+    "modules-right": ["tray", "custom/nixos", "memory", "wireplumber", "battery", "backlight", "custom/exit"],
 
     "hyprland/workspaces": {
         "disable-scroll": true,
@@ -89,5 +89,12 @@
     "tray": {
         "icon-size": 22,
         "spacing": 16
+    }
+
+    "custom/nixos": {
+        "tooltip": true,
+        "return-type": "json",
+        "exec": "bash ~/nixconf/dotfiles/scripts/nixos_status.sh",
+        "interval": 3600
     }
 }
