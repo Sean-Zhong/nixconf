@@ -6,7 +6,7 @@
 
     "modules-left": ["hyprland/workspaces", "custom/spacer", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "custom/nixos", "memory", "temperature", "wireplumber", "battery", "backlight", "custom/exit"],
+    "modules-right": ["tray", "memory", "wireplumber", "battery", "backlight", "custom/exit"],
 
     "hyprland/workspaces": {
         "disable-scroll": true,
@@ -15,12 +15,12 @@
             "1": "",
             "2": "",
             "3": "",
-            "4": "\udb82\udf3d",
-            "5": "\udb82\udf3e",
+            "4": "󰈈",
+            "5": "󰈉",
             "6": "󰍹",
             "7": "󰍹"
         },
-        "on-click": "activate",
+        "on-click": "activate"
     },
 
     "custom/spacer": {
@@ -29,39 +29,31 @@
 
     "hyprland/window": {
         "max-length": 40,
-        "icon": true,
+        "icon": false,
         "format": "{}",
         "rewrite": {
-            "Mozilla Firefox": "\ue745 firefox",
-            "(.*) — Mozilla Firefox": "\ue745 $1",
+            "Mozilla Firefox": " firefox",
+            "(.*) — Mozilla Firefox": " $1",
             "(.*) - Chromium": " $1",
             "(vim|nvim).*": " $0",
-            "docker.*": "\ue7b0 $0 $1",
+            "docker.*": "󰡨 $0 $1",
             "(lf|lfcd)": "󰙅 $0",
             "(top|htop|bashtop)": "󱎴 $0",
             "(bash|zsh)": " $0",
-            "intellij - (.*)": "\ue7b5 $1"
+            "intellij - (.*)": " $1"
         }
     },
 
     "clock": {
         "format": "{0:%R}  {0:%m-%d}",
-        "tooltip-format": "<tt><small>{calendar}</small></tt>",
-    },
-
-    "custom/vpn": {
-        "format": "🔒 {}",
-        "exec": "vpn-toggle",
-        "return-type": "json",
-        "interval": 5,
-        "on-click": "vpn-toggle toggle"
+        "tooltip-format": "<tt><small>{calendar}</small></tt>"
     },
 
     "wireplumber": {
         "format": "{icon}  {volume}%",
         "format-icons": ["", "", ""],
         "max-volume": 100,
-        "on-click": "swaync-client -t -sw", // -t toggles, -sw skips wait
+        "on-click": "swaync-client -t -sw",
         "tooltip": false
     },
 
@@ -81,16 +73,12 @@
     },
 
     "backlight": {
-        "format": "\udb80\udcdf  {percent}%"
+        "format": "󰃠  {percent}%"
     },
 
     "memory": {
         "interval": 30,
-        "format": "\uf4bc  {used:0.1f}G"
-    },
-
-    "temperature": {
-        "format": "  {temperatureC}°C"
+        "format": "  {used:0.1f}G"
     },
 
     "custom/exit": {
@@ -100,13 +88,6 @@
 
     "tray": {
         "icon-size": 22,
-        "spacing": 16,
-    },
-
-    "custom/nixos": {
-        "tooltip": true,
-        "return-type": "json",
-        "exec": "bash ~/nixconf/dotfiles/scripts/nixos_status.sh",
-        "interval": 60
-    },
+        "spacing": 16
+    }
 }

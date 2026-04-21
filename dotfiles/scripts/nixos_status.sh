@@ -5,12 +5,15 @@ CONFIG_NAME="$(hostname | sed -E 's/-([a-z])/\U\1/g')"
 OUTPUT_FILE="/tmp/nixos-update-diff.txt"
 UNIT_NAME="nixos-update-check"
 
-if ! systemctl --user list-timers | grep -q "$UNIT_NAME.timer"; then
+if ! systemctl --user -q is-active "$UNIT_NAME.timer"; then
   systemd-run --user \
     --unit="$UNIT_NAME" \
     --on-calendar="12:00" \
     --on-startup="300" \
     --description="Daily NixOS Update Check" \
+    --property="Nice=19" \
+    --property="CPUSchedulingPolicy=idle" \
+    --property="IOSchedulingClass=idle" \
     --setenv=PATH="/run/current-system/sw/bin:/etc/profiles/per-user/$USER/bin" \
     bash -c "
   BUILD=\$(nix build '$FLAKE_DIR#nixosConfigurations.$CONFIG_NAME.config.system.build.toplevel' \
@@ -30,7 +33,7 @@ if [ -f "$OUTPUT_FILE" ]; then
   report_time=$(stat -c %Y "$OUTPUT_FILE")
   system_time=$(stat -c %Y /run/current-system)
   if [ "$system_time" -gt "$report_time" ]; then
-    rm "$OUTPUT_FILE"
+    rm -f "$OUTPUT_FILE"
   fi
 fi
 

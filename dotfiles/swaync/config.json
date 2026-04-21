@@ -13,6 +13,11 @@
   "timeout-low": 5,
   "timeout-critical": 0,
   "fit-to-screen": true,
+  
+  "transition-time": 0,
+  "image-visibility": "when-available",
+  "hide-on-clear": true,
+
   "widgets": [
     "title",
     "mpris",
