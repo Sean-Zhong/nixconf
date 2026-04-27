@@ -20,6 +20,7 @@
         blueberry
         realvnc-vnc-viewer
         davinci-resolve
+        zoom-us
     ];
 }
 
