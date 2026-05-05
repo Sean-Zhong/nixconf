@@ -54,6 +54,7 @@
     ".config/wofi".source = ../../dotfiles/wofi;
     ".config/wlogout".source = ../../dotfiles/wlogout;
     ".config/swaync".source = ../../dotfiles/swaync;
+    ".tmux.conf".source = ../../dotfiles/tmux/tmux.conf;
   };
 
   home.sessionVariables = {

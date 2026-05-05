@@ -46,6 +46,7 @@
     "scripts".source = ../../dotfiles/scripts;
     ".config/wlogout".source = ../../dotfiles/wlogout;
     ".config/swaync".source = ../../dotfiles/swaync;
+    ".tmux.conf".source = ../../dotfiles/tmux/tmux.conf;
     };
 
   programs.home-manager.enable = true;
