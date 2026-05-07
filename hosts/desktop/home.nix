@@ -17,10 +17,25 @@
   home.homeDirectory = "/home/sean";
 
   programs.git = {
-      enable = true;
-      settings.user.name = "Sean Zhong";
-      settings.user.email = "sean.zhong98@gmail.com";
+    enable = true;
+    settings = {
+      user.name = "Sean Zhong";
+      user.email = "sean.zhong98@gmail.com";
+      merge.conflictstyle = "zdiff3";
+      diff.colorMoved = "default";
     };
+  };
+
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      navigate = true;
+      line-numbers = true;
+      side-by-side = true;
+      syntax-theme = "Dracula";
+    };
+  };
 
   programs.tmux = {
     enable = true;
