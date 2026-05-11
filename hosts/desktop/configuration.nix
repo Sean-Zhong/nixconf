@@ -77,13 +77,6 @@
 
   services.input-remapper.enable = true;
 
-  # Disable the GNOME3/GDM auto-suspend feature that cannot be disabled in GUI!
-  # If no user is logged in, the machine will power down after 20 minutes.
-  systemd.targets.sleep.enable = false;
-  systemd.targets.suspend.enable = false;
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -164,6 +157,25 @@
   virtualisation.docker = {
     enable = true;
   };
+
+  # Enable Polkit
+  security.polkit.enable = true;
+
+  # Allow users to bypass the password prompt for suspend/hibernate
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (
+        action.id == "org.freedesktop.login1.suspend" ||
+        action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+        action.id == "org.freedesktop.login1.hibernate" ||
+        action.id == "org.freedesktop.login1.hibernate-multiple-sessions"
+      ) {
+        if (subject.isInGroup("users") || subject.isInGroup("wheel")) {
+          return polkit.Result.YES;
+        }
+      }
+    });
+  '';
 
   # Needed for default bridge network to automatically work
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
