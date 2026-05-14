@@ -21,6 +21,7 @@
         realvnc-vnc-viewer
         davinci-resolve
         zoom-us
+        orca-slicer
     ];
 }
 

@@ -139,7 +139,6 @@
   environment.systemPackages = with pkgs; [
     keyutils
     cifs-utils
-    bambu-studio
   ];
 
   environment.shells = with pkgs; [ zsh ];
