@@ -26,16 +26,6 @@ in
        src = pkgs.zsh-nix-shell;
      }
      {
-       name = "powerlevel10k";
-       src = pkgs.zsh-powerlevel10k;
-       file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-     }
-     {
-       name = "powerlevel10k-config";
-       src = ../../dotfiles/p10k-config;
-       file = "p10k.zsh";
-     }
-     {
        name = "zsh-syntax-highlighting";
        src = pkgs.fetchFromGitHub {
          owner = "zsh-users";
@@ -46,13 +36,20 @@ in
      }
     ];
 
-    # plugins
     zplug = {
      enable = true;
      plugins = [
        { name = "zsh-users/zsh-autosuggestions"; }
-       { name = "plugins/git"; tags = [ from:oh-my-zsh ]; }
+       { name = "plugins/git"; tags = [ "from:oh-my-zsh" ]; } 
      ];
     };
   };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    enableTransience = true;
+  };
+
+  xdg.configFile."starship.toml".source = ../../dotfiles/starship/starship.toml;
 }
