@@ -106,26 +106,122 @@ config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 config.tab_and_split_indices_are_zero_based = false  -- Set this to false to make tab indices 1-indexed
 
--- tmux status
-wezterm.on("update-right-status", function(window, _)
-    local SOLID_LEFT_ARROW = ""
-    local ARROW_FOREGROUND = { Foreground = { Color = "#000000" } }
-    local prefix = ""
+-- Variables to store the previous CPU state to calculate usage over time
+local last_cpu_total = 0
+local last_cpu_idle = 0
 
-    if window:leader_is_active() then
-        prefix = " " .. utf8.char(0x1f30a) -- ocean wave
-        SOLID_LEFT_ARROW = utf8.char(0xe0b2)
+local function get_cpu_usage()
+    local f = io.open("/proc/stat", "r")
+    if not f then return "N/A" end
+    local line = f:read("*l")
+    f:close()
+
+    -- /proc/stat CPU line format: cpu  user nice system idle iowait irq softirq steal
+    local user, nice, system, idle, iowait, irq, softirq, steal = line:match("cpu%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)")
+    if not user then return "N/A" end
+
+    local total_idle = idle + iowait
+    local total_non_idle = user + nice + system + irq + softirq + steal
+    local total = total_idle + total_non_idle
+
+    local diff_total = total - last_cpu_total
+    local diff_idle = total_idle - last_cpu_idle
+
+    last_cpu_total = total
+    last_cpu_idle = total_idle
+
+    if diff_total == 0 then return "0.0%" end
+    local usage = ((diff_total - diff_idle) / diff_total) * 100
+    return string.format("%.1f%%", usage)
+end
+
+local function get_ram_usage()
+    local f = io.open("/proc/meminfo", "r")
+    if not f then return "N/A" end
+    local mem_total = 0
+    local mem_available = 0
+
+    for line in f:lines() do
+        if line:match("^MemTotal:") then
+            mem_total = tonumber(line:match("%d+"))
+        elseif line:match("^MemAvailable:") then
+            mem_available = tonumber(line:match("%d+"))
+        end
+    end
+    f:close()
+
+    if mem_total > 0 and mem_available > 0 then
+        local used = mem_total - mem_available
+        -- /proc/meminfo reports in kilobytes, convert to gigabytes
+        return string.format("%.1f/%.1fGB", used / 1024 / 1024, mem_total / 1024 / 1024)
+    end
+    return "N/A"
+end
+
+-- tmux status
+wezterm.on("update-status", function(window, _)
+    -- ==========================================
+    -- Left Status (Leader / Wave Icon)
+    -- ==========================================
+    local SOLID_RIGHT_ARROW = utf8.char(0xe0b0)
+    local wave_bg = "#b7bdf8"
+    local wave_fg = "#181825"
+
+    local first_tab_bg = "#1e2030"
+    local tabs = window:mux_window():tabs_with_info()
+
+    if tabs[1] and tabs[1].is_active then
+        first_tab_bg = "#c6a0f6"
     end
 
-    if window:active_tab():tab_id() ~= 0 then
-        ARROW_FOREGROUND = { Foreground = { Color = "#333333" } }
-    end -- arrow color based on if tab is first pane
+    if window:leader_is_active() then
+        window:set_left_status(wezterm.format {
+            { Background = { Color = wave_bg } },
+            { Foreground = { Color = wave_fg } },
+            { Text = " " .. utf8.char(0x1f30a) .. " " },
 
-    window:set_left_status(wezterm.format {
-        { Background = { Color = "#b7bdf8" } },
-        { Text = prefix },
-        ARROW_FOREGROUND,
-        { Text = SOLID_LEFT_ARROW }
+            { Background = { Color = first_tab_bg } },
+            { Foreground = { Color = wave_bg } },
+            { Text = SOLID_RIGHT_ARROW }
+        })
+    else
+        -- Clear the status when leader is not active
+        window:set_left_status("")
+    end
+
+    -- ==========================================
+    -- Right Status (Pointy System Stats)
+    -- ==========================================
+    local SOLID_LEFT_ARROW = utf8.char(0xe0b2)
+
+    local cpu = get_cpu_usage()
+    local ram = get_ram_usage()
+
+    -- Catppuccin Macchiato Colors
+    local color_cpu = "#eed49f"
+    local color_ram = "#8aadf4"
+    local color_text = "#181825"
+
+    window:set_right_status(wezterm.format {
+        -- 1. Transition from empty tab bar to CPU color
+        'ResetAttributes', 
+        { Foreground = { Color = color_cpu } },
+        { Text = SOLID_LEFT_ARROW },
+
+        -- 2. CPU Section
+        { Background = { Color = color_cpu } },
+        { Foreground = { Color = color_text } },
+        { Text = "  " .. cpu .. " " },
+
+        -- 3. Transition from CPU color to RAM color
+        { Background = { Color = color_cpu } },
+        { Foreground = { Color = color_ram } },
+        { Text = SOLID_LEFT_ARROW },
+
+        -- 4. RAM Section
+        { Background = { Color = color_ram } },
+        { Foreground = { Color = color_text } },
+        { Text = " 󰍛 " .. ram .. " " },
     })
 end)
 
