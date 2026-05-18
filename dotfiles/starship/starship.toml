@@ -2,12 +2,12 @@
 
 # --- LEFT PROMPT ---
 format = """
-[ ](bg:red)\
+[ ](bg:sapphire)\
 $os\
 $username\
-[](bg:peach fg:red)\
+[](bg:green fg:sapphire)\
 $directory\
-[](bg:yellow fg:peach)\
+[](bg:yellow fg:green)\
 $git_branch\
 $git_status\
 [](fg:yellow bg:green)\
@@ -38,7 +38,7 @@ palette = 'catppuccin_mocha'
 
 [os]
 disabled = false
-style = "bg:red fg:crust"
+style = "bg:sapphire fg:crust"
 
 [os.symbols]
 NixOS = ""
@@ -65,12 +65,12 @@ RedHatEnterprise = "󱄛"
 
 [username]
 show_always = true
-style_user = "bg:red fg:crust"
-style_root = "bg:red fg:crust"
+style_user = "bg:sapphire fg:crust"
+style_root = "bg:sapphire fg:crust"
 format = '[ $user]($style)'
 
 [directory]
-style = "bg:peach fg:crust"
+style = "bg:green fg:crust"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
