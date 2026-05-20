@@ -48,7 +48,6 @@ in
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-    enableTransience = true;
   };
 
   xdg.configFile."starship.toml".source = ../../dotfiles/starship/starship.toml;
