@@ -8,6 +8,7 @@
     libratbag
     steam-run
     bolt-launcher
+    wootility
   ];
 
   programs.steam = {

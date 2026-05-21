@@ -70,6 +70,8 @@
     variant = "us";
   };
 
+  hardware.wooting.enable = true;
+
   # RDP
   services.xrdp.enable = true;
   services.xrdp.defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
@@ -113,7 +115,7 @@
   users.users.sean = {
     isNormalUser = true;
     description = "Sean Zhong";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "input"];
     packages = with pkgs; [
     git
     ];
