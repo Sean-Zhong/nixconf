@@ -1,8 +1,10 @@
 keys:
-  - &my_ssh_key age173rq0qps87krw54puhlmhmrs53hhtc9g8f3g4n270z543pl2wcysvcjtje
+  - &laptop age173rq0qps87krw54puhlmhmrs53hhtc9g8f3g4n270z543pl2wcysvcjtje
+  - &desktop age1kdat3m7je49mrmx3cmlu2vnvp5umhhk84e67k8dtrj7ejd9s9sps4ez7mh
 
 creation_rules:
   - path_regex: secrets/.*$
     key_groups:
       - age:
-          - *my_ssh_key
+          - *laptop
+          - *desktop
