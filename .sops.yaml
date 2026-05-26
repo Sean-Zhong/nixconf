@@ -1,0 +1,8 @@
+keys:
+  - &my_ssh_key age1mew7xtcjazeyyklclkjdcjgzqnfk9gsdwx0krvyhzpk4yc8cd5nqg3xe8j
+
+creation_rules:
+  - path_regex: secrets/.*$
+    key_groups:
+      - age:
+          - *my_ssh_key

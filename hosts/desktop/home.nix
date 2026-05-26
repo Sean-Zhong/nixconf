@@ -11,6 +11,7 @@
     ../../modules/home-manager/zenbrowser.nix
     ../../modules/home-manager/kubernetes.nix
     ../../modules/home-manager/development.nix
+    ../../modules/home-manager/secrets.nix
     ];
 
   home.username = "sean";
