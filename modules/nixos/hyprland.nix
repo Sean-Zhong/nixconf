@@ -6,7 +6,6 @@
     swaynotificationcenter
     networkmanagerapplet
     libnotify
-    swww
     hyprpaper
     wofi
     uwsm
