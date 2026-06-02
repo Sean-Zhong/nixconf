@@ -19,7 +19,7 @@ hl.bind(mainMod .. " + C", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(ide))
 hl.bind(mainMod .. " + escape", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("pkill waybar && hyprctl dispatch exec waybar"))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("pkill waybar; uwsm app -- waybar"))
 hl.bind("SUPER + V", hl.dsp.exec_cmd("cliphist list | wofi --dmenu | cliphist decode | wl-copy"))
 
 -- Move focus with mainMod + arrow keys
