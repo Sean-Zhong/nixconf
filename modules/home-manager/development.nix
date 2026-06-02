@@ -40,6 +40,7 @@
         enableBashIntegration = true; # default is true
         enableZshIntegration = true;  # default is true
         enableFishIntegration = true; # default is true
+        shellWrapperName = "y";
     };
 
 }

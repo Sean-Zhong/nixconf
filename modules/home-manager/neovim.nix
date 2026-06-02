@@ -10,6 +10,8 @@ in
       extraConfig = ''
       '';
       plugins = sharedPlugins;
+      withRuby = false;
+      withPython3 = true;
   };
 
   home.file = {

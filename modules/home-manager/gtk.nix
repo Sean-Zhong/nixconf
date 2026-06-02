@@ -39,5 +39,7 @@
         name = "Bibata-Modern-Ice";
         size = 16;
         };
+
+        gtk4.theme = null;
     };
 }

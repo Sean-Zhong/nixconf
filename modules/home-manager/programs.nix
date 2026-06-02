@@ -6,7 +6,6 @@
         filezilla
         gnomeExtensions.forge
         gnomeExtensions.app-icons-taskbar
-        youtube-music
         solaar
         remmina
         playerctl
@@ -17,8 +16,6 @@
         usbimager
         pinta
         libreoffice
-        blueberry
-        realvnc-vnc-viewer
         davinci-resolve
         zoom-us
         orca-slicer
