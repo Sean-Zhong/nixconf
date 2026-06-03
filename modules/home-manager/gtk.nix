@@ -26,20 +26,34 @@
     gtk = {
         enable = true;
         theme = {
-	        package = pkgs.orchis-theme;
-	        name = "Orchis-Grey-Dark";
-	    };
+            package = pkgs.orchis-theme;
+            name = "Orchis-Grey-Dark";
+        };
 
-	    iconTheme = {
-	        package = pkgs.tela-icon-theme;
-	        name = "Tela-blue-dark";
-	    };
+        iconTheme = {
+            package = pkgs.tela-icon-theme;
+            name = "Tela-blue-dark";
+        };
 
         cursorTheme = {
-        name = "Bibata-Modern-Ice";
-        size = 16;
+            name = "Bibata-Modern-Ice";
+            size = 16;
         };
 
         gtk4.theme = null;
+
+        gtk3.extraConfig = {
+            gtk-application-prefer-dark-theme = 1;
+        };
+
+        gtk4.extraConfig = {
+            gtk-application-prefer-dark-theme = 1;
+        };
+    };
+
+    dconf.settings = {
+        "org/gnome/desktop/interface" = {
+            color-scheme = "prefer-dark";
+        };
     };
 }

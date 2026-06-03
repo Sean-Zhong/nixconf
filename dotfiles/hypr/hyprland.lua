@@ -27,8 +27,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("systemctl --user start hyprpolkitagent")
-    hl.exec_cmd("gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'")
-    hl.exec_cmd("gsettings set org.gnome.desktop.interface gtk-theme 'Orchis-Grey-Dark'")
 end)
 
 -----------------------------
@@ -39,7 +37,6 @@ hl.env("HYPRCURSOR_SIZE", "16")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
-hl.env("GTK_THEME", "Orchis-Grey-Dark")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 
 ---------------------
