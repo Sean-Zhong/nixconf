@@ -70,6 +70,10 @@
     ".config/wofi".source = ../../dotfiles/wofi;
     ".config/wlogout".source = ../../dotfiles/wlogout;
     ".config/swaync".source = ../../dotfiles/swaync;
+    ".config/discord-flags.conf".text = ''
+      --enable-features=WaylandWindowDecorations,WebRTCPipeWireCapturer
+      --ozone-platform-hint=auto
+    '';
   };
 
   home.sessionVariables = {
