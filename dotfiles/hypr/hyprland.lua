@@ -17,6 +17,7 @@ local ide         = "idea-ultimate"
 --- AUTOSTART ---
 -----------------
 hl.on("hyprland.start", function()
+    hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("ibus-daemon -rxRd --panel disable")
     hl.exec_cmd("gnome-keyring-daemon --start --components=ssh")
     hl.exec_cmd([[bash -c 'sleep 1; export SSH_AUTH_SOCK=/run/user/$(id -u)/ssh-agent; SSH_ASKPASS=$HOME/.local/bin/my-ssh-askpass SSH_ASKPASS_REQUIRE=force ssh-add ~/.ssh/id_ed25519']])
