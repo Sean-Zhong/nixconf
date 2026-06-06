@@ -1,5 +1,6 @@
 { config, pkgs, inputs, outputs, ... }:
 
+
 {
   imports = [ 
     ../../modules/home-manager/wezterm.nix
@@ -12,6 +13,7 @@
     ../../modules/home-manager/kubernetes.nix
     ../../modules/home-manager/development.nix
     ../../modules/home-manager/secrets.nix
+    ../../modules/home-manager/desktop-services.nix
     ];
 
   home.username = "sean";

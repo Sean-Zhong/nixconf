@@ -14,6 +14,7 @@
     ../../modules/home-manager/ssh.nix
     ../../modules/home-manager/development.nix
     ../../modules/home-manager/secrets.nix
+    ../../modules/home-manager/desktop-services.nix
     ];
 
   home.username = "sean";
