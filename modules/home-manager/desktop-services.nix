@@ -11,10 +11,5 @@
   services.network-manager-applet.enable = true;
 
   services.cliphist.enable = true;
-
-  xdg.configFile."autostart/hyprpolkitagent.desktop".text = ''
-    [Desktop Entry]
-    Hidden=true
-  '';
 }
 
