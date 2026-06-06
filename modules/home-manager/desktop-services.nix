@@ -11,8 +11,5 @@
   services.network-manager-applet.enable = true;
 
   services.cliphist.enable = true;
-
-  systemd.user.services.hyprpolkitagent = {
-    Install.wantedBy = [ "graphical-session.target" ];
-  };
 }
+

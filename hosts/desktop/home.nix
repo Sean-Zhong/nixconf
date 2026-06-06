@@ -76,6 +76,7 @@
       --enable-features=WaylandWindowDecorations,WebRTCPipeWireCapturer
       --ozone-platform-hint=auto
     '';
+    ".config/uwsm/env".source = ../../dotfiles/uwsm/env;
   };
 
   home.sessionVariables = {

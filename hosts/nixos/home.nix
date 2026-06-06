@@ -63,6 +63,7 @@
     "scripts".source = ../../dotfiles/scripts;
     ".config/wlogout".source = ../../dotfiles/wlogout;
     ".config/swaync".source = ../../dotfiles/swaync;
+    ".config/uwsm/env".source = ../../dotfiles/uwsm/env;
     };
 
   programs.home-manager.enable = true;

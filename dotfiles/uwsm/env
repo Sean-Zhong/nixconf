@@ -1,0 +1,3 @@
+export MOZ_ENABLE_WAYLAND=1
+export HYPRCURSOR_THEME=Bibata-Modern-Ice
+export HYPRCURSOR_SIZE=16
