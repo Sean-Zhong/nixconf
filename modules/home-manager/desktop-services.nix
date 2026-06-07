@@ -13,15 +13,15 @@
 
   services.cliphist.enable = true;
 
-  # 2. Configure Walker natively
   programs.walker = {
     enable = true;
-    runAsService = true; # Automatically spins up the Elephant backend natively!
+    runAsService = true;
 
     config = {
       terminal = "wezterm";
       theme = "default";
-      
+      close_when_open = true;
+
       builtins = {
         applications.weight = 100;
         websearch.weight = 50;
