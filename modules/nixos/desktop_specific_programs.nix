@@ -9,6 +9,7 @@
     steam-run
     bolt-launcher
     wootility
+    vesktop
   ];
 
   programs.steam = {
