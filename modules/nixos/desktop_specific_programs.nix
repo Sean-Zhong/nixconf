@@ -2,7 +2,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    discord
     runelite
     piper
     libratbag

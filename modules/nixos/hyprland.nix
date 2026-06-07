@@ -7,7 +7,6 @@
     networkmanagerapplet
     libnotify
     hyprpaper
-    wofi
     uwsm
     hyprshot
     hyprlock
@@ -54,5 +53,10 @@
 
   systemd.services.NetworkManager-wait-online.enable = false;
   programs.dconf.enable = true;
+
+  nix.settings = {
+    extra-substituters = ["https://walker.cachix.org"];
+    extra-trusted-public-keys = ["walker.cachix.org-1:fG8q+uAaMqhsMxWjwvk0IMb4mFPFLqHjuvfwQxE4oJM="];
+  };
 }
 

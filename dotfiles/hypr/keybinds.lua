@@ -1,7 +1,7 @@
 local mainMod     = "SUPER"
 local terminal    = "wezterm"
 local fileManager = "nautilus"
-local menu        = "wofi --show drun"
+local menu        = "walker"
 local browser     = "zen-beta"
 local ide         = "idea-ultimate"
 -------------------
