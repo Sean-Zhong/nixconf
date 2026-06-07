@@ -10,7 +10,7 @@ local ide         = "idea-ultimate"
 
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd([[sh -c "wlogout -b 5 -T 400 -B 400"]]))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("uwsm app -- wlogout -b 5 -T 400 -B 400"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
@@ -19,7 +19,7 @@ hl.bind(mainMod .. " + C", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(ide))
 hl.bind(mainMod .. " + escape", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("pkill waybar; uwsm app -- waybar"))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("systemctl --user restart waybar"))
 hl.bind("SUPER + V", hl.dsp.exec_cmd("cliphist list | wofi --dmenu | cliphist decode | wl-copy"))
 
 -- Move focus with mainMod + arrow keys
