@@ -154,8 +154,9 @@
   };
 
   # Docker
-  virtualisation.docker = {
-    enable = true;
+  virtualisation = {
+    docker.enable = true;
+    podman.enable = true;
   };
 
   # Enable Polkit
