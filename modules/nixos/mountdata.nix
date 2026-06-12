@@ -2,7 +2,7 @@
 
 pkgs.writeShellScriptBin "mountdata" ''
 sudo umount /mnt/team_files
-sudo sshfs -o allow_other,identityfile=/home/sean/.ssh/id_ed25519,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 \
+sudo sshfs -o allow_other,follow_symlinks,identityfile=/home/sean/.ssh/id_ed25519,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 \
     sean.zhong@team-flow-1.int.scila.se:/custdata/ \
     /mnt/team_files
 
