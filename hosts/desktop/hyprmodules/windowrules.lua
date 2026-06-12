@@ -4,11 +4,11 @@ hl.on("hyprland.start", function()
 end)
 
 hl.window_rule({
-    match = { class = "^(zen%-beta)$" },
+    match = { class = "^(zen-beta)$" },
     workspace = "1"
 })
 
 hl.window_rule({
-    match = { class = "^vesktop$" },
+    match = { class = "^(vesktop)$" },
     workspace = "6"
 })
