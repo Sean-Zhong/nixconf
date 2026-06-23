@@ -20,7 +20,9 @@ if ! systemctl --user -q is-active "$UNIT_NAME.timer"; then
     --recreate-lock-file \
     --no-write-lock-file \
     --print-out-paths \
-    --no-link) && \
+    --no-link \
+    --cores 4 \
+    --max-jobs 2) && \
 
     nvd diff /run/current-system \"\$BUILD\" > '$OUTPUT_FILE' && \
 
