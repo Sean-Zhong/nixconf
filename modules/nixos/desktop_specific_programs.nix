@@ -9,6 +9,7 @@
     bolt-launcher
     wootility
     vesktop
+    prismlauncher
   ];
 
   programs.steam = {
