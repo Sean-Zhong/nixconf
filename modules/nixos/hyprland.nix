@@ -23,7 +23,7 @@
     slurp
     swappy
     brightnessctl
-    quickshell
+    inputs.quickshell.packages.${pkgs.system}.default
   ];
 
   programs.hyprland = {

@@ -23,6 +23,10 @@
       url = "github:abenz1267/walker";
       inputs.elephant.follows = "elephant";
     };
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/quickshell/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
