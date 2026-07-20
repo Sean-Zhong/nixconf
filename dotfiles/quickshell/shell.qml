@@ -1,54 +1,51 @@
-    PanelWindow {
-        id: topBar
-        // Reference to the specific screen this instance is rendering on
-        property var screenModel: modelData
-        
-        /* STREAMING_CHUNK:Configuring Wayland Layer Shell properties... */
-        screen: screenModel
-        anchors {
-            top: true
-            left: true
-            right: true
-        }
-        height: 40 // Matches your old Waybar height
-        
-        // Tells Hyprland to reserve space so tiled windows don't overlap
-        exclusionMode: LayerShell.Exclusive
-        layer: LayerShell.Top
+import QtQuick
+import QtQuick.Layouts
+import QtQml
+import Quickshell
+import Quickshell.Wayland
+import Quickshell.Hyprland
+import Quickshell.Io
 
-        /* STREAMING_CHUNK:Styling the main background container... */
-        Rectangle {
-            anchors.fill: parent
-            color: "#1e1e2e" // Catppuccin Base
-            border.color: "#313244" // Catppuccin Surface0
-            border.width: 2 // Matches your general hyprland aesthetic
+ShellRoot {
+    Instantiator {
+        model: Quickshell.screens
+        
+        delegate: PanelWindow {
+            id: topBar
+            screen: modelData
+            
+            anchors {
+                top: true
+                left: true
+                right: true
+            }
+            implicitHeight: 40
+            exclusionMode: ExclusionMode.Auto
 
-            /* STREAMING_CHUNK:Building the layout structure... */
-            RowLayout {
+            Rectangle {
                 anchors.fill: parent
-                anchors.leftMargin: 15
-                anchors.rightMargin: 15
-                spacing: 10
+                color: "#1e1e2e" // Catppuccin Base
+                border.color: "#313244" // Catppuccin Surface0
+                border.width: 2
 
                 // ==========================================
                 // LEFT: Hyprland Workspaces Module
                 // ==========================================
-                /* STREAMING_CHUNK:Creating the Hyprland Workspaces module... */
                 RowLayout {
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 15
                     spacing: 6
-                    Layout.alignment: Qt.AlignLeft
 
                     Repeater {
-                        // Native Quickshell integration with Hyprland IPC
                         model: Hyprland.workspaces
                         
                         delegate: Rectangle {
                             required property var modelData
                             width: 28
                             height: 28
-                            radius: 14 // Makes them circles
+                            radius: 14
                             
-                            // Dynamic colors based on active workspace
                             color: modelData.focused ? "#cdd6f4" : "#313244"
 
                             Text {
@@ -62,48 +59,76 @@
                             MouseArea {
                                 anchors.fill: parent
                                 cursorShape: Qt.PointingHandCursor
-                                onClicked: Hyprland.dispatch(`workspace ${modelData.id}`)
+                                onClicked: modelData.activate()
                             }
                         }
                     }
                 }
 
                 // ==========================================
-                // CENTER: Flexible Spacer
+                // CENTER: Clock Module
                 // ==========================================
-                /* STREAMING_CHUNK:Adding a flexible spacer... */
-                Item {
-                    Layout.fillWidth: true
-                }
-
-                // ==========================================
-                // RIGHT: Clock Module
-                // ==========================================
-                /* STREAMING_CHUNK:Creating the Clock module... */
                 RowLayout {
-                    Layout.alignment: Qt.AlignRight
+                    anchors.centerIn: parent
                     
                     Timer {
                         interval: 1000
                         running: true
                         repeat: true
                         onTriggered: {
-                            // Simple time format matching your waybar {0:%R}
-                            timeText.text = new Date().toLocaleTimeString(Qt.locale(), "hh:mm")
+                            // Formatted to match your old waybar style: HH:mm  MM-dd
+                            timeText.text = Qt.formatDateTime(new Date(), "HH:mm  MM-dd")
                         }
                     }
 
                     Text {
                         id: timeText
-                        text: new Date().toLocaleTimeString(Qt.locale(), "hh:mm")
-                        color: "#cdd6f4" // Catppuccin Text
+                        text: Qt.formatDateTime(new Date(), "HH:mm  MM-dd")
+                        color: "#cdd6f4"
                         font.pixelSize: 16
                         font.family: "JetBrainsMono Nerd Font"
                         font.bold: true
+                    }
+                }
+
+                // ==========================================
+                // RIGHT: System Tray & Wlogout
+                // ==========================================
+                RowLayout {
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.rightMargin: 15
+                    spacing: 15
+
+                    // Defines the terminal command to run
+                    Process {
+                        id: wlogoutProc
+                        command: ["wlogout", "-b", "5", "-T", "400", "-B", "400"]
+                    }
+
+                    // Wlogout Button
+                    Rectangle {
+                        width: 28
+                        height: 28
+                        radius: 4
+                        color: "transparent"
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: ""
+                            color: "#f38ba8"
+                            font.pixelSize: 18
+                            font.family: "JetBrainsMono Nerd Font"
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: wlogoutProc.running = true
+                        }
                     }
                 }
             }
         }
     }
 }
-
