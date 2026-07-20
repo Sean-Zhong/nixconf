@@ -3,10 +3,10 @@
 {
   imports = [ inputs.walker.homeManagerModules.default ];
 
-  programs.waybar = {
-    enable = true;
-    systemd.enable = true;
-  };
+    #  programs.waybar = {
+    #    enable = true;
+    #    systemd.enable = true;
+    #  };
 
   services.hyprpaper.enable = true;
   services.hypridle.enable = true;

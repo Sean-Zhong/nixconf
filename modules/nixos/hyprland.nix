@@ -23,6 +23,7 @@
     slurp
     swappy
     brightnessctl
+    quickshell
   ];
 
   programs.hyprland = {

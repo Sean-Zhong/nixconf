@@ -77,6 +77,7 @@
       --ozone-platform-hint=auto
     '';
     ".config/uwsm/env".source = ../../dotfiles/uwsm/env;
+    ".config/quickshell".source = ../../dotfiles/quickshell;
   };
 
   home.sessionVariables = {
