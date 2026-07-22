@@ -10,7 +10,6 @@ ShellRoot {
         delegate: PanelWindow {
             id: topBar
             screen: modelData
-            
             color: "transparent"
 
             anchors {
@@ -18,10 +17,9 @@ ShellRoot {
                 left: true
                 right: true
             }
-            
             implicitHeight: 40
             exclusionMode: ExclusionMode.Auto
-            
+
             Rectangle {
                 anchors.fill: parent
                 color: "#771e1e2e" 
@@ -34,20 +32,16 @@ ShellRoot {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: 15
                     spacing: 20
-                    
+                    NixosMenu { anchors.verticalCenter: parent.verticalCenter }
                     Workspaces { anchors.verticalCenter: parent.verticalCenter }
-                    
-                    // The Tray is now happily living on the left!
                     SystemTrayModule { anchors.verticalCenter: parent.verticalCenter }
                 }
-                
                 // ==========================================
                 // CENTER: Clock
                 // ==========================================
                 Clock {
                     anchors.centerIn: parent
                 }
-                
                 // ==========================================
                 // RIGHT: Hardware, Volume, Wlogout
                 // ==========================================
@@ -56,7 +50,6 @@ ShellRoot {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.rightMargin: 18
                     spacing: 15
-                    
                     Hardware { anchors.verticalCenter: parent.verticalCenter }
                     Volume { anchors.verticalCenter: parent.verticalCenter }
                     Wlogout { anchors.verticalCenter: parent.verticalCenter }

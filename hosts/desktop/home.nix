@@ -67,7 +67,6 @@
   home.file = {
     ".config/hypr".source = ../../dotfiles/hypr;
     ".config/hyprmodules".source = ./hyprmodules;
-    ".config/waybar".source = ../../dotfiles/waybar;
     "resources/images".source = ../../resources/images;
     ".config/wofi".source = ../../dotfiles/wofi;
     ".config/wlogout".source = ../../dotfiles/wlogout;
@@ -78,6 +77,7 @@
     '';
     ".config/uwsm/env".source = ../../dotfiles/uwsm/env;
     ".config/quickshell".source = ../../dotfiles/quickshell;
+    ".config/cava".source = ../../dotfiles/cava;
   };
 
   home.sessionVariables = {

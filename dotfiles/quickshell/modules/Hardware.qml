@@ -3,11 +3,8 @@ import Quickshell.Io
 
 Rectangle {
     id: hardwarePill
-
-    color: "#99313244"
-
-    radius: 16
-
+    color: "#99313244" // Catppuccin Surface color
+    radius: 8
     implicitWidth: hardwareRow.implicitWidth + 24
     implicitHeight: 32
 
@@ -17,7 +14,7 @@ Rectangle {
         spacing: 15
 
         // ==========================================
-        // 1. CPU Module
+        // 1. CPU Module (Catppuccin Teal)
         // ==========================================
         Row {
             anchors.verticalCenter: parent.verticalCenter
@@ -31,21 +28,22 @@ Rectangle {
             }
             Text {
                 text: ""
-                color: "#ffffff" // Pure white
+                color: "#94e2d5"
                 font.pixelSize: 15
                 font.family: "JetBrainsMono Nerd Font"
             }
             Text {
                 id: cpuText
                 text: "..."
-                color: "#ffffff"
+                color: "#94e2d5"
                 font.pixelSize: 15
                 font.family: "JetBrainsMono Nerd Font"
+                font.bold: true
             }
         }
 
         // ==========================================
-        // 2. Temperature Module
+        // 2. Temperature Module (Catppuccin Peach)
         // ==========================================
         Row {
             anchors.verticalCenter: parent.verticalCenter
@@ -59,21 +57,22 @@ Rectangle {
             }
             Text {
                 text: ""
-                color: "#ffffff"
+                color: "#fab387"
                 font.pixelSize: 15
                 font.family: "JetBrainsMono Nerd Font"
             }
             Text {
                 id: tempText
                 text: "..."
-                color: "#ffffff"
+                color: "#fab387"
                 font.pixelSize: 15
                 font.family: "JetBrainsMono Nerd Font"
+                font.bold: true
             }
         }
 
         // ==========================================
-        // 3. Memory Module
+        // 3. Memory Module (Catppuccin Mauve)
         // ==========================================
         Row {
             anchors.verticalCenter: parent.verticalCenter
@@ -87,16 +86,17 @@ Rectangle {
             }
             Text {
                 text: ""
-                color: "#ffffff"
+                color: "#cba6f7"
                 font.pixelSize: 15
                 font.family: "JetBrainsMono Nerd Font"
             }
             Text {
                 id: memText
                 text: "..."
-                color: "#ffffff"
+                color: "#cba6f7"
                 font.pixelSize: 15
                 font.family: "JetBrainsMono Nerd Font"
+                font.bold: true
             }
         }
     }

@@ -5,7 +5,7 @@ import Quickshell.Widgets
 
 Rectangle {
     id: trayPill
-    color: "#99313244"
+    color: "transparent"
     radius: 16
     implicitWidth: trayRow.implicitWidth + 24
     implicitHeight: 32
