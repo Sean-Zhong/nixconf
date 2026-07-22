@@ -55,23 +55,30 @@ Rectangle {
         anchors.centerIn: parent
         spacing: 10
 
-        Row {
+        Item {
+            implicitWidth: visualizerRow.implicitWidth
+            implicitHeight: 22 // Fixed bounding frame so bottom baseline doesn't shift
             anchors.verticalCenter: parent.verticalCenter
-            spacing: 3
             visible: volumePill.sink?.audio && !volumePill.sink.audio.muted
 
-            Repeater {
-                model: volumePill.barHeights
-                delegate: Rectangle {
-                    required property var modelData
-                    width: 3
-                    height: Math.max(3, Math.min(16, (modelData / 10) * 16))
-                    radius: 1.5
-                    color: "#89b4fa" // Catppuccin Blue
-                    anchors.verticalCenter: parent.verticalCenter
+            Row {
+                id: visualizerRow
+                anchors.fill: parent
+                spacing: 3
 
-                    Behavior on height {
-                        NumberAnimation { duration: 50 }
+                Repeater {
+                    model: volumePill.barHeights
+                    delegate: Rectangle {
+                        required property var modelData
+                        width: 3
+                        height: Math.max(2, Math.min(22, (modelData / 10) * 22))
+                        radius: 1.5
+                        color: "#89b4fa"
+                        anchors.bottom: parent.bottom
+
+                        Behavior on height {
+                            NumberAnimation { duration: 50 }
+                        }
                     }
                 }
             }
