@@ -50,6 +50,7 @@ ShellRoot {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.rightMargin: 18
                     spacing: 15
+                    Laptop { anchors.verticalCenter: parent.verticalCenter }
                     Hardware { anchors.verticalCenter: parent.verticalCenter }
                     Volume { anchors.verticalCenter: parent.verticalCenter }
                     Wlogout { anchors.verticalCenter: parent.verticalCenter }
