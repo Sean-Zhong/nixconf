@@ -68,7 +68,6 @@
     ".config/hypr".source = ../../dotfiles/hypr;
     ".config/hyprmodules".source = ./hyprmodules;
     "resources/images".source = ../../resources/images;
-    ".config/wofi".source = ../../dotfiles/wofi;
     ".config/wlogout".source = ../../dotfiles/wlogout;
     ".config/swaync".source = ../../dotfiles/swaync;
     ".config/discord-flags.conf".text = ''
