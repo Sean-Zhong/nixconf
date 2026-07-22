@@ -2,7 +2,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    waybar
     swaynotificationcenter
     networkmanagerapplet
     libnotify
@@ -23,6 +22,8 @@
     slurp
     swappy
     brightnessctl
+    cava
+    inputs.quickshell.packages.${pkgs.system}.default
   ];
 
   programs.hyprland = {
