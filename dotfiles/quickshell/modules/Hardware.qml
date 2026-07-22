@@ -56,9 +56,9 @@ Rectangle {
             spacing: 6
             Process {
                 running: true
-                command: ["sh", "-c", "while true; do cat $(grep -lE 'k10temp|zenpower' /sys/class/hwmon/hwmon*/name 2>/dev/null | sed 's/name/temp3_input/') 2>/dev/null | head -n 1 | awk '{print int($1/1000)\"°C\"}' || echo '?°C'; sleep 5; done"]
+                command: ["sh", "-c", "while true; do hw=$(grep -lE 'k10temp|zenpower|coretemp' /sys/class/hwmon/hwmon*/name 2>/dev/null | head -n 1 | sed 's|/name||'); t=\"\"; if [ -n \"$hw\" ]; then lbl=$(grep -lE 'Tccd1|Tdie' \"$hw\"/temp*_label 2>/dev/null | head -n 1); [ -n \"$lbl\" ] && t=$(cat \"${lbl%label}input\" 2>/dev/null); [ -z \"$t\" ] && t=$(cat \"$hw\"/temp1_input 2>/dev/null); fi; [ -z \"$t\" ] && t=$(cat /sys/class/thermal/thermal_zone*/temp 2>/dev/null | head -n 1); if [ -n \"$t\" ] && [ \"$t\" -gt 0 ]; then echo $((t / 1000))\"°C\"; else echo '?°C'; fi; sleep 5; done"]
                 stdout: SplitParser {
-                    onRead: (data) => tempText.text = data.trim()
+                    onRead: (data) => { tempText.text = data.trim() }
                 }
             }
             Text {
