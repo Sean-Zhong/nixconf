@@ -10,6 +10,9 @@ Rectangle {
 
     property int currentBrightness: 100
 
+    property bool isWifiOn: wifiStatusText.text.indexOf("ON") !== -1
+    property bool isBtOn: btStatusText.text.indexOf("ON") !== -1
+
     Text {
         anchors.centerIn: parent
         text: "" 
@@ -172,7 +175,7 @@ Rectangle {
                                 Text {
                                     anchors.centerIn: parent
                                     text: "󰃠"
-                                    color: "#1e1e2e" // Dark text for contrast against yellow/white handle
+                                    color: "#1e1e2e"
                                     font.pixelSize: 10
                                     font.bold: true
                                     font.family: "JetBrainsMono Nerd Font"
@@ -188,7 +191,7 @@ Rectangle {
                                 function updateBrightness(mouseX) {
                                     var clampedX = Math.max(0, Math.min(width, mouseX))
                                     var pct = Math.round((clampedX / width) * 100)
-                                    pct = Math.max(1, Math.min(100, pct)) // Strictly prevents 0% blackout!
+                                    pct = Math.max(1, Math.min(100, pct))
 
                                     nixPill.currentBrightness = pct
                                     nixPill.runCmd(setBrightnessProc, "brightnessctl set " + pct + "%")
@@ -203,7 +206,6 @@ Rectangle {
                             }
                         }
 
-                        // Bright Sun Icon (Right)
                         Text {
                             text: "󰃠"
                             color: "#f9e2af"
@@ -236,7 +238,7 @@ Rectangle {
                             id: wifiStatusText
                             anchors.right: parent.right
                             text: "OFF"
-                            color: wifiStatusText.text.indexOf("ON") !== -1 ? "#a6e3a1" : "#f38ba8"
+                            color: nixPill.isWifiOn ? "#a6e3a1" : "#f38ba8"
                             font.pixelSize: 12
                             font.bold: true
                             font.family: "JetBrainsMono Nerd Font"
@@ -256,11 +258,27 @@ Rectangle {
 
                         Rectangle {
                             width: (parent.width - 8) / 2; height: 32; radius: 6
-                            color: wifiToggleMouse.containsMouse ? "#313244" : "#2a2b3d"
+                            color: {
+                                if (nixPill.isWifiOn) {
+                                    return wifiToggleMouse.containsMouse ? "#8ce187" : "#a6e3a1"
+                                }
+                                return wifiToggleMouse.containsMouse ? "#313244" : "#2a2b3d"
+                            }
                             Row {
                                 anchors.centerIn: parent; spacing: 6
-                                Text { text: "󰤨"; color: "#a6e3a1"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
-                                Text { text: "Toggle"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
+                                Text { 
+                                    text: "󰤨" 
+                                    color: nixPill.isWifiOn ? "#1e1e2e" : "#a6e3a1"
+                                    font.pixelSize: 13
+                                    font.family: "JetBrainsMono Nerd Font" 
+                                }
+                                Text { 
+                                    text: "Toggle" 
+                                    color: nixPill.isWifiOn ? "#1e1e2e" : "#cdd6f4"
+                                    font.pixelSize: 12
+                                    font.bold: nixPill.isWifiOn
+                                    font.family: "JetBrainsMono Nerd Font" 
+                                }
                             }
                             MouseArea {
                                 id: wifiToggleMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
@@ -313,7 +331,7 @@ Rectangle {
                             id: btStatusText
                             anchors.right: parent.right
                             text: "OFF"
-                            color: btStatusText.text.indexOf("ON") !== -1 ? "#89b4fa" : "#f38ba8"
+                            color: nixPill.isBtOn ? "#89b4fa" : "#f38ba8"
                             font.pixelSize: 12
                             font.bold: true
                             font.family: "JetBrainsMono Nerd Font"
@@ -333,11 +351,27 @@ Rectangle {
 
                         Rectangle {
                             width: (parent.width - 8) / 2; height: 32; radius: 6
-                            color: btToggleMouse.containsMouse ? "#313244" : "#2a2b3d"
+                            color: {
+                                if (nixPill.isBtOn) {
+                                    return btToggleMouse.containsMouse ? "#b4befe" : "#89b4fa"
+                                }
+                                return btToggleMouse.containsMouse ? "#313244" : "#2a2b3d"
+                            }
                             Row {
                                 anchors.centerIn: parent; spacing: 6
-                                Text { text: "󰂯"; color: "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
-                                Text { text: "Toggle"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
+                                Text { 
+                                    text: "󰂯" 
+                                    color: nixPill.isBtOn ? "#1e1e2e" : "#89b4fa"
+                                    font.pixelSize: 13
+                                    font.family: "JetBrainsMono Nerd Font" 
+                                }
+                                Text { 
+                                    text: "Toggle" 
+                                    color: nixPill.isBtOn ? "#1e1e2e" : "#cdd6f4"
+                                    font.pixelSize: 12
+                                    font.bold: nixPill.isBtOn
+                                    font.family: "JetBrainsMono Nerd Font" 
+                                }
                             }
                             MouseArea {
                                 id: btToggleMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
