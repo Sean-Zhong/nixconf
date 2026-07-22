@@ -8,6 +8,28 @@
     #    systemd.enable = true;
     #  };
 
+  systemd.user.services.quickshell = {
+    Unit = {
+      Description = "Quickshell Wayland Desktop Bar";
+      Documentation = "https://quickshell.outfoxxed.me/";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${pkgs.uwsm}/bin/uwsm app -- ${pkgs.quickshell}/bin/quickshell";
+
+      Restart = "on-failure";
+      RestartSec = "1s";
+
+      KillMode = "mixed";
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   services.hyprpaper.enable = true;
   services.hypridle.enable = true;
   services.network-manager-applet.enable = true;

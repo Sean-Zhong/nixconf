@@ -19,7 +19,7 @@ hl.bind(mainMod .. " + C", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(ide))
 hl.bind(mainMod .. " + escape", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("systemctl --user restart waybar"))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("systemctl --user restart quickshell"))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("walker -m clipboard"))
 
 -- Move focus with mainMod + arrow keys
