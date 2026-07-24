@@ -13,3 +13,12 @@ hl.window_rule({
     workspace = "2"
 })
 
+hl.window_rule({
+    match = { class = "vpn-auth" },
+    float = true,
+    size = "550 320",
+    center = true,
+    stayfocused = true,
+    animation = "popin 80%"
+})
+

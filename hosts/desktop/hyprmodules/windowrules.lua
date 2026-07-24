@@ -12,3 +12,12 @@ hl.window_rule({
     match = { class = "^(vesktop)$" },
     workspace = "6"
 })
+
+hl.window_rule({
+    match = { class = "vpn-auth" },
+    float = true,
+    size = "550 320",
+    center = true,
+    stayfocused = true,
+    animation = "popin 80%"
+})

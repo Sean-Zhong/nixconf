@@ -31,7 +31,7 @@ Rectangle {
 
     Text {
         anchors.centerIn: parent
-        text: "" 
+        text: ""
         color: "#74c7ec"
         font.pixelSize: 24
         font.family: "JetBrainsMono Nerd Font"
@@ -611,6 +611,156 @@ Rectangle {
                     }
 
                     Rectangle { width: parent.width; height: 1; color: "#313244" }
+
+                    // ==========================================
+                    // SMART OPENVPN 3 CONTROLS (AUTO-DETECTING)
+                    // ==========================================
+                    Column {
+                        width: parent.width
+                        spacing: 8
+                        // Smart Auto-Hide: If 0 profiles exist on this PC, the entire section vanishes!
+                        visible: vpnModel.count > 0
+
+                        property string activeVpns: ""
+
+                        ListModel { id: vpnModel }
+
+                        // 1. Profile Detector: Scans openvpn3 configs-list dynamically
+                        Process {
+                            id: vpnConfigProc
+                            running: true
+                            command: ["sh", "-c", "while true; do openvpn3 configs-list 2>/dev/null | grep '/net/openvpn/v3/configuration/' | sed 's/[[:space:]]*\\/net\\/openvpn\\/v3\\/configuration\\/.*//g' | tr '\\n' ';'; echo \"\"; sleep 5; done"]
+                            stdout: SplitParser {
+                                onRead: (data) => {
+                                    let raw = data.trim()
+                                    if (raw === "") {
+                                        vpnModel.clear()
+                                        return
+                                    }
+                                    let profiles = raw.split(";")
+                                    let validProfiles = []
+                                    for (let i = 0; i < profiles.length; i++) {
+                                        let p = profiles[i].trim()
+                                        if (p !== "") validProfiles.push(p)
+                                    }
+
+                                    // In-place update prevents UI flickering
+                                    if (vpnModel.count === validProfiles.length) {
+                                        for (let j = 0; j < validProfiles.length; j++) {
+                                            if (vpnModel.get(j).name !== validProfiles[j]) {
+                                                vpnModel.set(j, { name: validProfiles[j] })
+                                            }
+                                        }
+                                    } else {
+                                        vpnModel.clear()
+                                        for (let j = 0; j < validProfiles.length; j++) {
+                                            vpnModel.append({ name: validProfiles[j] })
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // 2. Active Session Detector: Checks which profiles are currently connected
+                        Process {
+                            id: vpnMonitorProc
+                            running: true
+                            command: ["sh", "-c", "while true; do openvpn3 sessions-list 2>/dev/null | grep 'Config name:' | sed 's/.*Config name:[[:space:]]*//g' | tr '\\n' ';'; echo \"\"; sleep 3; done"]
+                            stdout: SplitParser {
+                                onRead: (data) => {
+                                    parent.activeVpns = data.trim()
+                                }
+                            }
+                        }
+
+                        Process { id: vpnActionProc }
+
+                        // Section Header
+                        Item {
+                            width: parent.width; height: 18
+                            Text {
+                                anchors.left: parent.left
+                                text: "󰖂  OpenVPN 3"
+                                color: "#f5c2e7"
+                                font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                            }
+                            Text {
+                                anchors.right: parent.right
+                                text: parent.parent.activeVpns !== "" ? "ONLINE" : "OFF"
+                                color: parent.parent.activeVpns !== "" ? "#a6e3a1" : "#f38ba8"
+                                font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                            }
+                        }
+
+                        // Dynamic Profile List
+                        Column {
+                            width: parent.width
+                            spacing: 6
+
+                            Repeater {
+                                model: vpnModel
+                                delegate: Rectangle {
+                                    width: parent.width
+                                    height: 36
+                                    radius: 6
+                                    // Exact match against active semicolon-separated config names
+                                    property bool isConnected: parent.parent.activeVpns.split(";").indexOf(name) !== -1
+                                    color: isConnected ? (vpnMouse.containsMouse ? "#8ce187" : "#a6e3a1") : (vpnMouse.containsMouse ? "#313244" : "#2a2b3d")
+
+                                    Item {
+                                        anchors.fill: parent
+                                        anchors.leftMargin: 12; anchors.rightMargin: 12
+
+                                        // Left Side: Icon + Profile Name
+                                        Row {
+                                            anchors.left: parent.left
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            spacing: 10
+                                            Text {
+                                                text: isConnected ? "󰒘" : "󰦞"
+                                                color: isConnected ? "#1e1e2e" : "#f5c2e7"
+                                                font.pixelSize: 14; font.family: "JetBrainsMono Nerd Font"
+                                            }
+                                            Text {
+                                                text: name
+                                                color: isConnected ? "#1e1e2e" : "#cdd6f4"
+                                                font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                            }
+                                        }
+
+                                        // Right Side: Action Status Button
+                                        Text {
+                                            anchors.right: parent.right
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            text: isConnected ? "Disconnect 󰅛" : "Connect 󰍁"
+                                            color: isConnected ? "#1e1e2e" : "#89b4fa"
+                                            font.pixelSize: 11; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                        }
+                                    }
+
+                                    MouseArea {
+                                        id: vpnMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                        onClicked: {
+                                            if (parent.isConnected) {
+                                                // Disconnect silently in background
+                                                nixPill.runCmd(vpnActionProc, "openvpn3 session-manage --config '" + name + "' --disconnect")
+                                            } else {
+                                                // Connect via Hyprland floating auth modal!
+                                                nixPill.runCmd(vpnActionProc, "kitty --class vpn-auth -T 'OpenVPN 3 Authentication' -e sh -c \"echo '🔐 Authentication Required for " + name + "'; echo ''; openvpn3 session-start --config '" + name + "'; echo ''; echo 'Press ENTER to close...'; read\"")
+                                                nixMenuPopup.visible = false
+                                            }
+                                            // Force an immediate refresh check
+                                            vpnMonitorProc.running = false; vpnMonitorProc.running = true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // Smart Auto-Hiding Divider (Only renders if OpenVPN is visible!)
+                        Item { width: parent.width; height: 6 }
+                        Rectangle { width: parent.width; height: 1; color: "#313244" }
+                    }
 
                     Row {
                         spacing: 8
