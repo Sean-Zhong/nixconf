@@ -109,8 +109,8 @@ Rectangle {
         grabFocus: true
         color: "transparent"
 
-        implicitWidth: 380
-        implicitHeight: 380
+        implicitWidth: 540
+        implicitHeight: 500
 
         Rectangle {
             anchors.fill: parent

@@ -77,7 +77,7 @@ Rectangle {
     Process { id: manualCheckProc }
 
     function triggerManualCheck() {
-        runCmd(manualCheckProc, "systemctl --user start nixos-update-check.service 2>/dev/null || (bash $HOME/nixconf/dotfiles/scripts/*update*.sh 2>/dev/null || bash $HOME/nixconf/dotfiles/scripts/*nixos*.sh 2>/dev/null; systemctl --user start nixos-update-check.service 2>/dev/null)")
+        runCmd(manualCheckProc, "systemctl --user start --wait nixos-update-check.service 2>/dev/null || (bash $HOME/nixconf/dotfiles/scripts/*update*.sh 2>/dev/null || bash $HOME/nixconf/dotfiles/scripts/*nixos*.sh 2>/dev/null)")
         statusMonitorTimer.restart()
     }
 
@@ -156,7 +156,7 @@ Rectangle {
     }
 
     Timer {
-        interval: 30000
+        interval: 35000
         running: true
         repeat: false
         onTriggered: {
@@ -172,8 +172,8 @@ Rectangle {
         visible: false
         grabFocus: true
         color: "transparent"
-        implicitWidth: 640
-        implicitHeight: 440
+        implicitWidth: 760
+        implicitHeight: 520
 
         Rectangle {
             anchors.fill: parent
@@ -290,9 +290,7 @@ Rectangle {
                             RotationAnimation on rotation {
                                 running: nixPill.isChecking
                                 loops: Animation.Infinite
-                                from: 0
-                                to: 360
-                                duration: 1000
+                                from: 0; to: 360; duration: 1000
                             }
                         }
 
@@ -301,24 +299,15 @@ Rectangle {
                             anchors.right: parent.right
                             anchors.rightMargin: 8
                             anchors.verticalCenter: parent.verticalCenter
-                            width: 18
-                            height: 18
-                            radius: 9
-                            color: "#eb4d4b"
+                            width: 18; height: 18; radius: 9; color: "#eb4d4b"
                             Text {
                                 anchors.centerIn: parent
                                 text: nixPill.updateCount > 9 ? "!" : nixPill.updateCount
-                                color: "#ffffff"
-                                font.pixelSize: 10
-                                font.bold: true
-                                font.family: "JetBrainsMono Nerd Font"
+                                color: "#ffffff"; font.pixelSize: 10; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                             }
                         }
                         MouseArea {
-                            id: tab2Mouse
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
+                            id: tab2Mouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                             onClicked: nixPill.currentTab = "nixos"
                         }
                     }
@@ -348,10 +337,7 @@ Rectangle {
                             }
                         }
                         MouseArea {
-                            id: tab3Mouse
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
+                            id: tab3Mouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                             onClicked: nixPill.currentTab = "hardware"
                         }
                     }
@@ -381,10 +367,7 @@ Rectangle {
                             }
                         }
                         MouseArea {
-                            id: tab4Mouse
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
+                            id: tab4Mouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                             onClicked: nixPill.currentTab = "calendar"
                         }
                     }
@@ -393,9 +376,7 @@ Rectangle {
 
             Rectangle {
                 anchors.left: sidebar.right
-                width: 1
-                height: parent.height
-                color: "#313244"
+                width: 1; height: parent.height; color: "#313244"
             }
 
             Item {
@@ -409,39 +390,29 @@ Rectangle {
                     anchors.fill: parent
                     spacing: 14
                     visible: nixPill.currentTab === "quick"
-
                     Text {
                         text: "Quick Settings"
                         color: "#cdd6f4"
-                        font.pixelSize: 16
-                        font.bold: true
-                        font.family: "JetBrainsMono Nerd Font"
+                        font.pixelSize: 16; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                     }
-
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        color: "#313244"
-                    }
+                    Rectangle { width: parent.width; height: 1; color: "#313244" }
 
                     Column {
                         width: parent.width
                         spacing: 8
-                        Row {
-                            width: parent.width
+                        Item {
+                            width: parent.width; height: 18
                             Text {
+                                anchors.left: parent.left
                                 text: "󰃠  Brightness"
                                 color: "#f9e2af"
-                                font.pixelSize: 13
-                                font.bold: true
-                                font.family: "JetBrainsMono Nerd Font"
+                                font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                             }
                             Text {
                                 anchors.right: parent.right
                                 text: nixPill.currentBrightness + "%"
                                 color: "#cdd6f4"
-                                font.pixelSize: 13
-                                font.family: "JetBrainsMono Nerd Font"
+                                font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font"
                             }
                         }
                         Process {
@@ -460,100 +431,70 @@ Rectangle {
                             anchors.horizontalCenter: parent.horizontalCenter
                             Text {
                                 text: "󰃞"
-                                color: "#f9e2af"
-                                font.pixelSize: 15
-                                font.family: "JetBrainsMono Nerd Font"
+                                color: "#f9e2af"; font.pixelSize: 15; font.family: "JetBrainsMono Nerd Font"
                                 anchors.verticalCenter: parent.verticalCenter
                             }
                             Item {
-                                width: parent.width - 54
-                                height: 24
+                                width: parent.width - 54; height: 24
                                 anchors.verticalCenter: parent.verticalCenter
                                 Rectangle {
                                     anchors.centerIn: parent
-                                    width: parent.width
-                                    height: 8
-                                    radius: 4
-                                    color: "#2a2b3d"
+                                    width: parent.width; height: 8; radius: 4; color: "#2a2b3d"
                                     Rectangle {
                                         width: (nixPill.currentBrightness / 100) * parent.width
-                                        height: parent.height
-                                        radius: 4
-                                        color: "#f9e2af"
+                                        height: parent.height; radius: 4; color: "#f9e2af"
                                     }
                                 }
                                 Rectangle {
-                                    width: 20
-                                    height: 20
-                                    radius: 10
+                                    width: 20; height: 20; radius: 10
                                     color: sliderMouse.containsMouse || sliderMouse.pressed ? "#ffffff" : "#f9e2af"
                                     anchors.verticalCenter: parent.verticalCenter
                                     x: Math.max(0, Math.min(parent.width - width, ((nixPill.currentBrightness / 100) * parent.width) - (width / 2)))
-                                    border.color: "#1e1e2e"
-                                    border.width: 2
+                                    border.color: "#1e1e2e"; border.width: 2
                                     Text {
                                         anchors.centerIn: parent
                                         text: "󰃠"
-                                        color: "#1e1e2e"
-                                        font.pixelSize: 10
-                                        font.bold: true
-                                        font.family: "JetBrainsMono Nerd Font"
+                                        color: "#1e1e2e"; font.pixelSize: 10; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                                     }
                                 }
                                 MouseArea {
-                                    id: sliderMouse
-                                    anchors.fill: parent
-                                    hoverEnabled: true
-                                    cursorShape: Qt.PointingHandCursor
+                                    id: sliderMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                                     function updateBright(mouseX) {
                                         let pct = Math.max(1, Math.min(100, Math.round((Math.max(0, Math.min(width, mouseX)) / width) * 100)))
                                         nixPill.currentBrightness = pct
                                         nixPill.runCmd(setBrightnessProc, "brightnessctl set " + pct + "%")
                                     }
-                                    onPressed: {
-                                        updateBright(mouse.x)
-                                    }
-                                    onPositionChanged: {
-                                        if (pressed) updateBright(mouse.x)
-                                    }
+                                    onPressed: { updateBright(mouse.x) }
+                                    onPositionChanged: { if (pressed) updateBright(mouse.x) }
                                 }
                             }
                             Text {
                                 text: "󰃠"
-                                color: "#f9e2af"
-                                font.pixelSize: 17
-                                font.family: "JetBrainsMono Nerd Font"
+                                color: "#f9e2af"; font.pixelSize: 17; font.family: "JetBrainsMono Nerd Font"
                                 anchors.verticalCenter: parent.verticalCenter
                             }
                         }
                     }
 
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        color: "#313244"
-                    }
+                    Rectangle { width: parent.width; height: 1; color: "#313244" }
 
                     Column {
                         width: parent.width
                         spacing: 6
-                        Row {
-                            width: parent.width
+                        Item {
+                            width: parent.width; height: 18
                             Text {
+                                anchors.left: parent.left
                                 text: "󰤨  Wi-Fi"
                                 color: "#a6e3a1"
-                                font.pixelSize: 13
-                                font.bold: true
-                                font.family: "JetBrainsMono Nerd Font"
+                                font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                             }
                             Text {
                                 id: wifiStatusText
                                 anchors.right: parent.right
                                 text: "OFF"
                                 color: nixPill.isWifiOn ? "#a6e3a1" : "#f38ba8"
-                                font.pixelSize: 12
-                                font.bold: true
-                                font.family: "JetBrainsMono Nerd Font"
+                                font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                             }
                         }
                         Process {
@@ -561,74 +502,38 @@ Rectangle {
                             running: true
                             command: ["sh", "-c", "while true; do if rfkill list wlan 2>/dev/null | grep -q 'Soft blocked: yes'; then echo 'OFF'; else SSID=$(nmcli -t -f active,ssid dev wifi 2>/dev/null | grep '^yes' | cut -d: -f2); if [ -n \"$SSID\" ]; then echo \"ON ($SSID)\"; else echo \"ON (Disconnected)\"; fi; fi; sleep 2; done"]
                             stdout: SplitParser {
-                                onRead: (data) => {
-                                    wifiStatusText.text = data.trim()
-                                }
+                                onRead: (data) => { wifiStatusText.text = data.trim() }
                             }
                         }
                         Row {
                             width: parent.width
                             spacing: 8
                             Rectangle {
-                                width: (parent.width - 8) / 2
-                                height: 32
-                                radius: 6
+                                width: (parent.width - 8) / 2; height: 32; radius: 6
                                 color: nixPill.isWifiOn ? (wifiToggleMouse.containsMouse ? "#8ce187" : "#a6e3a1") : (wifiToggleMouse.containsMouse ? "#313244" : "#2a2b3d")
                                 Row {
-                                    anchors.centerIn: parent
-                                    spacing: 6
-                                    Text {
-                                        text: "󰤨"
-                                        color: nixPill.isWifiOn ? "#1e1e2e" : "#a6e3a1"
-                                        font.pixelSize: 13
-                                        font.family: "JetBrainsMono Nerd Font"
-                                    }
-                                    Text {
-                                        text: "Toggle"
-                                        color: nixPill.isWifiOn ? "#1e1e2e" : "#cdd6f4"
-                                        font.pixelSize: 12
-                                        font.bold: nixPill.isWifiOn
-                                        font.family: "JetBrainsMono Nerd Font"
-                                    }
+                                    anchors.centerIn: parent; spacing: 6
+                                    Text { text: "󰤨"; color: nixPill.isWifiOn ? "#1e1e2e" : "#a6e3a1"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                    Text { text: "Toggle"; color: nixPill.isWifiOn ? "#1e1e2e" : "#cdd6f4"; font.pixelSize: 12; font.bold: nixPill.isWifiOn; font.family: "JetBrainsMono Nerd Font" }
                                 }
                                 MouseArea {
-                                    id: wifiToggleMouse
-                                    anchors.fill: parent
-                                    hoverEnabled: true
-                                    cursorShape: Qt.PointingHandCursor
+                                    id: wifiToggleMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                                     onClicked: {
                                         nixPill.runCmd(wifiToggleProc, "rfkill toggle wlan || nmcli radio wifi toggle")
-                                        wifiCheckProc.running = false
-                                        wifiCheckProc.running = true
+                                        wifiCheckProc.running = false; wifiCheckProc.running = true
                                     }
                                 }
                             }
                             Rectangle {
-                                width: (parent.width - 8) / 2
-                                height: 32
-                                radius: 6
+                                width: (parent.width - 8) / 2; height: 32; radius: 6
                                 color: wifiAppMouse.containsMouse ? "#313244" : "#2a2b3d"
                                 Row {
-                                    anchors.centerIn: parent
-                                    spacing: 6
-                                    Text {
-                                        text: "󰒓"
-                                        color: "#89b4fa"
-                                        font.pixelSize: 13
-                                        font.family: "JetBrainsMono Nerd Font"
-                                    }
-                                    Text {
-                                        text: "Settings"
-                                        color: "#cdd6f4"
-                                        font.pixelSize: 12
-                                        font.family: "JetBrainsMono Nerd Font"
-                                    }
+                                    anchors.centerIn: parent; spacing: 6
+                                    Text { text: "󰒓"; color: "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                    Text { text: "Settings"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
                                 }
                                 MouseArea {
-                                    id: wifiAppMouse
-                                    anchors.fill: parent
-                                    hoverEnabled: true
-                                    cursorShape: Qt.PointingHandCursor
+                                    id: wifiAppMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                                     onClicked: {
                                         nixPill.runCmd(wifiAppProc, "nm-connection-editor || kitty -e nmtui")
                                         nixMenuPopup.visible = false
@@ -638,32 +543,25 @@ Rectangle {
                         }
                     }
 
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        color: "#313244"
-                    }
+                    Rectangle { width: parent.width; height: 1; color: "#313244" }
 
                     Column {
                         width: parent.width
                         spacing: 6
-                        Row {
-                            width: parent.width
+                        Item {
+                            width: parent.width; height: 18
                             Text {
+                                anchors.left: parent.left
                                 text: "󰂯  Bluetooth"
                                 color: "#89b4fa"
-                                font.pixelSize: 13
-                                font.bold: true
-                                font.family: "JetBrainsMono Nerd Font"
+                                font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                             }
                             Text {
                                 id: btStatusText
                                 anchors.right: parent.right
                                 text: "OFF"
                                 color: nixPill.isBtOn ? "#89b4fa" : "#f38ba8"
-                                font.pixelSize: 12
-                                font.bold: true
-                                font.family: "JetBrainsMono Nerd Font"
+                                font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                             }
                         }
                         Process {
@@ -671,74 +569,38 @@ Rectangle {
                             running: true
                             command: ["sh", "-c", "while true; do if rfkill list bluetooth 2>/dev/null | grep -q 'Soft blocked: yes' || ! bluetoothctl show 2>/dev/null | grep -q 'Powered: yes'; then echo 'OFF'; else dev=$(bluetoothctl info 2>/dev/null | grep 'Name:' | cut -d: -f2 | xargs); [ -n \"$dev\" ] && echo \"ON ($dev)\" || echo \"ON (Disconnected)\"; fi; sleep 2; done"]
                             stdout: SplitParser {
-                                onRead: (data) => {
-                                    btStatusText.text = data.trim()
-                                }
+                                onRead: (data) => { btStatusText.text = data.trim() }
                             }
                         }
                         Row {
                             width: parent.width
                             spacing: 8
                             Rectangle {
-                                width: (parent.width - 8) / 2
-                                height: 32
-                                radius: 6
+                                width: (parent.width - 8) / 2; height: 32; radius: 6
                                 color: nixPill.isBtOn ? (btToggleMouse.containsMouse ? "#b4befe" : "#89b4fa") : (btToggleMouse.containsMouse ? "#313244" : "#2a2b3d")
                                 Row {
-                                    anchors.centerIn: parent
-                                    spacing: 6
-                                    Text {
-                                        text: "󰂯"
-                                        color: nixPill.isBtOn ? "#1e1e2e" : "#89b4fa"
-                                        font.pixelSize: 13
-                                        font.family: "JetBrainsMono Nerd Font"
-                                    }
-                                    Text {
-                                        text: "Toggle"
-                                        color: nixPill.isBtOn ? "#1e1e2e" : "#cdd6f4"
-                                        font.pixelSize: 12
-                                        font.bold: nixPill.isBtOn
-                                        font.family: "JetBrainsMono Nerd Font"
-                                    }
+                                    anchors.centerIn: parent; spacing: 6
+                                    Text { text: "󰂯"; color: nixPill.isBtOn ? "#1e1e2e" : "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                    Text { text: "Toggle"; color: nixPill.isBtOn ? "#1e1e2e" : "#cdd6f4"; font.pixelSize: 12; font.bold: nixPill.isBtOn; font.family: "JetBrainsMono Nerd Font" }
                                 }
                                 MouseArea {
-                                    id: btToggleMouse
-                                    anchors.fill: parent
-                                    hoverEnabled: true
-                                    cursorShape: Qt.PointingHandCursor
+                                    id: btToggleMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                                     onClicked: {
                                         nixPill.runCmd(btToggleProc, "rfkill toggle bluetooth || (bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on)")
-                                        btCheckProc.running = false
-                                        btCheckProc.running = true
+                                        btCheckProc.running = false; btCheckProc.running = true
                                     }
                                 }
                             }
                             Rectangle {
-                                width: (parent.width - 8) / 2
-                                height: 32
-                                radius: 6
+                                width: (parent.width - 8) / 2; height: 32; radius: 6
                                 color: btAppMouse.containsMouse ? "#313244" : "#2a2b3d"
                                 Row {
-                                    anchors.centerIn: parent
-                                    spacing: 6
-                                    Text {
-                                        text: "󰒓"
-                                        color: "#89b4fa"
-                                        font.pixelSize: 13
-                                        font.family: "JetBrainsMono Nerd Font"
-                                    }
-                                    Text {
-                                        text: "Settings"
-                                        color: "#cdd6f4"
-                                        font.pixelSize: 12
-                                        font.family: "JetBrainsMono Nerd Font"
-                                    }
+                                    anchors.centerIn: parent; spacing: 6
+                                    Text { text: "󰒓"; color: "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                    Text { text: "Settings"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
                                 }
                                 MouseArea {
-                                    id: btAppMouse
-                                    anchors.fill: parent
-                                    hoverEnabled: true
-                                    cursorShape: Qt.PointingHandCursor
+                                    id: btAppMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                                     onClicked: {
                                         nixPill.runCmd(btAppProc, "blueman-manager || kitty -e bluetoothctl")
                                         nixMenuPopup.visible = false
@@ -748,79 +610,37 @@ Rectangle {
                         }
                     }
 
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        color: "#313244"
-                    }
+                    Rectangle { width: parent.width; height: 1; color: "#313244" }
 
                     Row {
                         spacing: 8
                         width: parent.width
                         Rectangle {
-                            width: (parent.width - 8) / 2
-                            height: 32
-                            radius: 6
+                            width: (parent.width - 8) / 2; height: 32; radius: 6
                             color: btn1Mouse.containsMouse ? "#313244" : "#2a2b3d"
                             Row {
-                                anchors.centerIn: parent
-                                spacing: 6
-                                Text {
-                                    text: "󰓃"
-                                    color: "#a6e3a1"
-                                    font.pixelSize: 13
-                                    font.family: "JetBrainsMono Nerd Font"
-                                }
-                                Text {
-                                    text: "Audio Mixer"
-                                    color: "#cdd6f4"
-                                    font.pixelSize: 12
-                                    font.family: "JetBrainsMono Nerd Font"
-                                }
+                                anchors.centerIn: parent; spacing: 6
+                                Text { text: "󰓃"; color: "#a6e3a1"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                Text { text: "Audio Mixer"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
                             }
                             Process { id: audioProc; command: ["pavucontrol"] }
                             MouseArea {
-                                id: btn1Mouse
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: {
-                                    audioProc.running = true
-                                    nixMenuPopup.visible = false
-                                }
+                                id: btn1Mouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                onClicked: { audioProc.running = true; nixMenuPopup.visible = false }
                             }
                         }
                         Rectangle {
-                            width: (parent.width - 8) / 2
-                            height: 32
-                            radius: 6
+                            width: (parent.width - 8) / 2; height: 32; radius: 6
                             color: btn2Mouse.containsMouse ? "#313244" : "#2a2b3d"
                             Row {
-                                anchors.centerIn: parent
-                                spacing: 6
-                                Text {
-                                    text: "󰌾"
-                                    color: "#f38ba8"
-                                    font.pixelSize: 13
-                                    font.family: "JetBrainsMono Nerd Font"
-                                }
-                                Text {
-                                    text: "Lock Screen"
-                                    color: "#cdd6f4"
-                                    font.pixelSize: 12
-                                    font.family: "JetBrainsMono Nerd Font"
-                                }
+                                anchors.centerIn: parent; spacing: 6
+                                Text { text: "󰌾"; color: "#f38ba8"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                Text { text: "Lock Screen"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
                             }
                             Process { id: lockProc; command: ["hyprlock"] }
                             MouseArea {
-                                id: btn2Mouse
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: {
-                                    lockProc.running = true
-                                    nixMenuPopup.visible = false
-                                }
+                                id: btn2Mouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                onClicked: { lockProc.running = true; nixMenuPopup.visible = false }
                             }
                         }
                     }
@@ -831,127 +651,72 @@ Rectangle {
                     spacing: 10
                     visible: nixPill.currentTab === "nixos"
                     Item {
-                        width: parent.width
-                        height: 28
+                        width: parent.width; height: 28
                         Text {
                             text: "Pending Updates (" + nixPill.updateCount + ")"
-                            color: "#cdd6f4"
-                            font.pixelSize: 16
-                            font.bold: true
-                            font.family: "JetBrainsMono Nerd Font"
+                            color: "#cdd6f4"; font.pixelSize: 16; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         Rectangle {
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
-                            width: nixPill.isChecking ? 85 : 72
-                            height: 26
-                            radius: 6
+                            anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                            width: nixPill.isChecking ? 85 : 72; height: 26; radius: 6
                             color: checkBtnMouse.containsMouse ? "#313244" : "#2a2b3d"
                             Row {
-                                anchors.centerIn: parent
-                                spacing: 5
+                                anchors.centerIn: parent; spacing: 5
                                 Text { 
-                                    text: "󰑐"
-                                    color: "#a6e3a1"
-                                    font.pixelSize: 13
-                                    font.family: "JetBrainsMono Nerd Font"
+                                    text: "󰑐"; color: "#a6e3a1"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font"
                                     transformOrigin: Item.Center
                                     RotationAnimation on rotation {
-                                        running: nixPill.isChecking
-                                        loops: Animation.Infinite
-                                        from: 0
-                                        to: 360
-                                        duration: 1000
+                                        running: nixPill.isChecking; loops: Animation.Infinite; from: 0; to: 360; duration: 1000
                                     }
                                 }
                                 Text {
                                     text: nixPill.isChecking ? "Checking" : "Check"
-                                    color: "#cdd6f4"
-                                    font.pixelSize: 11
-                                    font.bold: true
-                                    font.family: "JetBrainsMono Nerd Font"
+                                    color: "#cdd6f4"; font.pixelSize: 11; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                                 }
                             }
                             MouseArea {
-                                id: checkBtnMouse
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
+                                id: checkBtnMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                                 onClicked: nixPill.triggerManualCheck()
                             }
                         }
                     }
 
                     Rectangle {
-                        width: parent.width
-                        height: nixPill.isChecking ? 24 : 0
-                        color: "#2a2b3d"
-                        radius: 4
-                        visible: nixPill.isChecking
-                        clip: true
-
+                        width: parent.width; height: nixPill.isChecking ? 24 : 0; color: "#2a2b3d"; radius: 4
+                        visible: nixPill.isChecking; clip: true
                         Behavior on height { NumberAnimation { duration: 150 } }
-
                         Row {
-                            anchors.centerIn: parent
-                            spacing: 8
+                            anchors.centerIn: parent; spacing: 8
                             Text {
-                                text: "󰑐"
-                                color: "#89b4fa"
-                                font.pixelSize: 12
-                                font.family: "JetBrainsMono Nerd Font"
+                                text: "󰑐"; color: "#89b4fa"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font"
                                 transformOrigin: Item.Center
                                 RotationAnimation on rotation {
-                                    running: nixPill.isChecking
-                                    loops: Animation.Infinite
-                                    from: 0
-                                    to: 360
-                                    duration: 1000
+                                    running: nixPill.isChecking; loops: Animation.Infinite; from: 0; to: 360; duration: 1000
                                 }
                             }
                             Text {
-                                text: "Checking system updates in background..."
-                                color: "#89b4fa"
-                                font.pixelSize: 11
-                                font.bold: true
-                                font.family: "JetBrainsMono Nerd Font"
+                                text: "Checking system updates in background..."; color: "#89b4fa"; font.pixelSize: 11; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                             }
                         }
                     }
 
-                    Rectangle {
-                        width: parent.width
-                        height: 1
-                        color: "#313244"
-                    }
+                    Rectangle { width: parent.width; height: 1; color: "#313244" }
 
                     Item {
-                        width: parent.width
-                        height: nixPill.isChecking ? 320 : 350
+                        width: parent.width; height: nixPill.isChecking ? 400 : 430
                         clip: true
 
                         ListView {
                             id: updateListView
-                            anchors.fill: parent
-                            anchors.rightMargin: 16
-                            model: updateModel
-                            spacing: 4
-                            clip: true
+                            anchors.fill: parent; anchors.rightMargin: 16
+                            model: updateModel; spacing: 4; clip: true
                             boundsBehavior: Flickable.StopAtBounds
-
                             delegate: Rectangle {
-                                width: updateListView.width
-                                height: Math.max(22, itemText.implicitHeight + 4)
-                                color: "transparent"
-
+                                width: updateListView.width; height: Math.max(22, itemText.implicitHeight + 4); color: "transparent"
                                 Text {
-                                    id: itemText
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    width: parent.width
-                                    text: lineText
-                                    font.pixelSize: 11
-                                    font.family: "JetBrainsMono Nerd Font"
+                                    id: itemText; anchors.verticalCenter: parent.verticalCenter
+                                    width: parent.width; text: lineText; font.pixelSize: 11; font.family: "JetBrainsMono Nerd Font"
                                     wrapMode: Text.Wrap
                                     color: {
                                         if (lineText.match(/^\[[A+]/) || lineText.startsWith("+")) return "#a6e3a1"
@@ -965,36 +730,21 @@ Rectangle {
 
                         Item {
                             id: updateScrollbarArea
-                            anchors.right: parent.right
-                            anchors.top: parent.top
-                            anchors.bottom: parent.bottom
-                            width: 12
+                            anchors.right: parent.right; anchors.top: parent.top; anchors.bottom: parent.bottom; width: 12
                             visible: updateListView.contentHeight > updateListView.height
-
                             Rectangle {
                                 id: updateScrollTrack
-                                anchors.centerIn: parent
-                                width: 4
-                                height: parent.height
-                                radius: 2
-                                color: "#2a2b3d"
-
+                                anchors.centerIn: parent; width: 4; height: parent.height; radius: 2; color: "#2a2b3d"
                                 Rectangle {
                                     id: updateScrollThumb
-                                    width: parent.width
-                                    radius: 2
+                                    width: parent.width; radius: 2
                                     color: updateScrollMouse.containsMouse || updateScrollMouse.pressed ? "#b4befe" : "#89b4fa"
                                     y: updateListView.visibleArea.yPosition * updateScrollTrack.height
                                     height: Math.max(20, updateListView.visibleArea.heightRatio * updateScrollTrack.height)
                                 }
                             }
-
                             MouseArea {
-                                id: updateScrollMouse
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                cursorShape: Qt.PointingHandCursor
-
+                                id: updateScrollMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                                 function scrollToMouse(mouseY) {
                                     let maxContentY = updateListView.contentHeight - updateListView.height
                                     if (maxContentY <= 0) return
@@ -1005,7 +755,6 @@ Rectangle {
                                     let clampedY = Math.max(0, Math.min(availableTrack, clickY))
                                     updateListView.contentY = (clampedY / availableTrack) * maxContentY
                                 }
-
                                 onPressed: (mouse) => scrollToMouse(mouse.y)
                                 onPositionChanged: (mouse) => { if (pressed) scrollToMouse(mouse.y) }
                             }
