@@ -9,7 +9,6 @@ if ! systemctl --user -q is-active "$UNIT_NAME.timer"; then
   systemd-run --user \
     --unit="$UNIT_NAME" \
     --on-calendar="12:00" \
-    --on-startup="300" \
     --description="Daily NixOS Update Check" \
     --property="Nice=19" \
     --property="CPUSchedulingPolicy=idle" \
@@ -31,6 +30,7 @@ if ! systemctl --user -q is-active "$UNIT_NAME.timer"; then
     "
 fi
 
+# Clean up outdated diff reports if system was upgraded since last check
 if [ -f "$OUTPUT_FILE" ]; then
   report_time=$(stat -c %Y "$OUTPUT_FILE")
   system_time=$(stat -c %Y /run/current-system)
@@ -38,13 +38,3 @@ if [ -f "$OUTPUT_FILE" ]; then
     rm -f "$OUTPUT_FILE"
   fi
 fi
-
-if [ -f "$OUTPUT_FILE" ]; then
-  count=$(grep -cE '^(\[|\+|-)' "$OUTPUT_FILE")
-  nix_tooltip=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g' "$OUTPUT_FILE" | tr '\n' '\r')
-else
-  count="0"
-  nix_tooltip="No update data available. Run check script."
-fi
-
-jq -nc --unbuffered --arg status "󱄅 $count" --arg tooltip "$nix_tooltip" '{"text": $status, "tooltip": $tooltip}'

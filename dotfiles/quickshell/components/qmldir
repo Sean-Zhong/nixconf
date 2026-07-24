@@ -1,0 +1,3 @@
+module qs.components
+ProcessView 1.0 ProcessView.qml
+CalendarView 1.0 CalendarView.qml
