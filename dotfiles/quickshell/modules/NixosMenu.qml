@@ -625,11 +625,11 @@ Rectangle {
 
                         ListModel { id: vpnModel }
 
-                        // 1. Profile Detector: Scans openvpn3 configs-list dynamically
+                        // 1. Universal Profile Detector: Works across all OpenVPN 3 Linux versions!
                         Process {
                             id: vpnConfigProc
                             running: true
-                            command: ["sh", "-c", "while true; do openvpn3 configs-list 2>/dev/null | grep '/net/openvpn/v3/configuration/' | sed 's/[[:space:]]*\\/net\\/openvpn\\/v3\\/configuration\\/.*//g' | tr '\\n' ';'; echo \"\"; sleep 5; done"]
+                            command: ["sh", "-c", "while true; do openvpn3 configs-list 2>/dev/null | sed 's/.*Configuration [nN]ame:[[:space:]]*//g' | grep -vE '^(-+|Configuration|Owner|Group|Imported|Last|Used|Tags|openvpn3|No config|/net/openvpn/)' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | grep -v '^$' | tr '\\n' ';'; echo \"\"; sleep 5; done"]
                             stdout: SplitParser {
                                 onRead: (data) => {
                                     let raw = data.trim()
