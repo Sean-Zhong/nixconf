@@ -27,16 +27,40 @@ Item {
         spacing: 12
 
         Rectangle {
-            width: parent.width; height: 65; color: "#2a2b3d"; radius: 10
-            Text {
+            id: topClockBox
+            width: parent.width
+            height: 76
+            color: "#2a2b3d"
+            radius: 10
+
+            Column {
                 anchors.centerIn: parent
-                text: Qt.formatDateTime(calRoot.now, "HH:mm:ss")
-                color: "#ffffff"; font.pixelSize: 34; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                spacing: 4
+
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: Qt.formatDateTime(calRoot.now, "HH:mm:ss")
+                    color: "#ffffff"
+                    font.pixelSize: 30
+                    font.bold: true
+                    font.family: "JetBrainsMono Nerd Font"
+                }
+
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: Qt.formatDateTime(calRoot.now, "dddd, MMMM d")
+                    color: "#89b4fa"
+                    font.pixelSize: 13
+                    font.bold: true
+                    font.family: "JetBrainsMono Nerd Font"
+                }
             }
         }
 
         Row {
-            width: parent.width; height: parent.height - 65 - 12; spacing: 12
+            width: parent.width
+            height: parent.height - topClockBox.height - 12
+            spacing: 12
 
             Rectangle {
                 id: weatherCard
@@ -72,7 +96,6 @@ Item {
                 }
             }
 
-            // Calendar Grid (Right)
             Rectangle {
                 id: calCard
                 width: parent.width - 170 - 12; height: parent.height; color: "#2a2b3d"; radius: 10
