@@ -25,47 +25,57 @@
     };
     quickshell = {
       url = "git+https://git.outfoxxed.me/quickshell/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, quickshell, ... }@inputs:
     let
       system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+
       pkgsUnstable = import nixpkgs-unstable {
         inherit system;
         config = {
           allowUnfree = true;
         };
       };
+
+      quickshellWithDeps = quickshell.packages.${system}.default.withModules (with pkgs.qt6; [
+        qtmultimedia
+        qtconnectivity
+        qt5compat
+        qtsvg
+      ]);
     in
     {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
+      specialArgs = { inherit inputs quickshellWithDeps; };
       modules = [
         ./hosts/nixos/configuration.nix
         home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {
-                inherit system pkgsUnstable;
-              };
-            }
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {
+              inherit system pkgsUnstable quickshellWithDeps;
+            };
+          }
       ];
     };
+
     nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
+      specialArgs = { inherit inputs quickshellWithDeps; };
       modules = [
         ./hosts/desktop/configuration.nix
         home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {
-                inherit system pkgsUnstable;
-              };
-            }
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {
+              inherit system pkgsUnstable quickshellWithDeps;
+            };
+          }
       ];
     };
 

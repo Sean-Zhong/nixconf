@@ -11,17 +11,26 @@ Rectangle {
 
     property string currentTab: "quick"
     property int currentBrightness: 100
-    property bool isWifiOn: wifiStatusText.text.indexOf("ON") !== -1
-    property bool isBtOn: btStatusText.text.indexOf("ON") !== -1
-
+    property bool isWifiOn: wifiManager.isPowered
+    property bool isBtOn: btManager.isPowered
     property int updateCount: 0
     property bool isChecking: false
     property var tempUpdateList: []
     property int tempUpdateCount: 0
 
-    ListModel {
-        id: updateModel
+    WifiManager {
+        id: wifiManager
+        onPasswordRequired: (ssid) => {
+            wifiPasswordModal.targetSsid = ssid
+            wifiPasswordModal.visible = true
+        }
     }
+
+    BluetoothManager {
+        id: btManager
+    }
+
+    ListModel { id: updateModel }
 
     function runCmd(proc, cmd) {
         proc.running = false
@@ -48,7 +57,6 @@ Rectangle {
         height: 18
         radius: 9
         color: "#eb4d4b"
-        border.width: 0
 
         Text {
             id: badgeText
@@ -64,15 +72,11 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: {
-            nixMenuPopup.visible = !nixMenuPopup.visible
-        }
+        onClicked: nixMenuPopup.visible = !nixMenuPopup.visible
     }
 
     Process { id: setBrightnessProc }
-    Process { id: wifiToggleProc }
     Process { id: wifiAppProc }
-    Process { id: btToggleProc }
     Process { id: btAppProc }
     Process { id: manualCheckProc }
 
@@ -107,8 +111,8 @@ Rectangle {
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            checkStatusProc.running = false
-            checkStatusProc.running = true
+            checkStatusProc.running = false;
+            checkStatusProc.running = true;
         }
     }
 
@@ -159,9 +163,7 @@ Rectangle {
         interval: 35000
         running: true
         repeat: false
-        onTriggered: {
-            nixPill.triggerManualCheck()
-        }
+        onTriggered: nixPill.triggerManualCheck()
     }
 
     PopupWindow {
@@ -195,6 +197,7 @@ Rectangle {
                     anchors.fill: parent
                     anchors.margins: 10
                     spacing: 6
+
                     Row {
                         spacing: 8
                         anchors.margins: 6
@@ -214,10 +217,7 @@ Rectangle {
                         }
                     }
 
-                    Item {
-                        width: parent.width
-                        height: 6
-                    }
+                    Item { width: parent.width; height: 6 }
 
                     Rectangle {
                         width: parent.width
@@ -244,10 +244,7 @@ Rectangle {
                             }
                         }
                         MouseArea {
-                            id: tab1Mouse
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
+                            id: tab1Mouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
                             onClicked: nixPill.currentTab = "quick"
                         }
                     }
@@ -386,412 +383,586 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 anchors.margins: 18
 
-                Column {
+                Item {
                     anchors.fill: parent
-                    spacing: 14
                     visible: nixPill.currentTab === "quick"
-                    Text {
-                        text: "Quick Settings"
-                        color: "#cdd6f4"
-                        font.pixelSize: 16; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                    }
-                    Rectangle { width: parent.width; height: 1; color: "#313244" }
 
-                    Column {
-                        width: parent.width
-                        spacing: 8
-                        Item {
-                            width: parent.width; height: 18
-                            Text {
-                                anchors.left: parent.left
-                                text: "󰃠  Brightness"
-                                color: "#f9e2af"
-                                font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                            }
-                            Text {
-                                anchors.right: parent.right
-                                text: nixPill.currentBrightness + "%"
-                                color: "#cdd6f4"
-                                font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font"
-                            }
-                        }
-                        Process {
-                            running: true
-                            command: ["sh", "-c", "while true; do brightnessctl -m 2>/dev/null | cut -d, -f4 | tr -d '%'; sleep 1; done"]
-                            stdout: SplitParser {
-                                onRead: (data) => {
-                                    let val = parseInt(data.trim())
-                                    if (!isNaN(val)) nixPill.currentBrightness = val
-                                }
-                            }
-                        }
-                        Row {
-                            width: parent.width
-                            spacing: 10
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            Text {
-                                text: "󰃞"
-                                color: "#f9e2af"; font.pixelSize: 15; font.family: "JetBrainsMono Nerd Font"
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                            Item {
-                                width: parent.width - 54; height: 24
-                                anchors.verticalCenter: parent.verticalCenter
-                                Rectangle {
-                                    anchors.centerIn: parent
-                                    width: parent.width; height: 8; radius: 4; color: "#2a2b3d"
-                                    Rectangle {
-                                        width: (nixPill.currentBrightness / 100) * parent.width
-                                        height: parent.height; radius: 4; color: "#f9e2af"
-                                    }
-                                }
-                                Rectangle {
-                                    width: 20; height: 20; radius: 10
-                                    color: sliderMouse.containsMouse || sliderMouse.pressed ? "#ffffff" : "#f9e2af"
-                                    anchors.verticalCenter: parent.verticalCenter
-                                    x: Math.max(0, Math.min(parent.width - width, ((nixPill.currentBrightness / 100) * parent.width) - (width / 2)))
-                                    border.color: "#1e1e2e"; border.width: 2
-                                    Text {
-                                        anchors.centerIn: parent
-                                        text: "󰃠"
-                                        color: "#1e1e2e"; font.pixelSize: 10; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                                    }
-                                }
-                                MouseArea {
-                                    id: sliderMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                                    function updateBright(mouseX) {
-                                        let pct = Math.max(1, Math.min(100, Math.round((Math.max(0, Math.min(width, mouseX)) / width) * 100)))
-                                        nixPill.currentBrightness = pct
-                                        nixPill.runCmd(setBrightnessProc, "brightnessctl set " + pct + "%")
-                                    }
-                                    onPressed: { updateBright(mouse.x) }
-                                    onPositionChanged: { if (pressed) updateBright(mouse.x) }
-                                }
-                            }
-                            Text {
-                                text: "󰃠"
-                                color: "#f9e2af"; font.pixelSize: 17; font.family: "JetBrainsMono Nerd Font"
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                        }
-                    }
+                    Flickable {
+                        id: quickFlickable
+                        anchors.fill: parent
+                        anchors.rightMargin: quickScrollbarArea.visible ? 8 : 0
+                        contentWidth: width
+                        contentHeight: quickContentColumn.implicitHeight
+                        clip: true
+                        boundsBehavior: Flickable.StopAtBounds
+                        flickableDirection: Flickable.VerticalFlick
 
-                    Rectangle { width: parent.width; height: 1; color: "#313244" }
-
-                    Column {
-                        width: parent.width
-                        spacing: 6
-                        Item {
-                            width: parent.width; height: 18
-                            Text {
-                                anchors.left: parent.left
-                                text: "󰤨  Wi-Fi"
-                                color: "#a6e3a1"
-                                font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                            }
-                            Text {
-                                id: wifiStatusText
-                                anchors.right: parent.right
-                                text: "OFF"
-                                color: nixPill.isWifiOn ? "#a6e3a1" : "#f38ba8"
-                                font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                            }
-                        }
-                        Process {
-                            id: wifiCheckProc
-                            running: true
-                            command: ["sh", "-c", "while true; do if rfkill list wlan 2>/dev/null | grep -q 'Soft blocked: yes'; then echo 'OFF'; else SSID=$(nmcli -t -f active,ssid dev wifi 2>/dev/null | grep '^yes' | cut -d: -f2); if [ -n \"$SSID\" ]; then echo \"ON ($SSID)\"; else echo \"ON (Disconnected)\"; fi; fi; sleep 2; done"]
-                            stdout: SplitParser {
-                                onRead: (data) => { wifiStatusText.text = data.trim() }
-                            }
-                        }
-                        Row {
-                            width: parent.width
-                            spacing: 8
-                            Rectangle {
-                                width: (parent.width - 8) / 2; height: 32; radius: 6
-                                color: nixPill.isWifiOn ? (wifiToggleMouse.containsMouse ? "#8ce187" : "#a6e3a1") : (wifiToggleMouse.containsMouse ? "#313244" : "#2a2b3d")
-                                Row {
-                                    anchors.centerIn: parent; spacing: 6
-                                    Text { text: "󰤨"; color: nixPill.isWifiOn ? "#1e1e2e" : "#a6e3a1"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
-                                    Text { text: "Toggle"; color: nixPill.isWifiOn ? "#1e1e2e" : "#cdd6f4"; font.pixelSize: 12; font.bold: nixPill.isWifiOn; font.family: "JetBrainsMono Nerd Font" }
-                                }
-                                MouseArea {
-                                    id: wifiToggleMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                                    onClicked: {
-                                        nixPill.runCmd(wifiToggleProc, "rfkill toggle wlan || nmcli radio wifi toggle")
-                                        wifiCheckProc.running = false; wifiCheckProc.running = true
-                                    }
-                                }
-                            }
-                            Rectangle {
-                                width: (parent.width - 8) / 2; height: 32; radius: 6
-                                color: wifiAppMouse.containsMouse ? "#313244" : "#2a2b3d"
-                                Row {
-                                    anchors.centerIn: parent; spacing: 6
-                                    Text { text: "󰒓"; color: "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
-                                    Text { text: "Settings"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
-                                }
-                                MouseArea {
-                                    id: wifiAppMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                                    onClicked: {
-                                        nixPill.runCmd(wifiAppProc, "nm-connection-editor || kitty -e nmtui")
-                                        nixMenuPopup.visible = false
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    Rectangle { width: parent.width; height: 1; color: "#313244" }
-
-                    Column {
-                        width: parent.width
-                        spacing: 6
-                        Item {
-                            width: parent.width; height: 18
-                            Text {
-                                anchors.left: parent.left
-                                text: "󰂯  Bluetooth"
-                                color: "#89b4fa"
-                                font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                            }
-                            Text {
-                                id: btStatusText
-                                anchors.right: parent.right
-                                text: "OFF"
-                                color: nixPill.isBtOn ? "#89b4fa" : "#f38ba8"
-                                font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                            }
-                        }
-                        Process {
-                            id: btCheckProc
-                            running: true
-                            command: ["sh", "-c", "while true; do if rfkill list bluetooth 2>/dev/null | grep -q 'Soft blocked: yes' || ! bluetoothctl show 2>/dev/null | grep -q 'Powered: yes'; then echo 'OFF'; else dev=$(bluetoothctl info 2>/dev/null | grep 'Name:' | cut -d: -f2 | xargs); [ -n \"$dev\" ] && echo \"ON ($dev)\" || echo \"ON (Disconnected)\"; fi; sleep 2; done"]
-                            stdout: SplitParser {
-                                onRead: (data) => { btStatusText.text = data.trim() }
-                            }
-                        }
-                        Row {
-                            width: parent.width
-                            spacing: 8
-                            Rectangle {
-                                width: (parent.width - 8) / 2; height: 32; radius: 6
-                                color: nixPill.isBtOn ? (btToggleMouse.containsMouse ? "#b4befe" : "#89b4fa") : (btToggleMouse.containsMouse ? "#313244" : "#2a2b3d")
-                                Row {
-                                    anchors.centerIn: parent; spacing: 6
-                                    Text { text: "󰂯"; color: nixPill.isBtOn ? "#1e1e2e" : "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
-                                    Text { text: "Toggle"; color: nixPill.isBtOn ? "#1e1e2e" : "#cdd6f4"; font.pixelSize: 12; font.bold: nixPill.isBtOn; font.family: "JetBrainsMono Nerd Font" }
-                                }
-                                MouseArea {
-                                    id: btToggleMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                                    onClicked: {
-                                        nixPill.runCmd(btToggleProc, "rfkill toggle bluetooth || (bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on)")
-                                        btCheckProc.running = false; btCheckProc.running = true
-                                    }
-                                }
-                            }
-                            Rectangle {
-                                width: (parent.width - 8) / 2; height: 32; radius: 6
-                                color: btAppMouse.containsMouse ? "#313244" : "#2a2b3d"
-                                Row {
-                                    anchors.centerIn: parent; spacing: 6
-                                    Text { text: "󰒓"; color: "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
-                                    Text { text: "Settings"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
-                                }
-                                MouseArea {
-                                    id: btAppMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                                    onClicked: {
-                                        nixPill.runCmd(btAppProc, "blueman-manager || kitty -e bluetoothctl")
-                                        nixMenuPopup.visible = false
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    Rectangle { width: parent.width; height: 1; color: "#313244" }
-
-                    // ==========================================
-                    // SMART OPENVPN 3 CONTROLS (AUTO-DETECTING)
-                    // ==========================================
-                    Column {
-                        width: parent.width
-                        spacing: 8
-                        // Smart Auto-Hide: If 0 profiles exist on this PC, the entire section vanishes!
-                        visible: vpnModel.count > 0
-
-                        property string activeVpns: ""
-
-                        ListModel { id: vpnModel }
-
-                        // 1. Universal Profile Detector: Works across all OpenVPN 3 Linux versions!
-                        Process {
-                            id: vpnConfigProc
-                            running: true
-                            command: ["sh", "-c", "while true; do openvpn3 configs-list 2>/dev/null | sed 's/.*Configuration [nN]ame:[[:space:]]*//g' | grep -vE '^(-+|Configuration|Owner|Group|Imported|Last|Used|Tags|openvpn3|No config|/net/openvpn/)' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' | grep -v '^$' | tr '\\n' ';'; echo \"\"; sleep 5; done"]
-                            stdout: SplitParser {
-                                onRead: (data) => {
-                                    let raw = data.trim()
-                                    if (raw === "") {
-                                        vpnModel.clear()
-                                        return
-                                    }
-                                    let profiles = raw.split(";")
-                                    let validProfiles = []
-                                    for (let i = 0; i < profiles.length; i++) {
-                                        let p = profiles[i].trim()
-                                        if (p !== "") validProfiles.push(p)
-                                    }
-
-                                    // In-place update prevents UI flickering
-                                    if (vpnModel.count === validProfiles.length) {
-                                        for (let j = 0; j < validProfiles.length; j++) {
-                                            if (vpnModel.get(j).name !== validProfiles[j]) {
-                                                vpnModel.set(j, { name: validProfiles[j] })
-                                            }
-                                        }
-                                    } else {
-                                        vpnModel.clear()
-                                        for (let j = 0; j < validProfiles.length; j++) {
-                                            vpnModel.append({ name: validProfiles[j] })
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        // 2. Active Session Detector: Checks which profiles are currently connected
-                        Process {
-                            id: vpnMonitorProc
-                            running: true
-                            command: ["sh", "-c", "while true; do openvpn3 sessions-list 2>/dev/null | grep 'Config name:' | sed 's/.*Config name:[[:space:]]*//g' | tr '\\n' ';'; echo \"\"; sleep 3; done"]
-                            stdout: SplitParser {
-                                onRead: (data) => {
-                                    parent.activeVpns = data.trim()
-                                }
-                            }
-                        }
-
-                        Process { id: vpnActionProc }
-
-                        // Section Header
-                        Item {
-                            width: parent.width; height: 18
-                            Text {
-                                anchors.left: parent.left
-                                text: "󰖂  OpenVPN 3"
-                                color: "#f5c2e7"
-                                font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                            }
-                            Text {
-                                anchors.right: parent.right
-                                text: parent.parent.activeVpns !== "" ? "ONLINE" : "OFF"
-                                color: parent.parent.activeVpns !== "" ? "#a6e3a1" : "#f38ba8"
-                                font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                            }
-                        }
-
-                        // Dynamic Profile List
                         Column {
-                            width: parent.width
-                            spacing: 6
+                            id: quickContentColumn
+                            width: quickFlickable.width
+                            spacing: 14
 
-                            Repeater {
-                                model: vpnModel
-                                delegate: Rectangle {
-                                    width: parent.width
-                                    height: 36
-                                    radius: 6
-                                    // Exact match against active semicolon-separated config names
-                                    property bool isConnected: parent.parent.activeVpns.split(";").indexOf(name) !== -1
-                                    color: isConnected ? (vpnMouse.containsMouse ? "#8ce187" : "#a6e3a1") : (vpnMouse.containsMouse ? "#313244" : "#2a2b3d")
+                            Text {
+                                text: "Quick Settings"
+                                color: "#cdd6f4"
+                                font.pixelSize: 16; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                            }
+                            Rectangle { width: parent.width; height: 1; color: "#313244" }
 
-                                    Item {
-                                        anchors.fill: parent
-                                        anchors.leftMargin: 12; anchors.rightMargin: 12
-
-                                        // Left Side: Icon + Profile Name
-                                        Row {
-                                            anchors.left: parent.left
-                                            anchors.verticalCenter: parent.verticalCenter
-                                            spacing: 10
-                                            Text {
-                                                text: isConnected ? "󰒘" : "󰦞"
-                                                color: isConnected ? "#1e1e2e" : "#f5c2e7"
-                                                font.pixelSize: 14; font.family: "JetBrainsMono Nerd Font"
-                                            }
-                                            Text {
-                                                text: name
-                                                color: isConnected ? "#1e1e2e" : "#cdd6f4"
-                                                font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                                            }
-                                        }
-
-                                        // Right Side: Action Status Button
-                                        Text {
-                                            anchors.right: parent.right
-                                            anchors.verticalCenter: parent.verticalCenter
-                                            text: isConnected ? "Disconnect 󰅛" : "Connect 󰍁"
-                                            color: isConnected ? "#1e1e2e" : "#89b4fa"
-                                            font.pixelSize: 11; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                            Column {
+                                width: parent.width
+                                spacing: 8
+                                Item {
+                                    width: parent.width; height: 18
+                                    Text {
+                                        anchors.left: parent.left
+                                        text: "󰃠  Brightness"
+                                        color: "#f9e2af"
+                                        font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                    }
+                                    Text {
+                                        anchors.right: parent.right
+                                        text: nixPill.currentBrightness + "%"
+                                        color: "#cdd6f4"
+                                        font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font"
+                                    }
+                                }
+                                Process {
+                                    running: true
+                                    command: ["sh", "-c", "while true; do brightnessctl -m 2>/dev/null | cut -d, -f4 | tr -d '%'; sleep 1; done"]
+                                    stdout: SplitParser {
+                                        onRead: (data) => {
+                                            let val = parseInt(data.trim())
+                                            if (!isNaN(val)) nixPill.currentBrightness = val
                                         }
                                     }
+                                }
+                                Row {
+                                    width: parent.width
+                                    spacing: 10
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    Text {
+                                        text: "󰃞"
+                                        color: "#f9e2af"; font.pixelSize: 15; font.family: "JetBrainsMono Nerd Font"
+                                        anchors.verticalCenter: parent.verticalCenter
+                                    }
+                                    Item {
+                                        width: parent.width - 54; height: 24
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        Rectangle {
+                                            anchors.centerIn: parent
+                                            width: parent.width; height: 8; radius: 4; color: "#2a2b3d"
+                                            Rectangle {
+                                                width: (nixPill.currentBrightness / 100) * parent.width
+                                                height: parent.height; radius: 4; color: "#f9e2af"
+                                            }
+                                        }
+                                        Rectangle {
+                                            width: 20; height: 20; radius: 10
+                                            color: sliderMouse.containsMouse || sliderMouse.pressed ? "#ffffff" : "#f9e2af"
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            x: Math.max(0, Math.min(parent.width - width, ((nixPill.currentBrightness / 100) * parent.width) - (width / 2)))
+                                            border.color: "#1e1e2e"; border.width: 2
+                                            Text {
+                                                anchors.centerIn: parent
+                                                text: "󰃠"
+                                                color: "#1e1e2e"; font.pixelSize: 10; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                            }
+                                        }
+                                        MouseArea {
+                                            id: sliderMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                            function updateBright(mouseX) {
+                                                let pct = Math.max(1, Math.min(100, Math.round((Math.max(0, Math.min(width, mouseX)) / width) * 100)))
+                                                nixPill.currentBrightness = pct
+                                                nixPill.runCmd(setBrightnessProc, "brightnessctl set " + pct + "%")
+                                            }
+                                            onPressed: { updateBright(mouse.x) }
+                                            onPositionChanged: { if (pressed) updateBright(mouse.x) }
+                                        }
+                                    }
+                                    Text {
+                                        text: "󰃠"
+                                        color: "#f9e2af"; font.pixelSize: 17; font.family: "JetBrainsMono Nerd Font"
+                                        anchors.verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                            }
 
-                                    MouseArea {
-                                        id: vpnMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            if (parent.isConnected) {
-                                                // Disconnect silently in background
-                                                nixPill.runCmd(vpnActionProc, "openvpn3 session-manage --config '" + name + "' --disconnect")
-                                            } else {
-                                                // Connect via Hyprland floating auth modal!
-                                                nixPill.runCmd(vpnActionProc, "kitty --class vpn-auth -T 'OpenVPN 3 Authentication' -e sh -c \"echo '🔐 Authentication Required for " + name + "'; echo ''; openvpn3 session-start --config '" + name + "'; echo ''; echo 'Press ENTER to close...'; read\"")
+                            Rectangle { width: parent.width; height: 1; color: "#313244" }
+
+                            Column {
+                                id: wifiSection
+                                width: parent.width
+                                spacing: 6
+                                property bool showWifiList: false
+
+                                Item {
+                                    width: parent.width; height: 18
+                                    Text {
+                                        anchors.left: parent.left
+                                        text: "󰤨  Wi-Fi"
+                                        color: "#a6e3a1"
+                                        font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                    }
+                                    Text {
+                                        id: wifiStatusText
+                                        anchors.right: parent.right
+                                        text: wifiManager.isPowered ? (wifiManager.activeSsid !== "" ? "ON (" + wifiManager.activeSsid + ")" : "ON (Disconnected)") : "OFF"
+                                        color: wifiManager.isPowered ? "#a6e3a1" : "#f38ba8"
+                                        font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                    }
+                                }
+
+                                Row {
+                                    width: parent.width
+                                    spacing: 8
+                                    Rectangle {
+                                        width: (parent.width - 16) / 3; height: 32; radius: 6
+                                        color: nixPill.isWifiOn ? (wifiToggleMouse.containsMouse ? "#8ce187" : "#a6e3a1") : (wifiToggleMouse.containsMouse ? "#313244" : "#2a2b3d")
+                                        Row {
+                                            anchors.centerIn: parent; spacing: 6
+                                            Text { text: "󰤨"; color: nixPill.isWifiOn ? "#1e1e2e" : "#a6e3a1"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                            Text { text: "Toggle"; color: nixPill.isWifiOn ? "#1e1e2e" : "#cdd6f4"; font.pixelSize: 12; font.bold: nixPill.isWifiOn; font.family: "JetBrainsMono Nerd Font" }
+                                        }
+                                        MouseArea {
+                                            id: wifiToggleMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                            onClicked: wifiManager.togglePower()
+                                        }
+                                    }
+                                    Rectangle {
+                                        width: (parent.width - 16) / 3; height: 32; radius: 6
+                                        color: wifiSection.showWifiList ? "#89b4fa" : (wifiListMouse.containsMouse ? "#313244" : "#2a2b3d")
+                                        Row {
+                                            anchors.centerIn: parent; spacing: 6
+                                            Text { text: wifiSection.showWifiList ? "󰅀" : "󰅂"; color: wifiSection.showWifiList ? "#1e1e2e" : "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                            Text { text: "Networks"; color: wifiSection.showWifiList ? "#1e1e2e" : "#cdd6f4"; font.pixelSize: 12; font.bold: wifiSection.showWifiList; font.family: "JetBrainsMono Nerd Font" }
+                                        }
+                                        MouseArea {
+                                            id: wifiListMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                            onClicked: {
+                                                wifiSection.showWifiList = !wifiSection.showWifiList
+                                                if (wifiSection.showWifiList) wifiManager.requestScan()
+                                            }
+                                        }
+                                    }
+                                    Rectangle {
+                                        width: (parent.width - 16) / 3; height: 32; radius: 6
+                                        color: wifiAppMouse.containsMouse ? "#313244" : "#2a2b3d"
+                                        Row {
+                                            anchors.centerIn: parent; spacing: 6
+                                            Text { text: "󰒓"; color: "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                            Text { text: "Settings"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
+                                        }
+                                        MouseArea {
+                                            id: wifiAppMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                            onClicked: {
+                                                nixPill.runCmd(wifiAppProc, "nm-connection-editor || kitty -e nmtui")
                                                 nixMenuPopup.visible = false
                                             }
-                                            // Force an immediate refresh check
-                                            vpnMonitorProc.running = false; vpnMonitorProc.running = true
+                                        }
+                                    }
+                                }
+
+                                Column {
+                                    width: parent.width; spacing: 4
+                                    visible: wifiSection.showWifiList && nixPill.isWifiOn
+
+                                    Repeater {
+                                        model: wifiManager.accessPoints
+                                        delegate: Rectangle {
+                                            id: wifiNetItem
+                                            width: parent.width; height: 32; radius: 6
+                                            property var netObj: modelData
+                                            property string netName: netObj ? (netObj.name ? netObj.name : "") : ""
+                                            property bool isKnown: netObj ? Boolean(netObj.known) : false
+
+                                            property bool nativeConnected: netObj ? Boolean(netObj.connected) : false
+                                            property bool ssidMatched: (netName !== "" && wifiManager.activeSsid !== "") ? (netName.trim().toLowerCase() === wifiManager.activeSsid.trim().toLowerCase()) : false
+
+                                            property bool isConnected: nativeConnected || ssidMatched
+
+                                            property int strengthVal: wifiManager.getSignalStrength(netObj, netName)
+                                            property string strengthIcon: {
+                                                if (strengthVal <= 15) return "󰤯";
+                                                if (strengthVal <= 35) return "󰤟";
+                                                if (strengthVal <= 60) return "󰤢";
+                                                if (strengthVal <= 80) return "󰤥";
+                                                return "󰤨";
+                                            }
+
+                                            color: isConnected ? "#313244" : (netMouse.containsMouse ? "#2a2b3d" : "transparent")
+                                            border.color: isConnected ? "#a6e3a1" : "transparent"
+                                            border.width: isConnected ? 1 : 0
+
+                                            Item {
+                                                anchors.fill: parent; anchors.leftMargin: 10; anchors.rightMargin: 10
+                                                Row {
+                                                    anchors.left: parent.left; anchors.verticalCenter: parent.verticalCenter; spacing: 8
+                                                    Text { text: strengthIcon; color: isConnected ? "#a6e3a1" : "#a6adc8"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                                    Text { text: netName; color: isConnected ? "#a6e3a1" : "#cdd6f4"; font.pixelSize: 11; font.bold: isConnected; font.family: "JetBrainsMono Nerd Font" }
+                                                }
+                                                Row {
+                                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter; spacing: 10
+                                                    Text {
+                                                        text: isConnected ? "Disconnect 󰅛" : (isKnown ? "Connect (Saved) 󰄬" : "Connect 󰍁")
+                                                        color: isConnected ? "#f38ba8" : "#89b4fa"
+                                                        font.pixelSize: 11; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                                    }
+                                                }
+                                            }
+
+                                            MouseArea {
+                                                id: netMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                                onClicked: {
+                                                    if (!netObj) return;
+                                                    if (isConnected) {
+                                                        wifiManager.disconnectActive();
+                                                    } else if (isKnown) {
+                                                        wifiManager.connectToNetwork(netObj, "");
+                                                    } else {
+                                                        wifiPasswordModal.targetSsid = netName;
+                                                        wifiPasswordModal.visible = true;
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        // Smart Auto-Hiding Divider (Only renders if OpenVPN is visible!)
-                        Item { width: parent.width; height: 6 }
-                        Rectangle { width: parent.width; height: 1; color: "#313244" }
+                            Rectangle { width: parent.width; height: 1; color: "#313244" }
+
+                            Column {
+                                id: btSection
+                                width: parent.width
+                                spacing: 6
+                                property bool showBtList: false
+
+                                Item {
+                                    width: parent.width; height: 18
+                                    Text {
+                                        anchors.left: parent.left
+                                        text: "󰂯  Bluetooth"
+                                        color: "#89b4fa"
+                                        font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                    }
+                                    Text {
+                                        id: btStatusText
+                                        anchors.right: parent.right
+                                        text: btManager.isPowered ? (btManager.connectedDeviceName !== "" ? "ON (" + btManager.connectedDeviceName + ")" : "ON (Disconnected)") : "OFF"
+                                        color: btManager.isPowered ? "#89b4fa" : "#f38ba8"
+                                        font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                    }
+                                }
+
+                                Row {
+                                    width: parent.width
+                                    spacing: 8
+                                    Rectangle {
+                                        width: (parent.width - 16) / 3; height: 32; radius: 6
+                                        color: nixPill.isBtOn ? (btToggleMouse.containsMouse ? "#b4befe" : "#89b4fa") : (btToggleMouse.containsMouse ? "#313244" : "#2a2b3d")
+                                        Row {
+                                            anchors.centerIn: parent; spacing: 6
+                                            Text { text: "󰂯"; color: nixPill.isBtOn ? "#1e1e2e" : "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                            Text { text: "Toggle"; color: nixPill.isBtOn ? "#1e1e2e" : "#cdd6f4"; font.pixelSize: 12; font.bold: nixPill.isBtOn; font.family: "JetBrainsMono Nerd Font" }
+                                        }
+                                        MouseArea {
+                                            id: btToggleMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                            onClicked: btManager.togglePower()
+                                        }
+                                    }
+                                    Rectangle {
+                                        width: (parent.width - 16) / 3; height: 32; radius: 6
+                                        color: btSection.showBtList ? "#89b4fa" : (btListMouse.containsMouse ? "#313244" : "#2a2b3d")
+                                        Row {
+                                            anchors.centerIn: parent; spacing: 6
+                                            Text { text: btSection.showBtList ? "󰅀" : "󰅂"; color: btSection.showBtList ? "#1e1e2e" : "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                            Text { text: "Devices"; color: btSection.showBtList ? "#1e1e2e" : "#cdd6f4"; font.pixelSize: 12; font.bold: btSection.showBtList; font.family: "JetBrainsMono Nerd Font" }
+                                        }
+                                        MouseArea {
+                                            id: btListMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                            onClicked: btSection.showBtList = !btSection.showBtList
+                                        }
+                                    }
+                                    Rectangle {
+                                        width: (parent.width - 16) / 3; height: 32; radius: 6
+                                        color: btAppMouse.containsMouse ? "#313244" : "#2a2b3d"
+                                        Row {
+                                            anchors.centerIn: parent; spacing: 6
+                                            Text { text: "󰒓"; color: "#89b4fa"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                            Text { text: "Settings"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
+                                        }
+                                        MouseArea {
+                                            id: btAppMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                            onClicked: {
+                                                nixPill.runCmd(btAppProc, "blueman-manager || kitty -e bluetoothctl")
+                                                nixMenuPopup.visible = false
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Column {
+                                    width: parent.width; spacing: 4
+                                    visible: btSection.showBtList && nixPill.isBtOn
+
+                                    Repeater {
+                                        model: btManager.adapter ? btManager.adapter.devices : []
+                                        delegate: Rectangle {
+                                            id: btDevItem
+                                            width: parent.width; height: 30; radius: 6
+                                            property bool isConnected: modelData.connected
+                                            color: isConnected ? "#313244" : (devMouse.containsMouse ? "#2a2b3d" : "transparent")
+
+                                            Item {
+                                                anchors.fill: parent; anchors.leftMargin: 10; anchors.rightMargin: 10
+                                                Row {
+                                                    anchors.left: parent.left; anchors.verticalCenter: parent.verticalCenter; spacing: 8
+                                                    Text { text: isConnected ? "󰂱" : "󰂯"; color: isConnected ? "#89b4fa" : "#a6adc8"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                                    Text { text: modelData.name; color: isConnected ? "#89b4fa" : "#cdd6f4"; font.pixelSize: 11; font.bold: isConnected; font.family: "JetBrainsMono Nerd Font" }
+                                                }
+                                                Text {
+                                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                                    text: isConnected ? "Connected 󰄬" : "Connect 󰍁"
+                                                    color: isConnected ? "#89b4fa" : "#cdd6f4"
+                                                    font.pixelSize: 11; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                                }
+                                            }
+
+                                            MouseArea {
+                                                id: devMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                                onClicked: {
+                                                    if (isConnected) {
+                                                        modelData.disconnectFromDevice();
+                                                    } else {
+                                                        if (!modelData.paired) modelData.pair();
+                                                        modelData.connectToDevice();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            Rectangle { width: parent.width; height: 1; color: "#313244" }
+
+                            Column {
+                                id: vpnSection
+                                width: parent.width
+                                spacing: 8
+                                visible: vpnModel.count > 0
+
+                                property string activeVpns: ""
+
+                                ListModel { id: vpnModel }
+
+                                Process {
+                                    id: vpnConfigProc
+                                    running: true
+                                    command: ["sh", "-c", "while true; do nmcli -t -f NAME,TYPE con show 2>/dev/null | awk -F: '$2==\"vpn\" {print $1}' | tr '\\n' ';'; echo \"\"; sleep 5; done"]
+                                    stdout: SplitParser {
+                                        onRead: (data) => {
+                                            let raw = data.trim()
+                                            if (raw === "") {
+                                                vpnModel.clear()
+                                                return
+                                            }
+                                            let profiles = raw.split(";")
+                                            let validProfiles = []
+                                            for (let i = 0; i < profiles.length; i++) {
+                                                let p = profiles[i].trim()
+                                                if (p !== "") validProfiles.push(p)
+                                            }
+
+                                            if (vpnModel.count === validProfiles.length) {
+                                                for (let j = 0; j < validProfiles.length; j++) {
+                                                    if (vpnModel.get(j).name !== validProfiles[j]) {
+                                                        vpnModel.set(j, { name: validProfiles[j] })
+                                                    }
+                                                }
+                                            } else {
+                                                vpnModel.clear()
+                                                for (let j = 0; j < validProfiles.length; j++) {
+                                                    vpnModel.append({ name: validProfiles[j] })
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Process {
+                                    id: vpnMonitorProc
+                                    running: true
+                                    command: ["sh", "-c", "while true; do nmcli -t -f NAME,TYPE con show --active 2>/dev/null | awk -F: '$2==\"vpn\" {print $1}' | tr '\\n' ';'; echo \"\"; sleep 3; done"]
+                                    stdout: SplitParser {
+                                        onRead: (data) => {
+                                            vpnSection.activeVpns = data.trim()
+                                        }
+                                    }
+                                }
+
+                                Process { id: vpnActionProc }
+
+                                Item {
+                                    width: parent.width; height: 18
+                                    Text {
+                                        anchors.left: parent.left
+                                        text: "󰖂  VPN Networks"
+                                        color: "#f5c2e7"
+                                        font.pixelSize: 13; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                    }
+                                    Text {
+                                        anchors.right: parent.right
+                                        text: vpnSection.activeVpns !== "" ? "ONLINE" : "OFF"
+                                        color: vpnSection.activeVpns !== "" ? "#a6e3a1" : "#f38ba8"
+                                        font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                    }
+                                }
+
+                                Column {
+                                    width: parent.width
+                                    spacing: 6
+
+                                    Repeater {
+                                        model: vpnModel
+                                        delegate: Rectangle {
+                                            id: vpnProfileItem
+                                            width: parent.width
+                                            height: 36
+                                            radius: 6
+                                            property bool isConnected: vpnSection.activeVpns.split(";").indexOf(name) !== -1
+                                            color: vpnProfileItem.isConnected ? (vpnMouse.containsMouse ? "#8ce187" : "#a6e3a1") : (vpnMouse.containsMouse ? "#313244" : "#2a2b3d")
+
+                                            Item {
+                                                anchors.fill: parent
+                                                anchors.leftMargin: 12; anchors.rightMargin: 12
+
+                                                Row {
+                                                    anchors.left: parent.left
+                                                    anchors.verticalCenter: parent.verticalCenter
+                                                    spacing: 10
+                                                    Text {
+                                                        text: vpnProfileItem.isConnected ? "󰒘" : "󰦞"
+                                                        color: vpnProfileItem.isConnected ? "#1e1e2e" : "#f5c2e7"
+                                                        font.pixelSize: 14; font.family: "JetBrainsMono Nerd Font"
+                                                    }
+                                                    Text {
+                                                        text: name
+                                                        color: vpnProfileItem.isConnected ? "#1e1e2e" : "#cdd6f4"
+                                                        font.pixelSize: 12; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                                    }
+                                                }
+
+                                                Text {
+                                                    anchors.right: parent.right
+                                                    anchors.verticalCenter: parent.verticalCenter
+                                                    text: vpnProfileItem.isConnected ? "Disconnect 󰅛" : "Connect 󰍁"
+                                                    color: vpnProfileItem.isConnected ? "#1e1e2e" : "#89b4fa"
+                                                    font.pixelSize: 11; font.bold: true; font.family: "JetBrainsMono Nerd Font"
+                                                }
+                                            }
+
+                                            MouseArea {
+                                                id: vpnMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                                onClicked: {
+                                                    if (vpnProfileItem.isConnected) {
+                                                        nixPill.runCmd(vpnActionProc, "nmcli connection down '" + name + "'")
+                                                    } else {
+                                                        nixPill.runCmd(vpnActionProc, "nmcli connection up '" + name + "'")
+                                                        nixMenuPopup.visible = false
+                                                    }
+                                                    vpnMonitorProc.running = false; vpnMonitorProc.running = true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Item { width: parent.width; height: 6 }
+                                Rectangle { width: parent.width; height: 1; color: "#313244" }
+                            }
+
+                            Row {
+                                spacing: 8
+                                width: parent.width
+                                Rectangle {
+                                    width: (parent.width - 8) / 2; height: 32; radius: 6
+                                    color: btn1Mouse.containsMouse ? "#313244" : "#2a2b3d"
+                                    Row {
+                                        anchors.centerIn: parent; spacing: 6
+                                        Text { text: "󰓃"; color: "#a6e3a1"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                        Text { text: "Audio Mixer"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
+                                    }
+                                    Process { id: audioProc; command: ["pavucontrol"] }
+                                    MouseArea {
+                                        id: btn1Mouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                        onClicked: { audioProc.running = true; nixMenuPopup.visible = false }
+                                    }
+                                }
+                                Rectangle {
+                                    width: (parent.width - 8) / 2; height: 32; radius: 6
+                                    color: btn2Mouse.containsMouse ? "#313244" : "#2a2b3d"
+                                    Row {
+                                        anchors.centerIn: parent; spacing: 6
+                                        Text { text: "󰌾"; color: "#f38ba8"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
+                                        Text { text: "Lock Screen"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
+                                    }
+                                    Process { id: lockProc; command: ["hyprlock"] }
+                                    MouseArea {
+                                        id: btn2Mouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
+                                        onClicked: { lockProc.running = true; nixMenuPopup.visible = false }
+                                    }
+                                }
+                            }
+
+                            Item { width: parent.width; height: 6 }
+                        }
                     }
 
-                    Row {
-                        spacing: 8
-                        width: parent.width
+                    Item {
+                        id: quickScrollbarArea
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        width: 6
+                        visible: quickFlickable.contentHeight > quickFlickable.height
+
                         Rectangle {
-                            width: (parent.width - 8) / 2; height: 32; radius: 6
-                            color: btn1Mouse.containsMouse ? "#313244" : "#2a2b3d"
-                            Row {
-                                anchors.centerIn: parent; spacing: 6
-                                Text { text: "󰓃"; color: "#a6e3a1"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
-                                Text { text: "Audio Mixer"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
-                            }
-                            Process { id: audioProc; command: ["pavucontrol"] }
-                            MouseArea {
-                                id: btn1Mouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                                onClicked: { audioProc.running = true; nixMenuPopup.visible = false }
+                            id: quickScrollTrack
+                            anchors.centerIn: parent
+                            width: 2.5
+                            height: parent.height
+                            radius: 1.25
+                            color: "#2a2b3d"
+
+                            Rectangle {
+                                id: quickScrollThumb
+                                width: parent.width
+                                radius: 1.25
+                                color: quickScrollMouse.containsMouse || quickScrollMouse.pressed ? "#b4befe" : "#89b4fa"
+                                y: quickFlickable.visibleArea.yPosition * quickScrollTrack.height
+                                height: Math.max(20, quickFlickable.visibleArea.heightRatio * quickScrollTrack.height)
                             }
                         }
-                        Rectangle {
-                            width: (parent.width - 8) / 2; height: 32; radius: 6
-                            color: btn2Mouse.containsMouse ? "#313244" : "#2a2b3d"
-                            Row {
-                                anchors.centerIn: parent; spacing: 6
-                                Text { text: "󰌾"; color: "#f38ba8"; font.pixelSize: 13; font.family: "JetBrainsMono Nerd Font" }
-                                Text { text: "Lock Screen"; color: "#cdd6f4"; font.pixelSize: 12; font.family: "JetBrainsMono Nerd Font" }
+
+                        MouseArea {
+                            id: quickScrollMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            function scrollToMouse(mouseY) {
+                                let maxContentY = quickFlickable.contentHeight - quickFlickable.height
+                                if (maxContentY <= 0) return
+                                let thumbHeight = quickScrollThumb.height
+                                let availableTrack = quickScrollTrack.height - thumbHeight
+                                if (availableTrack <= 0) return
+                                let clickY = mouseY - (thumbHeight / 2)
+                                let clampedY = Math.max(0, Math.min(availableTrack, clickY))
+                                quickFlickable.contentY = (clampedY / availableTrack) * maxContentY
                             }
-                            Process { id: lockProc; command: ["hyprlock"] }
-                            MouseArea {
-                                id: btn2Mouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                                onClicked: { lockProc.running = true; nixMenuPopup.visible = false }
-                            }
+                            onPressed: (mouse) => scrollToMouse(mouse.y)
+                            onPositionChanged: (mouse) => { if (pressed) scrollToMouse(mouse.y) }
                         }
                     }
                 }
@@ -800,6 +971,7 @@ Rectangle {
                     anchors.fill: parent
                     spacing: 10
                     visible: nixPill.currentTab === "nixos"
+
                     Item {
                         width: parent.width; height: 28
                         Text {
@@ -859,7 +1031,7 @@ Rectangle {
 
                         ListView {
                             id: updateListView
-                            anchors.fill: parent; anchors.rightMargin: 16
+                            anchors.fill: parent; anchors.rightMargin: updateScrollbarArea.visible ? 8 : 0
                             model: updateModel; spacing: 4; clip: true
                             boundsBehavior: Flickable.StopAtBounds
                             delegate: Rectangle {
@@ -880,14 +1052,14 @@ Rectangle {
 
                         Item {
                             id: updateScrollbarArea
-                            anchors.right: parent.right; anchors.top: parent.top; anchors.bottom: parent.bottom; width: 12
+                            anchors.right: parent.right; anchors.top: parent.top; anchors.bottom: parent.bottom; width: 6
                             visible: updateListView.contentHeight > updateListView.height
                             Rectangle {
                                 id: updateScrollTrack
-                                anchors.centerIn: parent; width: 4; height: parent.height; radius: 2; color: "#2a2b3d"
+                                anchors.centerIn: parent; width: 2.5; height: parent.height; radius: 1.25; color: "#2a2b3d"
                                 Rectangle {
                                     id: updateScrollThumb
-                                    width: parent.width; radius: 2
+                                    width: parent.width; radius: 1.25
                                     color: updateScrollMouse.containsMouse || updateScrollMouse.pressed ? "#b4befe" : "#89b4fa"
                                     y: updateListView.visibleArea.yPosition * updateScrollTrack.height
                                     height: Math.max(20, updateListView.visibleArea.heightRatio * updateScrollTrack.height)
@@ -923,6 +1095,27 @@ Rectangle {
                     onCloseRequested: nixMenuPopup.visible = false
                 }
             }
+        }
+    }
+
+    PasswordModal {
+        id: wifiPasswordModal
+        anchor.item: nixPill
+        anchor.edges: Edges.Bottom
+        anchor.gravity: Edges.Bottom
+
+        onConnectRequested: (ssid, password) => {
+            let aps = wifiManager.accessPoints;
+            if (aps) {
+                let list = aps.values ? aps.values : aps;
+                for (let i = 0; i < list.length; i++) {
+                    if (list[i] && list[i].name === ssid) {
+                        wifiManager.connectToNetwork(list[i], password);
+                        break;
+                    }
+                }
+            }
+            wifiPasswordModal.visible = false;
         }
     }
 }

@@ -18,7 +18,6 @@ hl.window_rule({
     float = true,
     size = "550 320",
     center = true,
-    stayfocused = true,
     animation = "popin 80%"
 })
 

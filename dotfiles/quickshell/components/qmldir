@@ -1,3 +1,5 @@
 module qs.components
 ProcessView 1.0 ProcessView.qml
 CalendarView 1.0 CalendarView.qml
+ModalPopup 1.0 ModalPopup.qml
+PasswordModal 1.0 PasswordModal.qml

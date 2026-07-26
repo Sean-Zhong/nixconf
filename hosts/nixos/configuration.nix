@@ -87,7 +87,7 @@
   users.users.sean = {
     isNormalUser = true;
     description = "Sean Zhong";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "input" "audio" "video" ];
     packages = with pkgs; [
     git
     ];

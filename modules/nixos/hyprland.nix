@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, quickshellWithDeps, inputs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -23,7 +23,7 @@
     swappy
     brightnessctl
     cava
-    inputs.quickshell.packages.${pkgs.system}.default
+    quickshellWithDeps
   ];
 
   programs.hyprland = {
