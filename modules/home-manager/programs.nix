@@ -20,6 +20,7 @@
         zoom-us
         orca-slicer
         killall
+        bambu-studio
     ];
 }
 
