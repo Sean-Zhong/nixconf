@@ -87,7 +87,7 @@ Rectangle {
 
     Process {
         id: checkStatusProc
-        command: ["sh", "-c", "if [ \"$(systemctl --user show -p SubState --value nixos-update-check.service 2>/dev/null)\" = \"running\" ] || pgrep -x nvd >/dev/null; then echo 'RUNNING'; else echo 'STOPPED'; fi"]
+        command: ["sh", "-c", "state=$(systemctl --user show -p SubState --value nixos-update-check.service 2>/dev/null); if [ \"$state\" = \"running\" ] || [ \"$state\" = \"start\" ] || pgrep -x nvd >/dev/null; then echo 'RUNNING'; else echo 'STOPPED'; fi"]
         stdout: SplitParser {
             onRead: (data) => {
                 let status = data.trim()
