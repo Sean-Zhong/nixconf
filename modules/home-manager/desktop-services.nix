@@ -44,12 +44,13 @@
       Unit.Description = "NixOS Update Check Service";
       Service = {
         Type = "oneshot";
-        ExecStart = "${pkgs.bash}/bin/bash %h/nixconf/dotfiles/scripts/nixos_status.sh";
+        ExecStart = "${pkgs.bash}/bin/bash %h/nixconf/dotfiles/scripts/update.sh";
         Nice = 19;
         CPUSchedulingPolicy = "idle";
         IOSchedulingClass = "idle";
+
+        Environment = "PATH=${pkgs.lib.makeBinPath (with pkgs; [ nix nvd git bash coreutils libnotify ])}:/run/current-system/sw/bin";
       };
-      path = with pkgs; [ nix nvd git bash coreutils libnotify ];
     };
 
   services.hyprpaper.enable = true;
