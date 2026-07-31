@@ -13,7 +13,7 @@
         binutils
         cookiecutter
         inputs.dagger.packages.${system}.dagger
-        jetbrains.pycharm-community
+        jetbrains.pycharm
         tree
         openvpn3
         jq
