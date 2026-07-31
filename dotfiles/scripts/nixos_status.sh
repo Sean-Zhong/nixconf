@@ -3,34 +3,20 @@
 FLAKE_DIR="$(git rev-parse --show-toplevel 2>/dev/null || echo "$HOME/nixconf")"
 CONFIG_NAME="$(hostname | sed -E 's/-([a-z])/\U\1/g')"
 OUTPUT_FILE="/tmp/nixos-update-diff.txt"
-UNIT_NAME="nixos-update-check"
 
-if ! systemctl --user -q is-active "$UNIT_NAME.timer"; then
-  systemd-run --user \
-    --unit="$UNIT_NAME" \
-    --on-calendar="12:00" \
-    --description="Daily NixOS Update Check" \
-    --property="Nice=19" \
-    --property="CPUSchedulingPolicy=idle" \
-    --property="IOSchedulingClass=idle" \
-    --setenv=PATH="/run/current-system/sw/bin:/etc/profiles/per-user/$USER/bin" \
-    bash -c "
-  BUILD=\$(nix build '$FLAKE_DIR#nixosConfigurations.$CONFIG_NAME.config.system.build.toplevel' \
-    --recreate-lock-file \
-    --no-write-lock-file \
-    --print-out-paths \
-    --no-link \
-    --cores 4 \
-    --max-jobs 2) && \
+BUILD=$(nix build "$FLAKE_DIR#nixosConfigurations.$CONFIG_NAME.config.system.build.toplevel" \
+  --recreate-lock-file \
+  --no-write-lock-file \
+  --print-out-paths \
+  --no-link \
+  --cores 4 \
+  --max-jobs 2) && \
 
-    nvd diff /run/current-system \"\$BUILD\" > '$OUTPUT_FILE' && \
+nvd diff /run/current-system "$BUILD" > "$OUTPUT_FILE" && \
 
-    { command -v notify-send >/dev/null && notify-send 'NixOS' 'Update check complete' || \
-      echo 'notify-send not found, skipping notification'; }
-    "
-fi
+{ command -v notify-send >/dev/null && notify-send 'NixOS' 'Update check complete' || \
+  echo 'notify-send not found, skipping notification'; }
 
-# Clean up outdated diff reports if system was upgraded since last check
 if [ -f "$OUTPUT_FILE" ]; then
   report_time=$(stat -c %Y "$OUTPUT_FILE")
   system_time=$(stat -c %Y /run/current-system)

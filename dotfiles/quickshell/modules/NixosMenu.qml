@@ -159,12 +159,6 @@ Rectangle {
         }
     }
 
-    Timer {
-        interval: 35000
-        running: true
-        repeat: false
-        onTriggered: nixPill.triggerManualCheck()
-    }
 
     PopupWindow {
         id: nixMenuPopup
@@ -213,7 +207,7 @@ Rectangle {
                             font.pixelSize: 14
                             font.bold: true
                             font.family: "JetBrainsMono Nerd Font"
-                            anchors.verticalCenter: parent.verticalCenter
+                           anchors.verticalCenter: parent.verticalCenter
                         }
                     }
 

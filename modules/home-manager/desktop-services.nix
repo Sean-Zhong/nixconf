@@ -30,6 +30,28 @@
     };
   };
 
+    systemd.user.timers.nixos-update-check = {
+      Unit.Description = "Daily NixOS Update Check Timer";
+      Timer = {
+        OnBootSec = "35s";
+        OnCalendar = "12:00";
+        Persistent = true;
+      };
+      Install.WantedBy = [ "timers.target" ];
+    };
+
+    systemd.user.services.nixos-update-check = {
+      Unit.Description = "NixOS Update Check Service";
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.bash}/bin/bash %h/nixconf/dotfiles/scripts/nixos_status.sh";
+        Nice = 19;
+        CPUSchedulingPolicy = "idle";
+        IOSchedulingClass = "idle";
+      };
+      path = with pkgs; [ nix nvd git bash coreutils libnotify ];
+    };
+
   services.hyprpaper.enable = true;
   services.hypridle.enable = true;
   services.network-manager-applet.enable = true;
