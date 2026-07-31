@@ -44,7 +44,7 @@
       Unit.Description = "NixOS Update Check Service";
       Service = {
         Type = "oneshot";
-        ExecStart = "${pkgs.bash}/bin/bash %h/nixconf/dotfiles/scripts/update.sh";
+        ExecStart = "${pkgs.bash}/bin/bash %h/nixconf/dotfiles/scripts/nixos_status.sh";
         Nice = 19;
         CPUSchedulingPolicy = "idle";
         IOSchedulingClass = "idle";
