@@ -159,7 +159,6 @@ Rectangle {
         }
     }
 
-
     PopupWindow {
         id: nixMenuPopup
         anchor.item: nixPill
@@ -207,7 +206,7 @@ Rectangle {
                             font.pixelSize: 14
                             font.bold: true
                             font.family: "JetBrainsMono Nerd Font"
-                           anchors.verticalCenter: parent.verticalCenter
+                            anchors.verticalCenter: parent.verticalCenter
                         }
                     }
 
@@ -566,6 +565,7 @@ Rectangle {
                                         delegate: Rectangle {
                                             id: wifiNetItem
                                             width: parent.width; height: 32; radius: 6
+
                                             property var netObj: modelData
                                             property string netName: netObj ? (netObj.name ? netObj.name : "") : ""
                                             property bool isKnown: netObj ? Boolean(netObj.known) : false
@@ -754,7 +754,7 @@ Rectangle {
                                 Process {
                                     id: vpnConfigProc
                                     running: true
-                                    command: ["sh", "-c", "while true; do nmcli -t -f NAME,TYPE con show 2>/dev/null | awk -F: '$2==\"vpn\" {print $1}' | tr '\\n' ';'; echo \"\"; sleep 5; done"]
+                                    command: ["sh", "-c", "while true; do c1=$(nmcli -t -f NAME,TYPE con show 2>/dev/null | awk -F: '$2==\"vpn\" {print $1}' | tr '\\n' ';'); c2=$(openvpn3 configs-list 2>/dev/null | awk -F'[Nn]ame: ' 'NF>1 {print $2}' | tr '\\n' ';'); c3=$(openvpn3 sessions-list 2>/dev/null | awk -F'Config name: ' 'NF>1 {print $2}' | tr '\\n' ';'); echo \"${c1}${c2}${c3}\"; sleep 5; done"]
                                     stdout: SplitParser {
                                         onRead: (data) => {
                                             let raw = data.trim()
@@ -764,9 +764,12 @@ Rectangle {
                                             }
                                             let profiles = raw.split(";")
                                             let validProfiles = []
+
                                             for (let i = 0; i < profiles.length; i++) {
                                                 let p = profiles[i].trim()
-                                                if (p !== "") validProfiles.push(p)
+                                                if (p !== "" && validProfiles.indexOf(p) === -1) {
+                                                    validProfiles.push(p)
+                                                }
                                             }
 
                                             if (vpnModel.count === validProfiles.length) {
@@ -788,15 +791,13 @@ Rectangle {
                                 Process {
                                     id: vpnMonitorProc
                                     running: true
-                                    command: ["sh", "-c", "while true; do nmcli -t -f NAME,TYPE con show --active 2>/dev/null | awk -F: '$2==\"vpn\" {print $1}' | tr '\\n' ';'; echo \"\"; sleep 3; done"]
+                                    command: ["sh", "-c", "while true; do a1=$(nmcli -t -f NAME,TYPE con show --active 2>/dev/null | awk -F: '$2==\"vpn\" {print $1}' | tr '\\n' ';'); a2=$(openvpn3 sessions-list 2>/dev/null | awk -F'Config name: ' 'NF>1 {print $2}' | tr '\\n' ';'); echo \"${a1}${a2}\"; sleep 3; done"]
                                     stdout: SplitParser {
                                         onRead: (data) => {
                                             vpnSection.activeVpns = data.trim()
                                         }
                                     }
                                 }
-
-                                Process { id: vpnActionProc }
 
                                 Item {
                                     width: parent.width; height: 18
@@ -825,8 +826,10 @@ Rectangle {
                                             width: parent.width
                                             height: 36
                                             radius: 6
+
                                             property bool isConnected: vpnSection.activeVpns.split(";").indexOf(name) !== -1
-                                            color: vpnProfileItem.isConnected ? (vpnMouse.containsMouse ? "#8ce187" : "#a6e3a1") : (vpnMouse.containsMouse ? "#313244" : "#2a2b3d")
+
+                                            color: vpnProfileItem.isConnected ? "#a6e3a1" : "#2a2b3d"
 
                                             Item {
                                                 anchors.fill: parent
@@ -851,22 +854,10 @@ Rectangle {
                                                 Text {
                                                     anchors.right: parent.right
                                                     anchors.verticalCenter: parent.verticalCenter
-                                                    text: vpnProfileItem.isConnected ? "Disconnect 󰅛" : "Connect 󰍁"
-                                                    color: vpnProfileItem.isConnected ? "#1e1e2e" : "#89b4fa"
-                                                    font.pixelSize: 11; font.bold: true; font.family: "JetBrainsMono Nerd Font"
-                                                }
-                                            }
 
-                                            MouseArea {
-                                                id: vpnMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor
-                                                onClicked: {
-                                                    if (vpnProfileItem.isConnected) {
-                                                        nixPill.runCmd(vpnActionProc, "nmcli connection down '" + name + "'")
-                                                    } else {
-                                                        nixPill.runCmd(vpnActionProc, "nmcli connection up '" + name + "'")
-                                                        nixMenuPopup.visible = false
-                                                    }
-                                                    vpnMonitorProc.running = false; vpnMonitorProc.running = true
+                                                    text: vpnProfileItem.isConnected ? "Connected 󰄬" : "Offline 󰦞"
+                                                    color: vpnProfileItem.isConnected ? "#1e1e2e" : "#a6adc8"
+                                                    font.pixelSize: 11; font.bold: true; font.family: "JetBrainsMono Nerd Font"
                                                 }
                                             }
                                         }
