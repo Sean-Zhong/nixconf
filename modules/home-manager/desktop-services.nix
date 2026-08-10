@@ -33,7 +33,7 @@
     systemd.user.timers.nixos-update-check = {
       Unit.Description = "Daily NixOS Update Check Timer";
       Timer = {
-        OnBootSec = "35s";
+        OnStartupSec = "35s";
         OnCalendar = "12:00";
         Persistent = true;
       };
