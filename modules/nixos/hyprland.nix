@@ -11,7 +11,6 @@
     hyprlock
     hypridle
     hyprcursor
-    wlogout
     blueman
     wl-clipboard
     cliphist
