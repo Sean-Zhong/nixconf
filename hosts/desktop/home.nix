@@ -77,7 +77,7 @@
     ".config/uwsm/env".source = ../../dotfiles/uwsm/env;
     ".config/quickshell".source = ../../dotfiles/quickshell;
     ".config/cava".source = ../../dotfiles/cava;
-    ".w3m".source = ../../dotfiles/w3m;
+    ".w3m/config".source = ../../dotfiles/w3m/config;
   };
 
   home.sessionVariables = {

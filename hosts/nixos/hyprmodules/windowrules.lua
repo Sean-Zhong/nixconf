@@ -1,5 +1,5 @@
 hl.on("hyprland.start", function()
-    hl.exec_cmd("zen-beta")
+    hl.exec_cmd("[workspace 1 silent] zen-beta")
     hl.exec_cmd("idea")
 end)
 
@@ -14,10 +14,8 @@ hl.window_rule({
 })
 
 hl.window_rule({
-    match = { class = "vpn-auth" },
+    match = { class = "^chrome-auth.*" },
     float = true,
-    size = "550 320",
-    center = true,
-    animation = "popin 80%"
+    size = "600 700",
+    center = true
 })
-

@@ -88,31 +88,19 @@ config.keys = {
         key = 'V',
         action = wezterm.action.PasteFrom 'Clipboard'
     },
-    -- ==========================================
-    -- w3m Scila SSO Interceptor
-    -- ==========================================
-    {
-        key = 'O',
-        mods = 'CTRL|SHIFT',
-        action = wezterm.action.QuickSelectArgs {
-            label = 'Open Scila Auth in w3m',
-            patterns = {
-                'https://auth\\.int\\.scila\\.se/realms/Scila/device\\?user_code=[A-Z0-9-]+',
-            },
-            action = wezterm.action_callback(function(window, pane)
-                local match = window:get_selection_text_for_pane(pane)
-
-                window:perform_action(
-                    wezterm.action.SplitPane {
-                        direction = 'Down',
-                        command = { args = { 'w3m', match } },
-                        size = { Percent = 40 },
-                    },
-                    pane
-                )
-            end),
-        },
-    },
+    wezterm.on('open-uri', function(window, pane, uri)
+        if uri:match('^https://auth%.int%.scila%.se/.*') then
+            wezterm.background_child_process {
+                'chromium',
+                '--ozone-platform-hint=auto',
+                '--disable-extensions',
+                '--disable-sync',
+                '--disable-background-networking',
+                '--app=' .. uri
+            }
+            return false
+        end
+    end)
 }
 
 for i = 1, 9 do
