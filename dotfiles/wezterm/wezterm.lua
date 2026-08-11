@@ -88,25 +88,46 @@ config.keys = {
         key = 'V',
         action = wezterm.action.PasteFrom 'Clipboard'
     },
+    -- ==========================================
+    -- w3m Scila SSO Interceptor
+    -- ==========================================
+    {
+        key = 'O',
+        mods = 'CTRL|SHIFT',
+        action = wezterm.action.QuickSelectArgs {
+            label = 'Open Scila Auth in w3m',
+            patterns = {
+                'https://auth\\.int\\.scila\\.se/realms/Scila/device\\?user_code=[A-Z0-9-]+',
+            },
+            action = wezterm.action_callback(function(window, pane)
+                local match = window:get_selection_text_for_pane(pane)
+
+                window:perform_action(
+                    wezterm.action.SplitPane {
+                        direction = 'Down',
+                        command = { args = { 'w3m', match } },
+                        size = { Percent = 40 },
+                    },
+                    pane
+                )
+            end),
+        },
+    },
 }
 
--- Update the keybindings to use 1-indexed tabs
 for i = 1, 9 do
-    -- leader + number to activate that tab (1-indexed)
     table.insert(config.keys, {
         key = tostring(i),
         mods = "LEADER",
-        action = wezterm.action.ActivateTab(i - 1),  -- We subtract 1 here because tabs are 0-indexed internally
+        action = wezterm.action.ActivateTab(i - 1),
     })
 end
 
--- tab bar settings
 config.hide_tab_bar_if_only_one_tab = false
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
-config.tab_and_split_indices_are_zero_based = false  -- Set this to false to make tab indices 1-indexed
+config.tab_and_split_indices_are_zero_based = false
 
--- Variables to store the previous CPU state to calculate usage over time
 local last_cpu_total = 0
 local last_cpu_idle = 0
 
@@ -116,7 +137,6 @@ local function get_cpu_usage()
     local line = f:read("*l")
     f:close()
 
-    -- /proc/stat CPU line format: cpu  user nice system idle iowait irq softirq steal
     local user, nice, system, idle, iowait, irq, softirq, steal = line:match("cpu%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)%s+(%d+)")
     if not user then return "N/A" end
 
@@ -152,7 +172,6 @@ local function get_ram_usage()
 
     if mem_total > 0 and mem_available > 0 then
         local used = mem_total - mem_available
-        -- /proc/meminfo reports in kilobytes, convert to gigabytes
         return string.format("%.1f/%.1fGB", used / 1024 / 1024, mem_total / 1024 / 1024)
     end
     return "N/A"
@@ -185,7 +204,6 @@ wezterm.on("update-status", function(window, _)
             { Text = SOLID_RIGHT_ARROW }
         })
     else
-        -- Clear the status when leader is not active
         window:set_left_status("")
     end
 
@@ -197,28 +215,23 @@ wezterm.on("update-status", function(window, _)
     local cpu = get_cpu_usage()
     local ram = get_ram_usage()
 
-    -- Catppuccin Macchiato Colors
     local color_cpu = "#eed49f"
     local color_ram = "#8aadf4"
     local color_text = "#181825"
 
     window:set_right_status(wezterm.format {
-        -- 1. Transition from empty tab bar to CPU color
         'ResetAttributes', 
         { Foreground = { Color = color_cpu } },
         { Text = SOLID_LEFT_ARROW },
 
-        -- 2. CPU Section
         { Background = { Color = color_cpu } },
         { Foreground = { Color = color_text } },
         { Text = "  " .. cpu .. " " },
 
-        -- 3. Transition from CPU color to RAM color
         { Background = { Color = color_cpu } },
         { Foreground = { Color = color_ram } },
         { Text = SOLID_LEFT_ARROW },
 
-        -- 4. RAM Section
         { Background = { Color = color_ram } },
         { Foreground = { Color = color_text } },
         { Text = " 󰍛 " .. ram .. " " },
@@ -227,5 +240,4 @@ end)
 
 config.mux_enable_ssh_agent = false
 
--- and finally, return the configuration to wezterm
 return config

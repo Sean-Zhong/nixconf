@@ -28,6 +28,7 @@
         ripgrep           # File content searching
         fzf               # Fuzzy finding
         zoxide            # Historical directory navigation
+        w3m
     ];
 
     home.sessionVariables = {

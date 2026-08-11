@@ -64,6 +64,7 @@
     ".config/uwsm/env".source = ../../dotfiles/uwsm/env;
     ".config/quickshell".source = ../../dotfiles/quickshell;
     ".config/cava".source = ../../dotfiles/cava;
+    ".w3m".source = ../../dotfiles/w3m;
     };
 
   programs.home-manager.enable = true;
