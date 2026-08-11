@@ -59,7 +59,6 @@
     ".config/hyprmodules".source = ./hyprmodules;
     "resources/images".source = ../../resources/images;
     "scripts".source = ../../dotfiles/scripts;
-    ".config/wlogout".source = ../../dotfiles/wlogout;
     ".config/swaync".source = ../../dotfiles/swaync;
     ".config/uwsm/env".source = ../../dotfiles/uwsm/env;
     ".config/quickshell".source = ../../dotfiles/quickshell;

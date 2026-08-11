@@ -68,7 +68,6 @@
     ".config/hypr".source = ../../dotfiles/hypr;
     ".config/hyprmodules".source = ./hyprmodules;
     "resources/images".source = ../../resources/images;
-    ".config/wlogout".source = ../../dotfiles/wlogout;
     ".config/swaync".source = ../../dotfiles/swaync;
     ".config/discord-flags.conf".text = ''
       --enable-features=WaylandWindowDecorations,WebRTCPipeWireCapturer

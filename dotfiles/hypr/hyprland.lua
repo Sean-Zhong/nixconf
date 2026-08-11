@@ -161,3 +161,9 @@ hl.layer_rule({
     ignore_alpha = 0.2
 })
 
+hl.layer_rule({
+    match = { namespace = "powermenu" },
+    blur = false,
+    animation = "none"
+})
+
