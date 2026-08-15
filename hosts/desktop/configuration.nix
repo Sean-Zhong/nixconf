@@ -178,6 +178,10 @@
     });
   '';
 
+services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTR{idVendor}=="1cbe", ATTR{idProduct}=="0050", MODE="0666", TAG+="uaccess"
+  '';
+
   # Needed for default bridge network to automatically work
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.kernel.sysctl."net.ipv6.ip_forward" = 1;

@@ -1,0 +1,137 @@
+---
+author: "Sean"
+
+display:
+  DISPLAY_SIZE: 5.2"
+  DISPLAY_ORIENTATION: landscape
+  DISPLAY_RGB_LED: 255, 0, 0
+
+static_images:
+  BACKGROUND:
+    PATH: background.png
+    X: 0
+    Y: 0
+    WIDTH: 1280
+    HEIGHT: 720
+
+static_text:
+  CPU_HEADER:
+    TEXT: "9800X3D"
+    X: 80
+    Y: 40
+    FONT: jetbrains-mono/JetBrainsMono-Bold.ttf
+    FONT_SIZE: 50
+    FONT_COLOR: 20, 30, 60
+    BACKGROUND_IMAGE: background.png
+    ANCHOR: lt
+
+  GPU_HEADER:
+    TEXT: "9070XT"
+    X: 720
+    Y: 40
+    FONT: jetbrains-mono/JetBrainsMono-Bold.ttf
+    FONT_SIZE: 50
+    FONT_COLOR: 20, 30, 60
+    BACKGROUND_IMAGE: background.png
+    ANCHOR: lt
+
+STATS:
+  CPU:
+    PERCENTAGE:
+      INTERVAL: 2.0
+      RADIAL:
+        SHOW: True
+        X: 320
+        Y: 290
+        RADIUS: 135
+        WIDTH: 22
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        ANGLE_START: 135
+        ANGLE_END: 45
+        ANGLE_STEPS: 1
+        ANGLE_SEP: 0
+        CLOCKWISE: True
+        BAR_COLOR: 61, 184, 225
+        BAR_BACKGROUND_COLOR: 180, 200, 225
+        DRAW_BAR_BACKGROUND: True
+        SHOW_TEXT: True
+        SHOW_UNIT: True
+        FONT: jetbrains-mono/JetBrainsMono-Bold.ttf
+        FONT_SIZE: 60
+        FONT_COLOR: 20, 30, 60
+        BACKGROUND_IMAGE: background.png
+    TEMPERATURE:
+      INTERVAL: 2.0
+      GRAPH:
+        SHOW: True
+        X: 140
+        Y: 475
+        WIDTH: 360
+        HEIGHT: 28
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 61, 184, 225
+        BACKGROUND_COLOR: 180, 200, 225
+        BAR_OUTLINE: True
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: True
+        X: 320
+        Y: 545
+        FONT: jetbrains-mono/JetBrainsMono-Bold.ttf
+        FONT_SIZE: 55
+        FONT_COLOR: 20, 30, 60
+        BACKGROUND_IMAGE: background.png
+        ALIGN: center
+        ANCHOR: mt
+
+  GPU:
+    INTERVAL: 2.0
+    PERCENTAGE:
+      RADIAL:
+        SHOW: True
+        X: 960
+        Y: 290
+        RADIUS: 135
+        WIDTH: 22
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        ANGLE_START: 135
+        ANGLE_END: 45
+        ANGLE_STEPS: 1
+        ANGLE_SEP: 0
+        CLOCKWISE: True
+        BAR_COLOR: 61, 184, 225
+        BAR_BACKGROUND_COLOR: 180, 200, 225
+        DRAW_BAR_BACKGROUND: True
+        SHOW_TEXT: True
+        SHOW_UNIT: True
+        FONT: jetbrains-mono/JetBrainsMono-Bold.ttf
+        FONT_SIZE: 60
+        FONT_COLOR: 20, 30, 60
+        BACKGROUND_IMAGE: background.png
+    TEMPERATURE:
+      INTERVAL: 2.0
+      GRAPH:
+        SHOW: True
+        X: 780
+        Y: 475
+        WIDTH: 360
+        HEIGHT: 28
+        MIN_VALUE: 0
+        MAX_VALUE: 100
+        BAR_COLOR: 61, 184, 225
+        BACKGROUND_COLOR: 180, 200, 225
+        BAR_OUTLINE: True
+      TEXT:
+        SHOW: True
+        SHOW_UNIT: True
+        X: 960
+        Y: 545
+        FONT: jetbrains-mono/JetBrainsMono-Bold.ttf
+        FONT_SIZE: 55
+        FONT_COLOR: 20, 30, 60
+        BACKGROUND_IMAGE: background.png
+        ALIGN: center
+        ANCHOR: mt

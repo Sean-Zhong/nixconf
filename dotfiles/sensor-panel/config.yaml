@@ -1,0 +1,16 @@
+config:
+  COM_PORT: AUTO
+  THEME: CustomTheme
+  HW_READ_METHOD: PYTHON
+  UPDATE_INTERVAL: 3.0
+
+display:
+  REVISION: TUR_USB
+  BRIGHTNESS: 100
+  ORIENTATION: landscape
+
+hardware:
+  ETH: 'enp9s0'
+  WLO: ''
+  GPU: amd
+  PING: ''

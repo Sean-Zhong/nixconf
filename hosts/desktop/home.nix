@@ -14,6 +14,7 @@
     ../../modules/home-manager/development.nix
     ../../modules/home-manager/secrets.nix
     ../../modules/home-manager/desktop-services.nix
+    ../../modules/home-manager/sensor-panel.nix
     ];
 
   home.username = "sean";
@@ -77,6 +78,8 @@
     ".config/quickshell".source = ../../dotfiles/quickshell;
     ".config/cava".source = ../../dotfiles/cava;
     ".w3m/config".source = ../../dotfiles/w3m/config;
+    ".config/turzx/config.yaml".source = ../../dotfiles/sensor-panel/config.yaml;
+    ".config/turzx/res/themes/CustomTheme".source = ../../dotfiles/sensor-panel/CustomTheme;
   };
 
   home.sessionVariables = {
