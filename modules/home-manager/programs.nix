@@ -21,6 +21,7 @@
         orca-slicer
         killall
         bambu-studio
+        radeontop
     ];
 }
 
