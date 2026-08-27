@@ -24,7 +24,7 @@ let
     gputil
   ]);
 
-patchTurzx = pkgs.writeText "patch-turzx.py" ''
+  patchTurzx = pkgs.writeText "patch-turzx.py" ''
 import os
 import re
 
@@ -32,49 +32,81 @@ base_dir = os.path.expanduser("~/.config/turzx")
 main_path = os.path.join(base_dir, "main.py")
 sensors_path = os.path.join(base_dir, "library", "sensors", "sensors_python.py")
 
-# ... [Keep your existing main.py and theme.yaml patch sections] ...
+# 1. Patch main.py for PNG performance and threading lock
+if os.path.exists(main_path):
+    with open(main_path, "r", encoding="utf-8", errors="ignore") as f:
+        content = f.read()
 
-# 2. Directly override AMD GPU detection with Safe Caching and Radeontop
+    patch_main = """
+# --- Performance Patch ---
+import PIL.Image
+import threading
+
+_orig_save = PIL.Image.Image.save
+def _fast_save(self, fp, format=None, **params):
+    if format == 'PNG' or str(format).upper() == 'PNG':
+        params['compress_level'] = 1
+    return _orig_save(self, fp, format, **params)
+PIL.Image.Image.save = _fast_save
+
+_display_lock = threading.Lock()
+try:
+    import library.lcd_comm_turing_usb as usb_comm
+    _orig_disp = usb_comm.LcdCommTuringUSB.DisplayPILImage
+    def _locked_disp(self, *args, **kwargs):
+        with _display_lock:
+            return _orig_disp(self, *args, **kwargs)
+    usb_comm.LcdCommTuringUSB.DisplayPILImage = _locked_disp
+except Exception:
+    pass
+# -------------------------
+"""
+    content = content.replace("import sys", "import sys\n" + patch_main, 1)
+    with open(main_path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+# 2. Native Linux AMD GPU Power-Proxy (100% Safe)
 if os.path.exists(sensors_path):
     with open(sensors_path, "r", encoding="utf-8", errors="ignore") as f:
         scontent = f.read()
 
     amd_patch = """
-# --- Native Linux AMD GPU Safe Polling ---
+# --- Native Linux AMD GPU Power-Proxy ---
 import glob
 import os
-import time
-import subprocess
-import re
-
-_gpu_cache_time = 0.0
-_gpu_cache_val = 0.0
 
 def _get_safe_amd_pct():
-    global _gpu_cache_time, _gpu_cache_val
-    now = time.time()
+    # Safely calculate load based on current power draw vs maximum power cap via hwmon.
+    for name_file in glob.glob("/sys/class/hwmon/hwmon*/name"):
+        try:
+            with open(name_file, "r") as f:
+                if "amdgpu" in f.read().lower():
+                    hdir = os.path.dirname(name_file)
 
-    # Return the cached value if less than 10 seconds have passed
-    if (now - _gpu_cache_time) < 10.0:
-        return _gpu_cache_val
+                    cur_power = 0.0
+                    power_file = os.path.join(hdir, "power1_input")
+                    if not os.path.exists(power_file):
+                        power_file = os.path.join(hdir, "power1_average")
 
-    _gpu_cache_time = now
+                    if os.path.exists(power_file):
+                        with open(power_file, "r") as pf:
+                            cur_power = float(pf.read().strip())
 
-    try:
-        # Use radeontop for safe, single-shot register reading
-        # -d - outputs to stdout, -l 1 limits it to 1 tick
-        result = subprocess.run(["radeontop", "-d", "-", "-l", "1"], capture_output=True, text=True, timeout=2)
-        if result.returncode == 0:
-            match = re.search(r'gpu\s+([0-9.]+)%', result.stdout)
-            if match:
-                _gpu_cache_val = float(match.group(1))
-    except Exception:
-        pass
+                    cap_power = 250000000.0
+                    cap_file = os.path.join(hdir, "power1_cap")
+                    if os.path.exists(cap_file):
+                        with open(cap_file, "r") as cf:
+                            cap_power = float(cf.read().strip())
 
-    return _gpu_cache_val
+                    if cur_power > 0 and cap_power > 0:
+                        pct = (cur_power / cap_power) * 100.0
+                        return min(max(pct, 0.0), 100.0)
+        except Exception:
+            pass
+    return 0.0
 
 def _get_sysfs_amd_temp():
-    # ... [Keep your existing temperature sysfs code here, as reading temps is safe] ...
+    # Passive temperature reading is completely safe
     for name_file in glob.glob("/sys/class/hwmon/hwmon*/name"):
         try:
             with open(name_file, "r") as f:
@@ -100,7 +132,7 @@ class GpuOverride(metaclass=GpuMeta):
 
     @staticmethod
     def get_gpu_to_use():
-        return "AMD Radeon RX 9070 XT"
+        return "AMD Radeon GPU"
 
     @classmethod
     def percentage(cls, *args, **kwargs):
@@ -132,8 +164,25 @@ except Exception:
     scontent += "\n" + amd_patch
     with open(sensors_path, "w", encoding="utf-8") as f:
         f.write(scontent)
-'';
 
+# 3. Enforce 2.0s minimum intervals on theme YAMLs
+theme_dir = os.path.join(base_dir, "res", "themes")
+if os.path.exists(theme_dir):
+    for root, _, files in os.walk(theme_dir):
+        if "theme.yaml" in files:
+            tpath = os.path.join(root, "theme.yaml")
+            with open(tpath, "r", encoding="utf-8", errors="ignore") as f:
+                tcontent = f.read()
+            def enforce_min(match):
+                try:
+                    val = float(match.group(1))
+                    return f"INTERVAL: {max(2.0, val)}"
+                except ValueError:
+                    return match.group(0)
+            patched = re.sub(r"INTERVAL:\s*([0-9]*\.?[0-9]+)", enforce_min, tcontent)
+            with open(tpath, "w", encoding="utf-8") as f:
+                f.write(patched)
+  '';
 in {
   systemd.user.services.turzx-screen = {
     Unit = {
@@ -147,8 +196,6 @@ in {
     Service = {
       WorkingDirectory = "${config.home.homeDirectory}/.config/turzx";
       Nice = 10;
-
-      path = [ pkgs.radeontop ];
 
       Environment = [
         "LD_LIBRARY_PATH=${pkgs.libusb1}/lib"
@@ -169,9 +216,9 @@ in {
         "${pkgs.gnused}/bin/sed -i 's/time.sleep(0.01)/time.sleep(0.5)/g; s/time.sleep(0.1)/time.sleep(0.5)/g' ${config.home.homeDirectory}/.config/turzx/main.py"
         "${pythonEnv}/bin/python ${patchTurzx}"
         "${pkgs.bash}/bin/bash -c 'if [ ! -f ${config.home.homeDirectory}/.config/turzx/config.yaml ]; then cp ${config.home.homeDirectory}/.config/turzx/config.example.yaml ${config.home.homeDirectory}/.config/turzx/config.yaml; fi'"
-        "${pkgs.coreutils}/bin/sleep 10"
       ];
-      ExecStart = "${pythonEnv}/bin/python ${config.home.homeDirectory}/.config/turzx/main.py";
+
+      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/sleep 10 && exec ${pythonEnv}/bin/python ${config.home.homeDirectory}/.config/turzx/main.py'";
       Restart = "always";
       RestartSec = "5s";
     };
