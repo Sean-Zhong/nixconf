@@ -9,19 +9,8 @@ let
   };
 
   pythonEnv = pkgs.python3.withPackages (ps: with ps; [
-    psutil
-    pyserial
-    pillow
-    pyusb
-    pyyaml
-    babel
-    requests
-    pycryptodome
-    numpy
-    ping3
-    uptime
-    pystray
-    gputil
+    psutil pyserial pillow pyusb pyyaml babel
+    requests pycryptodome numpy ping3 uptime pystray gputil
   ]);
 
   patchTurzx = pkgs.writeText "patch-turzx.py" ''
@@ -65,7 +54,7 @@ except Exception:
     with open(main_path, "w", encoding="utf-8") as f:
         f.write(content)
 
-# 2. Native Linux AMD GPU Power-Proxy (100% Safe)
+# 2. Native Linux AMD GPU Power-Proxy (Dynamic Max Polling)
 if os.path.exists(sensors_path):
     with open(sensors_path, "r", encoding="utf-8", errors="ignore") as f:
         scontent = f.read()
@@ -76,7 +65,7 @@ import glob
 import os
 
 def _get_safe_amd_pct():
-    # Safely calculate load based on current power draw vs maximum power cap via hwmon.
+    max_pct = 0.0
     for name_file in glob.glob("/sys/class/hwmon/hwmon*/name"):
         try:
             with open(name_file, "r") as f:
@@ -100,26 +89,30 @@ def _get_safe_amd_pct():
 
                     if cur_power > 0 and cap_power > 0:
                         pct = (cur_power / cap_power) * 100.0
-                        return min(max(pct, 0.0), 100.0)
+                        if pct > max_pct:
+                            max_pct = pct
         except Exception:
             pass
-    return 0.0
+    return min(max(max_pct, 0.0), 100.0)
 
 def _get_sysfs_amd_temp():
-    # Passive temperature reading is completely safe
+    max_temp = 0.0
     for name_file in glob.glob("/sys/class/hwmon/hwmon*/name"):
         try:
             with open(name_file, "r") as f:
                 if "amdgpu" in f.read().lower():
                     hdir = os.path.dirname(name_file)
                     for tf in glob.glob(os.path.join(hdir, "temp*_input")):
-                        with open(tf, "r") as tfile:
-                            val = float(tfile.read().strip()) / 1000.0
-                            if 0 < val < 120:
-                                return val
+                        try:
+                            with open(tf, "r") as tfile:
+                                val = float(tfile.read().strip()) / 1000.0
+                                if 0 < val < 120 and val > max_temp:
+                                    max_temp = val
+                        except Exception:
+                            pass
         except Exception:
             pass
-    return 0.0
+    return max_temp
 
 class GpuMeta(type):
     def __getattr__(cls, name):
