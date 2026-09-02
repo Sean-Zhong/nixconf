@@ -133,8 +133,13 @@
   # Docker
   virtualisation = {
     docker.enable = true;
-    podman.enable = true;
+    podman = {
+      enable = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
   };
+
+  programs.fuse.userAllowOther = true;
 
   # Enable Polkit
   security.polkit.enable = true;

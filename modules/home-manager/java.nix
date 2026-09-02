@@ -12,6 +12,7 @@
         JAVA_17_HOME = "$HOME/jdks/temurin17";
         JAVA_21_HOME = "$HOME/jdks/temurin21";
         JAVA_25_HOME = "$HOME/jdks/temurin25";
+        JAVA_HOME = "$JAVA_25_HOME";
         JETBRAINS_CLIENT_JDK = "$HOME/jdks/jetbrains";
     };
 
