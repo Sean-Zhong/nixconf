@@ -13,6 +13,7 @@
     hyprcursor
     blueman
     wl-clipboard
+    wf-recorder
     cliphist
     hyprpolkitagent
     hyprsunset

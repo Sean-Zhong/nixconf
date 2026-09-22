@@ -93,9 +93,7 @@ config.keys = {
             wezterm.background_child_process {
                 'chromium',
                 '--ozone-platform-hint=auto',
-                '--disable-extensions',
                 '--disable-sync',
-                '--disable-background-networking',
                 '--app=' .. uri
             }
             return false

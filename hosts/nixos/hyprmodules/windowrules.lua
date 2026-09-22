@@ -19,3 +19,10 @@ hl.window_rule({
     size = "600 700",
     center = true
 })
+
+hl.window_rule({
+    match = { class = "^chrome-nngceckbapebfimnlniiiahkandclblb.*" },
+    float = true,
+    size = "600 700",
+    center = true
+})
