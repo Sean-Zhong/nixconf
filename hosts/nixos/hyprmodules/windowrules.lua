@@ -1,6 +1,6 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("[workspace 1 silent] zen-beta")
-    hl.exec_cmd("idea")
+    hl.exec_cmd("intellij-idea")
 end)
 
 hl.window_rule({
