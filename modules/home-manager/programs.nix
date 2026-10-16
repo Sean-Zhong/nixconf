@@ -6,7 +6,6 @@
         filezilla
         gnomeExtensions.forge
         gnomeExtensions.app-icons-taskbar
-        solaar
         remmina
         playerctl
         parted
