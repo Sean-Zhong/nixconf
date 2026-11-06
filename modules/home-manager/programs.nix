@@ -17,10 +17,10 @@
         libreoffice
         davinci-resolve
         zoom-us
-        orca-slicer
         killall
         bambu-studio
         radeontop
+        ytmdesktop
     ];
 }
 
