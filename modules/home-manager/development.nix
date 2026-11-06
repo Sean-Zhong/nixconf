@@ -3,7 +3,6 @@
     home.packages = with pkgs; [
         pkgsUnstable.jetbrains.idea
         sshfs
-        vscode-fhs
         openssh
         wezterm
         devpod
