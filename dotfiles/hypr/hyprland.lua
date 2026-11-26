@@ -21,6 +21,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("gnome-keyring-daemon --start --components=ssh")
     hl.exec_cmd([[bash -c 'sleep 1; export SSH_AUTH_SOCK=/run/user/$(id -u)/ssh-agent; SSH_ASKPASS=$HOME/.local/bin/my-ssh-askpass SSH_ASKPASS_REQUIRE=force ssh-add ~/.ssh/id_ed25519']])
     hl.exec_cmd("dbus-update-activation-environment --systemd --all && systemctl --user restart elephant walker")
+    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE && systemctl --user restart xdg-desktop-portal xdg-desktop-portal-hyprland")
 end)
 
 -----------------------------
